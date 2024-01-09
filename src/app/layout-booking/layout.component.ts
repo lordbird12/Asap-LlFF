@@ -28,7 +28,7 @@ import { BookingLayoutComponent } from './layouts/vertical/booking/booking.compo
     standalone   : true,
     imports      : [NgIf, EmptyLayoutComponent, CenteredLayoutComponent, EnterpriseLayoutComponent, MaterialLayoutComponent, ModernLayoutComponent, ClassicLayoutComponent, ClassyLayoutComponent, CompactLayoutComponent, DenseLayoutComponent, FuturisticLayoutComponent, ThinLayoutComponent, SettingsComponent,BookingLayoutComponent],
 })
-export class LayoutComponent implements OnInit, OnDestroy
+export class LayoutBookingComponent implements OnInit, OnDestroy
 {
     config: FuseConfig;
     layout: string;
