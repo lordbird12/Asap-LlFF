@@ -1,0 +1,46 @@
+<div class="w-full">
+
+    <!-- Form -->
+    <form [formGroup]="dataForm">
+
+        <!-- Section -->
+        <div class="flex items-center justify-center">
+            <img class="w-50 h-auto items-center justify-center" src="assets/images/honda.png" alt="Cover image">
+        </div>
+        <div class="w-full mt-15">
+            <div class="text-xl">6กท-6789</div>
+            <div class="text-secondary">Honda Accord • Silver</div>
+        </div>
+        <div class="grid sm:grid-cols-4 gap-6 mt-5 w-full">
+            <!-- Name -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>โปรดระบุเลขไมล์ปัจจุบัน</mat-label>
+                    <input class="w-full" [formControlName]="'kg'" placeholder="" matInput>
+                    <mat-select [value]="'kg'" matSuffix>
+                        <mat-option [value]="'kg'">กิโลเมตร</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <!-- <div class="my-10 border-t"></div> -->
+
+        <!-- Actions -->
+        <!-- <div class="relative flex flex-0 items-center justify-start w-full h-14 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+
+            <button class="fuse-mat-button-large w-full mt-6 rounded-md text-white" mat-flat-button [color]="'primary'">
+                ถัดไป
+            </button>
+        </div> -->
+
+
+
+    </form>
+</div>
+<!-- <div class="relative items-center justify-start w-full h-14 z-49 ">
+    <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" [disabled]="disableBtn" mat-flat-button [color]="'primary'">
+        ถัดไป
+    </button>
+</div> -->
