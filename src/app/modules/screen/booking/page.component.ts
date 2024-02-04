@@ -19,6 +19,13 @@ import { FuseCardComponent } from '@fuse/components/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+import {
+    MatBottomSheet,
+    MatBottomSheetModule,
+    MatBottomSheetRef,
+  } from '@angular/material/bottom-sheet';
+import { OtpComponent } from './otp/page.component';
+
 @Component({
     selector: 'services',
     templateUrl: './page.component.html',
@@ -42,6 +49,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatDividerModule,
         MatFormFieldModule,
         MatButtonModule,
+        MatBottomSheetModule,
+        
     ],
 })
 export class PageComponent implements OnInit, OnDestroy {
@@ -58,8 +67,13 @@ export class PageComponent implements OnInit, OnDestroy {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
+        private _bottomSheet: MatBottomSheet
         
     ) {}
+
+    openBottomSheet(): void {
+        this._bottomSheet.open(OtpComponent);
+      }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

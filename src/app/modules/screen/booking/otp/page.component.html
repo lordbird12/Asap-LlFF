@@ -7,25 +7,27 @@
             class="text-[16px] text-center md:text-xl font-light  tracking-tight text-gray-500  leading-7 sm:leading-10 truncate mt-2 mb-10">
             กรุณาใส่รหัสยืนยันที่ส่งไปยังเบอร์ {{phone}}
         </span>
-        <div class="grid grid-cols-6 gap-1 mx-10">
-            <mat-form-field class="text-center rounded">
-                <input matInput  type="tel" pattern="\d*" maxlength="1">
-            </mat-form-field>
-            <mat-form-field class="text-center rounded">
-                <input matInput  maxLength="1">
-            </mat-form-field>
-            <mat-form-field class="text-center rounded">
-                <input matInput   maxLength="1">
-            </mat-form-field>
-            <mat-form-field class="text-center rounded">
-                <input matInput  maxLength="1">
-            </mat-form-field>
-            <mat-form-field class="text-center rounded">
-                <input matInput maxLength="1">
-            </mat-form-field>
-            <mat-form-field class="text-center rounded">
-                <input matInput maxLength="1">
-            </mat-form-field>
-        </div>
+        <form [formGroup]="otpForm">
+            <div class="grid grid-cols-6 gap-1 mx-10">
+                <mat-form-field class="text-center rounded">
+                    <input matInput type="tel" maxLength="1" #otpInput1 (input)="onFirstDigitInput()" formControlName="otp1">
+                </mat-form-field>
+                <mat-form-field class="text-center rounded">
+                    <input matInput type="tel" maxLength="1" #otpInput2 (input)="onSelect2()" formControlName="otp2">
+                </mat-form-field>
+                <mat-form-field class="text-center rounded">
+                    <input matInput type="tel" maxLength="1" #otpInput3 (input)="onSelect3()" formControlName="otp3">
+                </mat-form-field>
+                <mat-form-field class="text-center rounded">
+                    <input matInput type="tel" maxLength="1" #otpInput4 (input)="onSelect4()" formControlName="otp4"> 
+                </mat-form-field>
+                <mat-form-field class="text-center rounded">
+                    <input matInput type="tel" maxLength="1" #otpInput5 (input)="onSelect5()" formControlName="otp5">
+                </mat-form-field>
+                <mat-form-field class="text-center rounded">
+                    <input matInput type="tel" maxLength="1" #otpInput6 (input)="submit()" formControlName="otp6">
+                </mat-form-field>
+            </div>
+        </form>
     </div>
 </div>
