@@ -1,0 +1,31 @@
+<div class="flex w-full bg-white justify-center">
+    <div class="flex flex-col">
+        <span class="text-2xl text-center md:text-xl font-bold  tracking-tight  leading-7 sm:leading-10 truncate mt-10">
+            ยืนยันเบอร์โทรของคุณ
+        </span>
+        <span
+            class="text-[16px] text-center md:text-xl font-light  tracking-tight text-gray-500  leading-7 sm:leading-10 truncate mt-2 mb-10">
+            กรุณาใส่รหัสยืนยันที่ส่งไปยังเบอร์ {{phone}}
+        </span>
+        <div class="grid grid-cols-6 gap-1 mx-10">
+            <mat-form-field class="text-center rounded">
+                <input matInput  type="phone" pattern="\d*" maxlength="1">
+            </mat-form-field>
+            <mat-form-field class="text-center rounded">
+                <input matInput  maxLength="1">
+            </mat-form-field>
+            <mat-form-field class="text-center rounded">
+                <input matInput   maxLength="1">
+            </mat-form-field>
+            <mat-form-field class="text-center rounded">
+                <input matInput  maxLength="1">
+            </mat-form-field>
+            <mat-form-field class="text-center rounded">
+                <input matInput maxLength="1">
+            </mat-form-field>
+            <mat-form-field class="text-center rounded">
+                <input matInput maxLength="1">
+            </mat-form-field>
+        </div>
+    </div>
+</div>

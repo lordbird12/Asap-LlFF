@@ -17,10 +17,11 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { FuseCardComponent } from '@fuse/components/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
 
 @Component({
-    selector: 'services',
+    selector: 'otp',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,9 +43,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatDividerModule,
         MatFormFieldModule,
         MatButtonModule,
+        MatInputModule
     ],
 })
-export class PageComponent implements OnInit, OnDestroy {
+export class OtpComponent implements OnInit, OnDestroy {
     @ViewChild('drawer') drawer: MatDrawer;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
@@ -52,6 +54,7 @@ export class PageComponent implements OnInit, OnDestroy {
     selectedPanel: string = 'main';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     formFieldHelpers: string[] = ['fuse-mat-dense'];
+    phone : string = '085-036-0033'
     /**
      * Constructor
      */
