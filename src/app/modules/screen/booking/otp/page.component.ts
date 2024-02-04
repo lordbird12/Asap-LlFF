@@ -21,6 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
     selector: 'otp',
@@ -71,6 +72,7 @@ export class OtpComponent implements OnInit, OnDestroy {
     @ViewChild('otpInput5') otpInput5: ElementRef;
     @ViewChild('otpInput6') otpInput6: ElementRef;
     constructor(
+        private _bottomSheetRef: MatBottomSheetRef<OtpComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
         private formBuilder: FormBuilder,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
@@ -87,35 +89,82 @@ export class OtpComponent implements OnInit, OnDestroy {
             // Add more fields as needed
           });
     }
-
+ 
       // เมื่อผู้ใช้ป้อนค่าในช่อง 1
-  onFirstDigitInput() {
+  onFirstDigitInput(event) {
     // ให้ focus ที่ช่องที่ 2
-    this.otpInput2.nativeElement.focus();
+    if (event.inputType === 'deleteContentBackward') {
+        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+        this.otpInput1.nativeElement.focus();
+      } else {
+        // ให้ focus ที่ช่องที่ 2
+        this.otpInput2.nativeElement.focus();
+      }
   }
 
   // เมื่อผู้ใช้ป้อนค่าในช่อง 2 (และสามารถทำในลำดับต่อไปได้)
-  onSelect2() {
+  onSelect2(event) {
+    if (event.inputType === 'deleteContentBackward') {
+        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+        this.otpInput1.nativeElement.focus();
+      } else {
+        // ให้ focus ที่ช่องที่ 2
+        this.otpInput3.nativeElement.focus();
+      }
     // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
-    this.otpInput3.nativeElement.focus();
+    
   }
-  onSelect3() {
+  onSelect3(event) {
     // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
-    this.otpInput4.nativeElement.focus();
+  
+    if (event.inputType === 'deleteContentBackward') {
+        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+        this.otpInput2.nativeElement.focus();
+      } else {
+        // ให้ focus ที่ช่องที่ 2
+        this.otpInput4.nativeElement.focus();
+      }
   }
-  onSelect4() {
+  onSelect4(event) {
     // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
     this.otpInput5.nativeElement.focus();
+
+    if (event.inputType === 'deleteContentBackward') {
+        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+        this.otpInput3.nativeElement.focus();
+      } else {
+        // ให้ focus ที่ช่องที่ 2
+        this.otpInput5.nativeElement.focus();
+      }
   }
-  onSelect5() {
+  onSelect5(event) {
     // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
-    this.otpInput6.nativeElement.focus();
+    if (event.inputType === 'deleteContentBackward') {
+        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+        this.otpInput4.nativeElement.focus();
+      } else {
+        // ให้ focus ที่ช่องที่ 2
+        this.otpInput6.nativeElement.focus();
+      }
+  
   }
 
-  submit() {
-    console.log(this.otpForm)
+  submit(event) {
+    if (event.inputType === 'deleteContentBackward') {
+        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+        this.otpInput5.nativeElement.focus();
+      } else {
+        // ให้ focus ที่ช่องที่ 2
+        this.closeBottomSheet(event);
+        
+      }
+
   }
 
+  closeBottomSheet(event: MouseEvent): void {
+    this._bottomSheetRef.dismiss();
+    event.preventDefault();
+  }
 
   ngAfterViewInit() {
     // ให้ focus ที่ช่องแรกทันที

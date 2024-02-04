@@ -1,4 +1,4 @@
-<div class="flex w-full bg-white justify-center">
+<div class="flex w-full bg-white justify-center rounded max-w-[100vh]">
     <div class="flex flex-col">
         <span class="text-2xl text-center md:text-xl font-bold  tracking-tight  leading-7 sm:leading-10 truncate mt-10">
             ยืนยันเบอร์โทรของคุณ
@@ -10,22 +10,22 @@
         <form [formGroup]="otpForm">
             <div class="grid grid-cols-6 gap-1 mx-10">
                 <mat-form-field class="text-center rounded">
-                    <input matInput type="tel" maxLength="1" #otpInput1 (input)="onFirstDigitInput()" formControlName="otp1">
+                    <input matInput type="tel" maxLength="1" #otpInput1 (input)="onFirstDigitInput($event)" formControlName="otp1">
                 </mat-form-field>
                 <mat-form-field class="text-center rounded">
-                    <input matInput type="tel" maxLength="1" #otpInput2 (input)="onSelect2()" formControlName="otp2">
+                    <input matInput type="tel" maxLength="1" #otpInput2 (input)="onSelect2($event)" formControlName="otp2">
                 </mat-form-field>
                 <mat-form-field class="text-center rounded">
-                    <input matInput type="tel" maxLength="1" #otpInput3 (input)="onSelect3()" formControlName="otp3">
+                    <input matInput type="tel" maxLength="1" #otpInput3 (input)="onSelect3($event)" formControlName="otp3">
                 </mat-form-field>
                 <mat-form-field class="text-center rounded">
-                    <input matInput type="tel" maxLength="1" #otpInput4 (input)="onSelect4()" formControlName="otp4"> 
+                    <input matInput type="tel" maxLength="1" #otpInput4 (input)="onSelect4($event)" formControlName="otp4"> 
                 </mat-form-field>
                 <mat-form-field class="text-center rounded">
-                    <input matInput type="tel" maxLength="1" #otpInput5 (input)="onSelect5()" formControlName="otp5">
+                    <input matInput type="tel" maxLength="1" #otpInput5 (input)="onSelect5($event)" formControlName="otp5">
                 </mat-form-field>
                 <mat-form-field class="text-center rounded">
-                    <input matInput type="tel" maxLength="1" #otpInput6 (input)="submit()" formControlName="otp6">
+                    <input matInput type="tel" maxLength="1" #otpInput6 (input)="submit($event)" formControlName="otp6">
                 </mat-form-field>
             </div>
         </form>
