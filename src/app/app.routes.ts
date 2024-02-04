@@ -5,6 +5,8 @@ import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { LayoutMainComponent } from 'app/layout-main/layout-main.component';
 import { Layout2Component } from './layout2/layout.component';
+import { LayoutBookingComponent } from './layout-booking/layout.component';
+import { LayoutCalendarComponent } from './layout-calendar/layout-calendar.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -40,6 +42,28 @@ export const appRoutes: Route[] = [
             },
 
         ],
+    },
+    {
+        path: 'booking',
+        canActivate: [NoAuthGuard],
+        canActivateChild: [NoAuthGuard],
+        component: LayoutBookingComponent,
+        // resolve: {
+        //     initialData: initialDataResolver,
+        // },
+        loadChildren: () =>
+            import('app/modules/screen/booking/page.routes'),
+    },
+    {
+        path: 'calendar',
+        canActivate: [NoAuthGuard],
+        canActivateChild: [NoAuthGuard],
+        component: LayoutCalendarComponent,
+        // resolve: {
+        //     initialData: initialDataResolver,
+        // },
+        loadChildren: () =>
+            import('app/modules/screen/calendar/page.routes'),
     },
     {
         path: 'screens',
@@ -159,6 +183,7 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/landing/home/home.routes'),
             },
+
         ],
     },
 
