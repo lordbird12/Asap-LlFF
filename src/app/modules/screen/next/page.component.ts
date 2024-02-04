@@ -13,31 +13,32 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Subject, takeUntil } from 'rxjs';
-import { HomeMainComponent } from './main/page.component';
-import { HomeListComponent } from './list/page.component';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { LicenseComponent } from './license/page.component';
+import { KgComponent } from './kg/page.component';
+import { PolicyComponent } from './policy/page.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';  
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'services',
+    selector: 'page',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
         CommonModule,
-        MatButtonModule,
-        NgClass,
-        MatIconModule,
         MatSidenavModule,
+        MatCheckboxModule,
         MatButtonModule,
         MatIconModule,
         NgFor,
         NgClass,
         NgSwitch,
         NgSwitchCase,
-        HomeMainComponent,
-        HomeListComponent,
+        LicenseComponent,
+        KgComponent,
+        PolicyComponent,
     ],
 })
 export class PageComponent implements OnInit, OnDestroy {
@@ -45,7 +46,7 @@ export class PageComponent implements OnInit, OnDestroy {
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     panels: any[] = [];
-    selectedPanel: string = 'main';
+    selectedPanel: string = 'policy';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -54,6 +55,7 @@ export class PageComponent implements OnInit, OnDestroy {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
+        private _activatedRoute: ActivatedRoute,
         private _router: Router,
     ) {}
 
@@ -68,19 +70,26 @@ export class PageComponent implements OnInit, OnDestroy {
         // Setup available panels
         this.panels = [
             {
-                id: 'home-main',
+                id: 'policy',
                 icon: 'heroicons_outline:user-circle',
                 title: 'Account',
                 description:
                     'Manage your public profile and private information',
             },
             {
-                id: 'home-list',
+                id: 'license',
                 icon: 'heroicons_outline:lock-closed',
                 title: 'Security',
                 description:
                     'Manage your password and 2-step verification preferences',
-            }
+            },
+            {
+                id: 'kg',
+                icon: 'heroicons_outline:credit-card',
+                title: 'Plan & Billing',
+                description:
+                    'Manage your subscription plan, payment method and billing information',
+            },
         ];
 
         // Subscribe to media changes
@@ -120,12 +129,12 @@ export class PageComponent implements OnInit, OnDestroy {
      * @param panel
      */
     goToPanel(): void {
-        if(this.selectedPanel == ""){
-            this.selectedPanel  = "main";
-        }else if(this.selectedPanel  == "main"){
-            this.selectedPanel  = "list";
+        if(this.selectedPanel == "" || this.selectedPanel  == "policy"){
+            this.selectedPanel  = "license";
+        }else if(this.selectedPanel  == "license"){
+            this.selectedPanel  = "kg";
         }else{
-            this._router.navigate(['screens/next']);
+            this._router.navigate(['screens/services']);
             return;
         }
 

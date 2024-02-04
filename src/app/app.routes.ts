@@ -4,6 +4,7 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { LayoutMainComponent } from 'app/layout-main/layout-main.component';
+import { Layout2Component } from './layout2/layout.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -54,6 +55,24 @@ export const appRoutes: Route[] = [
                 path: 'home',
                 loadChildren: () =>
                     import('app/modules/screen/home/page.routes'),
+            },
+        ],
+    },
+
+    {
+        path: 'screens',
+        // canActivate: [AuthGuard],
+        // canActivateChild: [AuthGuard],
+        component: Layout2Component,
+        resolve: {
+            initialData: initialDataResolver,
+        },
+        children: [
+
+            {
+                path: 'next',
+                loadChildren: () =>
+                    import('app/modules/screen/next/page.routes'),
             },
         ],
     },
