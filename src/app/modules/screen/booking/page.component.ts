@@ -25,6 +25,7 @@ import {
     MatBottomSheetRef,
   } from '@angular/material/bottom-sheet';
 import { OtpComponent } from './otp/page.component';
+import { StarsComponent } from './stars/page.component';
 
 @Component({
     selector: 'services',
@@ -72,7 +73,7 @@ export class PageComponent implements OnInit, OnDestroy {
     ) {}
 
     openBottomSheet(): void {
-        this._bottomSheet.open(OtpComponent);
+        this._bottomSheet.open(StarsComponent);
       }
 
     // -----------------------------------------------------------------------------------------------------
