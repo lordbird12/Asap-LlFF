@@ -17,8 +17,10 @@ import { LicenseComponent } from './license/page.component';
 import { KgComponent } from './kg/page.component';
 import { PolicyComponent } from './policy/page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { PageService } from './page.service';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'page',
@@ -49,6 +51,8 @@ export class PageComponent implements OnInit, OnDestroy {
     selectedPanel: string = 'policy';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+    activeBtn: any;
+
     /**
      * Constructor
      */
@@ -57,6 +61,8 @@ export class PageComponent implements OnInit, OnDestroy {
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
+        private _service: PageService,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -67,6 +73,7 @@ export class PageComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        this.activeBtn = false;
         // Setup available panels
         this.panels = [
             {
@@ -129,12 +136,50 @@ export class PageComponent implements OnInit, OnDestroy {
      * @param panel
      */
     goToPanel(): void {
-        if(this.selectedPanel == "" || this.selectedPanel  == "policy"){
-            this.selectedPanel  = "license";
-        }else if(this.selectedPanel  == "license"){
-            this.selectedPanel  = "kg";
-        }else{
-            this._router.navigate(['screens/services']);
+        if (this.selectedPanel == '' || this.selectedPanel == 'policy') {
+            this.selectedPanel = 'license';
+        } else if (this.selectedPanel == 'license') {
+            var json = localStorage.getItem('license')
+                ? JSON.parse(localStorage.getItem('license'))
+                : [];
+            this._service.getById(json.license).subscribe((resp: any) => {
+                // this.item = resp.data;
+                if (resp.data) {
+                    const obj = {
+                        data: resp.data,
+                    };
+    
+                    localStorage.setItem('data', JSON.stringify(obj));
+                    this._changeDetectorRef.markForCheck();
+                    this.selectedPanel = 'kg';
+                } else {
+                    this._fuseConfirmationService.open({
+                        title: 'เกิดข้อผิดพลาด',
+                        message: 'ไม่พบข้อมูลรถในระบบ กรุณาตรวจสอบข้อมูล',
+                        icon: {
+                            show: true,
+                            name: 'heroicons_outline:exclamation',
+                            color: 'warning',
+                        },
+                        actions: {
+                            confirm: {
+                                show: false,
+                                label: 'ตกลง',
+                                color: 'primary',
+                            },
+                            cancel: {
+                                show: false,
+                                label: 'ยกเลิก',
+                            },
+                        },
+                        dismissible: true,
+                    });
+                }
+                
+            });
+            
+        } else {
+            this.Submit();
             return;
         }
 
@@ -164,5 +209,86 @@ export class PageComponent implements OnInit, OnDestroy {
      */
     trackByFn(index: number, item: any): any {
         return item.id || index;
+    }
+
+    showOptions(event) {
+        if (event.checked) {
+            this.activeBtn = true;
+        } else {
+            this.activeBtn = false;
+        }
+    }
+
+    Submit(): void {
+        // const end =  moment(this.addForm.value.register_date).format('YYYY-MM-DD')
+        // console.log(end)
+        // this.addForm.patchValue({
+        //   register_date:end
+        // })
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'เพิ่มข้อมูล',
+            message: 'คุณต้องการเพิ่มข้อมูลใช่หรือไม่ ?',
+            icon: {
+                show: false,
+                name: 'heroicons_outline:exclamation',
+                color: 'warning',
+            },
+            actions: {
+                confirm: {
+                    show: true,
+                    label: 'ตกลง',
+                    color: 'primary',
+                },
+                cancel: {
+                    show: true,
+                    label: 'ยกเลิก',
+                },
+            },
+            dismissible: true,
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                var license = localStorage.getItem('license')
+                    ? JSON.parse(localStorage.getItem('license'))
+                    : [];
+                var mlie = localStorage.getItem('mlie')
+                    ? JSON.parse(localStorage.getItem('mlie'))
+                    : [];
+
+                this._service.create(license, mlie).subscribe({
+                    next: (resp: any) => {
+                        this._router.navigate(['screens/services']);
+                    },
+
+                    error: (err: any) => {
+                        this._fuseConfirmationService.open({
+                            title: 'เกิดข้อผิดพลาด',
+                            message: err.error.message,
+                            icon: {
+                                show: true,
+                                name: 'heroicons_outline:exclamation',
+                                color: 'warning',
+                            },
+                            actions: {
+                                confirm: {
+                                    show: false,
+                                    label: 'ตกลง',
+                                    color: 'primary',
+                                },
+                                cancel: {
+                                    show: false,
+                                    label: 'ยกเลิก',
+                                },
+                            },
+                            dismissible: true,
+                        });
+                        console.log(err.error.message);
+                    },
+                });
+            }
+        });
     }
 }

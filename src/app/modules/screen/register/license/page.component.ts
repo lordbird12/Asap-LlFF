@@ -40,7 +40,7 @@ import { MatSelectModule } from '@angular/material/select';
 export class LicenseComponent implements OnInit {
     dataForm: UntypedFormGroup;
     disableBtn: boolean = true;
-
+    licensePlate: string = '';
     /**
      * Constructor
      */
@@ -57,17 +57,48 @@ export class LicenseComponent implements OnInit {
         // Create the form
         this.dataForm = this._formBuilder.group({
             license: [
-                null,
-                [Validators.required, Validators.pattern('[0-9 ]{11}')],
+                '',
+                [Validators.required, Validators.pattern(/^([A-Z0-9]{1,7})$/)],
             ],
         });
     }
 
     onChange(event: any) {
-        if(event.target.value){
+        if (event.target.value) {
             this.disableBtn = false;
-        }else{
+        } else {
             this.disableBtn = true;
         }
+
+        event.target.value = event.target.value
+            .replace(/[^ก-ฮ0-9]/g, '')
+            .toUpperCase();
+        event.target.value = event.target.value.replace(
+            /([ก-ฮ]{2})([0-9]{4})/,
+            '$1-$2'
+        );
+
+        this.dataForm.patchValue({
+            license: event.target.value.slice(0, 8),
+        });
+
+        const obj = {
+            license: this.dataForm.value.license,
+        };
+
+        localStorage.setItem('license', JSON.stringify(obj));
+    }
+
+    formatLicensePlate(): void {
+        // Implement the logic to format the license plate as per your requirements
+        // For example, you can add dashes or other separators
+        // Here's a simple example:
+        this.licensePlate = this.licensePlate
+            .replace(/[^A-Za-z0-9]/g, '')
+            .toUpperCase();
+        this.licensePlate = this.licensePlate.replace(
+            /([A-Z0-9]{3})([A-Z0-9]{3})/,
+            '$1-$2'
+        );
     }
 }

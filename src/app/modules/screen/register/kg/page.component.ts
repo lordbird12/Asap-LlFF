@@ -1,6 +1,7 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     OnInit,
     ViewEncapsulation,
@@ -18,6 +19,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { PageService } from '../page.service';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'register-kg',
@@ -40,11 +43,16 @@ import { MatSelectModule } from '@angular/material/select';
 export class KgComponent implements OnInit {
     dataForm: UntypedFormGroup;
     disableBtn: boolean = true;
-
+    item: any;
     /**
      * Constructor
      */
-    constructor(private _formBuilder: UntypedFormBuilder) {}
+    constructor(
+        private _formBuilder: UntypedFormBuilder,
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _service: PageService,
+        private _fuseConfirmationService: FuseConfirmationService
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -56,18 +64,39 @@ export class KgComponent implements OnInit {
     ngOnInit(): void {
         // Create the form
         this.dataForm = this._formBuilder.group({
-            kg: [
+            mlie: [
                 null,
                 [Validators.required, Validators.pattern('[0-9 ]{11}')],
             ],
         });
+
+         this.item = localStorage.getItem('data')
+            ? JSON.parse(localStorage.getItem('data')).data
+            : [];
+
+            console.log(this.item);
+            this._changeDetectorRef.markForCheck();
+        // this._service.getById(json.license).subscribe((resp: any) => {
+        //     this.item = resp.data;
+        //     this._changeDetectorRef.markForCheck();
+        // });
     }
 
     onChange(event: any) {
-        if(event.target.value){
+        if (event.target.value) {
             this.disableBtn = false;
-        }else{
+        } else {
             this.disableBtn = true;
         }
+
+        event.target.value = event.target.value
+            .replace(/[^0-9]/g, '')
+            .toUpperCase();
+
+        const obj = {
+            mlie: this.dataForm.value.mlie,
+        };
+
+        localStorage.setItem('mlie', JSON.stringify(obj));
     }
 }
