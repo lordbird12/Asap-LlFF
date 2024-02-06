@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PageService } from './page.service';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { getCookie, setCookie } from 'typescript-cookie'
 
 @Component({
     selector: 'page',
@@ -139,8 +140,8 @@ export class PageComponent implements OnInit, OnDestroy {
         if (this.selectedPanel == '' || this.selectedPanel == 'policy') {
             this.selectedPanel = 'license';
         } else if (this.selectedPanel == 'license') {
-            var json = sessionStorage.getItem('license')
-                ? JSON.parse(sessionStorage.getItem('license'))
+            var json = getCookie('license')
+                ? JSON.parse(getCookie('license'))
                 : [];
             this._service.getById(json.license).subscribe((resp: any) => {
                 // this.item = resp.data;
@@ -149,7 +150,8 @@ export class PageComponent implements OnInit, OnDestroy {
                         data: resp.data,
                     };
     
-                    sessionStorage.setItem('data', JSON.stringify(obj));
+                    // sessionStorage.setItem('data', JSON.stringify(obj));
+                    setCookie('data', JSON.stringify(obj))
                     this._changeDetectorRef.markForCheck();
                     this.selectedPanel = 'kg';
                 } else {
@@ -251,14 +253,14 @@ export class PageComponent implements OnInit, OnDestroy {
         confirmation.afterClosed().subscribe((result) => {
             // If the confirm button pressed...
             if (result === 'confirmed') {
-                var license = sessionStorage.getItem('license')
-                    ? JSON.parse(sessionStorage.getItem('license'))
+                var license = getCookie('license')
+                    ? JSON.parse(getCookie('license'))
                     : [];
-                var mlie = sessionStorage.getItem('mlie')
-                    ? JSON.parse(sessionStorage.getItem('mlie'))
+                var mlie = getCookie('mlie')
+                    ? JSON.parse(getCookie('mlie'))
                     : [];
 
-                this._service.create(license, mlie).subscribe({
+                this._service.create(license.license, mlie.mlie).subscribe({
                     next: (resp: any) => {
                         this._router.navigate(['screens/services']);
                     },

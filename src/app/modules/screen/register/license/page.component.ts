@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { getCookie, setCookie } from 'typescript-cookie'
 
 @Component({
     selector: 'register-license',
@@ -86,7 +87,11 @@ export class LicenseComponent implements OnInit {
             license: this.dataForm.value.license,
         };
 
-        sessionStorage.setItem('license', JSON.stringify(obj));
+        // sessionStorage.setItem('license', JSON.stringify(obj));
+
+        // document.cookie = "license=" + JSON.stringify(obj);
+        setCookie('license',JSON.stringify(obj));
+
     }
 
     formatLicensePlate(): void {

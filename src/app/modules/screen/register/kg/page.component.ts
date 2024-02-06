@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { PageService } from '../page.service';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { getCookie, setCookie } from 'typescript-cookie'
 
 @Component({
     selector: 'register-kg',
@@ -70,8 +71,8 @@ export class KgComponent implements OnInit {
             ],
         });
 
-         this.item = sessionStorage.getItem('data')
-            ? JSON.parse(sessionStorage.getItem('data')).data
+         this.item = getCookie('data')
+            ? JSON.parse(getCookie('data')).data
             : [];
 
             console.log(this.item);
@@ -81,6 +82,8 @@ export class KgComponent implements OnInit {
         //     this._changeDetectorRef.markForCheck();
         // });
     }
+
+    
 
     onChange(event: any) {
         if (event.target.value) {
@@ -97,6 +100,6 @@ export class KgComponent implements OnInit {
             mlie: this.dataForm.value.mlie,
         };
 
-        sessionStorage.setItem('mlie', JSON.stringify(obj));
+        setCookie('mlie', JSON.stringify(obj));
     }
 }
