@@ -86,7 +86,7 @@ export class LicenseComponent implements OnInit {
             license: this.dataForm.value.license,
         };
 
-        localStorage.setItem('license', JSON.stringify(obj));
+        sessionStorage.setItem('license', JSON.stringify(obj));
     }
 
     formatLicensePlate(): void {

@@ -70,8 +70,8 @@ export class KgComponent implements OnInit {
             ],
         });
 
-         this.item = localStorage.getItem('data')
-            ? JSON.parse(localStorage.getItem('data')).data
+         this.item = sessionStorage.getItem('data')
+            ? JSON.parse(sessionStorage.getItem('data')).data
             : [];
 
             console.log(this.item);
@@ -97,6 +97,6 @@ export class KgComponent implements OnInit {
             mlie: this.dataForm.value.mlie,
         };
 
-        localStorage.setItem('mlie', JSON.stringify(obj));
+        sessionStorage.setItem('mlie', JSON.stringify(obj));
     }
 }
