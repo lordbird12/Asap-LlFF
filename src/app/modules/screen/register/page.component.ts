@@ -139,12 +139,15 @@ export class PageComponent implements OnInit, OnDestroy {
         if (this.selectedPanel == '' || this.selectedPanel == 'policy') {
             this.selectedPanel = 'license';
         } else if (this.selectedPanel == 'license') {
+            alert(1);
             var json = localStorage.getItem('license')
                 ? JSON.parse(localStorage.getItem('license'))
                 : [];
+                alert(2);
             this._service.getById(json.license).subscribe((resp: any) => {
                 // this.item = resp.data;
                 if (resp.data) {
+                    alert(3);
                     const obj = {
                         data: resp.data,
                     };
@@ -153,6 +156,7 @@ export class PageComponent implements OnInit, OnDestroy {
                     this._changeDetectorRef.markForCheck();
                     this.selectedPanel = 'kg';
                 } else {
+                    alert(4);
                     this._fuseConfirmationService.open({
                         title: 'เกิดข้อผิดพลาด',
                         message: 'ไม่พบข้อมูลรถในระบบ กรุณาตรวจสอบข้อมูล',
