@@ -63,7 +63,16 @@
                     <ng-container [ngSwitch]="selectedPanel">
                         <!-- Account -->
                         <ng-container *ngSwitchCase="'main'">
-                            <services-main></services-main>
+                            <step-main></step-main>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'step-two'">
+                            <step-two></step-two>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'step-three'">
+                            <step-three></step-three>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'step-four'">
+                            <step-four></step-four>
                         </ng-container>
                     </ng-container>
                 </div>

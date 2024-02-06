@@ -134,7 +134,17 @@ export class PageComponent implements OnInit, OnDestroy {
      * @param panel
      */
     goToPanel(): void {
-        this._router.navigate(['screens/home']);
+        if (this.selectedPanel == '') {
+            this.selectedPanel = 'main';
+        } else if (this.selectedPanel == 'main') {
+            this.selectedPanel = 'step-two';
+        }else if (this.selectedPanel == 'step-two') {
+            this.selectedPanel = 'step-three';
+        }else if (this.selectedPanel == 'step-three') {
+            this.selectedPanel = 'step-four';
+        }else{
+            this._router.navigate(['screens/home']);
+        }
         return;
 
         // Close the drawer on 'over' mode

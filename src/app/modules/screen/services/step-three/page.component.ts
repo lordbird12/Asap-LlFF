@@ -27,7 +27,7 @@ import {NgStepperModule} from 'angular-ng-stepper';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
-    selector: 'services-main',
+    selector: 'step-three',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,7 +49,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         MatProgressBarModule
     ],
 })
-export class ServicesMainComponent implements OnInit {
+export class StepThreeComponent implements OnInit {
     addForm: UntypedFormGroup;
 
     /**
