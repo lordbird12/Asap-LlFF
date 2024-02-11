@@ -27,7 +27,7 @@ import {NgStepperModule} from 'angular-ng-stepper';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
-    selector: 'services-main',
+    selector: 'step-main',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,

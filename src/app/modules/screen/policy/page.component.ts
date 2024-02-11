@@ -13,8 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Subject, takeUntil } from 'rxjs';
-import { LicenseComponent } from './license/page.component';
-
+import { PolicyComponent } from './policy/page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -49,7 +48,7 @@ import { MatSelectModule } from '@angular/material/select';
         NgClass,
         NgSwitch,
         NgSwitchCase,
-        LicenseComponent,
+        PolicyComponent,
         MatOptionModule,
         MatFormFieldModule,
         MatInputModule,
@@ -69,7 +68,7 @@ export class PageComponent implements OnInit, OnDestroy {
     activeBtn: any;
     licensePlate: string = '';
     disableBtn: boolean = true;
-
+    planBillingForm: UntypedFormGroup;
     /**
      * Constructor
      */
@@ -161,99 +160,24 @@ export class PageComponent implements OnInit, OnDestroy {
      * @param panel
      */
     goToPanel(): void {
-
-          this._service.getById(this.dataForm.value.license).subscribe((resp: any) => {
-                // this.item = resp.data;
-                if (resp.data) {
-                    const obj = {
-                        data: resp.data,
-                    };
-
-                    // sessionStorage.setItem('data', JSON.stringify(obj));
-                    setCookie('data', JSON.stringify(obj))
-                    this._changeDetectorRef.markForCheck();
-                    this._router.navigate(['screens/register-kg/'+resp.data.id]);
-                } else {
-                    this._fuseConfirmationService.open({
-                        title: 'เกิดข้อผิดพลาด',
-                        message: 'ไม่พบข้อมูลรถในระบบ กรุณาตรวจสอบข้อมูล',
-                        icon: {
-                            show: true,
-                            name: 'heroicons_outline:exclamation',
-                            color: 'warning',
-                        },
-                        actions: {
-                            confirm: {
-                                show: false,
-                                label: 'ตกลง',
-                                color: 'primary',
-                            },
-                            cancel: {
-                                show: false,
-                                label: 'ยกเลิก',
-                            },
-                        },
-                        dismissible: true,
-                    });
-                }
-
-            });
-
+        this._router.navigate(['screens/position/list']);
         // if (this.selectedPanel == '' || this.selectedPanel == 'policy') {
         //     this.selectedPanel = 'license';
         // } else if (this.selectedPanel == 'license') {
-        //     this._router.navigate(['screens/register-kg']);
-            // var json = getCookie('license')
-            //     ? JSON.parse(getCookie('license'))
-            //     : [];
-            // this._service.getById(json.license).subscribe((resp: any) => {
-            //     // this.item = resp.data;
-            //     if (resp.data) {
-            //         const obj = {
-            //             data: resp.data,
-            //         };
-
-            //         // sessionStorage.setItem('data', JSON.stringify(obj));
-            //         setCookie('data', JSON.stringify(obj))
-            //         this._changeDetectorRef.markForCheck();
-            //         this.selectedPanel = 'kg';
-            //     } else {
-            //         this._fuseConfirmationService.open({
-            //             title: 'เกิดข้อผิดพลาด',
-            //             message: 'ไม่พบข้อมูลรถในระบบ กรุณาตรวจสอบข้อมูล',
-            //             icon: {
-            //                 show: true,
-            //                 name: 'heroicons_outline:exclamation',
-            //                 color: 'warning',
-            //             },
-            //             actions: {
-            //                 confirm: {
-            //                     show: false,
-            //                     label: 'ตกลง',
-            //                     color: 'primary',
-            //                 },
-            //                 cancel: {
-            //                     show: false,
-            //                     label: 'ยกเลิก',
-            //                 },
-            //             },
-            //             dismissible: true,
-            //         });
-            //     }
-
-            // });
+        //     this._router.navigate(['screens/register']);
+       
         // } else {
         //     this.Submit();
         //     return;
         // }
 
-        // console.log(this.selectedPanel);
+        console.log(this.selectedPanel);
         // this.selectedPanel = panel;
 
         // Close the drawer on 'over' mode
-        // if (this.drawerMode === 'over') {
-        //     this.drawer.close();
-        // }
+        if (this.drawerMode === 'over') {
+            this.drawer.close();
+        }
     }
 
     /**

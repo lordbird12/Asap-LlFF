@@ -14,6 +14,9 @@ import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Subject, takeUntil } from 'rxjs';
 import { ServicesMainComponent } from './main/page.component';
+import { StepTwoComponent } from './step-two/page.component';
+import { StepThreeComponent } from './step-three/page.component';
+import { StepFourComponent } from './step-four/page.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
@@ -31,6 +34,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
         NgSwitch,
         NgSwitchCase,
         ServicesMainComponent,
+        StepTwoComponent,
+        StepThreeComponent,
+        StepFourComponent
     ],
 })
 export class PageComponent implements OnInit, OnDestroy {
@@ -59,6 +65,7 @@ export class PageComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        
         // Setup available panels
         this.panels = [
             {

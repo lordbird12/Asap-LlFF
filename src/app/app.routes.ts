@@ -13,7 +13,7 @@ import { LayoutCalendarComponent } from './layout-calendar/layout-calendar.compo
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
     // Redirect empty path to '/dashboards/project'
-    { path: '', pathMatch: 'full', redirectTo: 'screens/register' },
+    { path: '', pathMatch: 'full', redirectTo: 'screens/policy' },
 
     // Redirect signed-in user to the '/dashboards/project'
     //
@@ -31,12 +31,27 @@ export const appRoutes: Route[] = [
         },
         children: [
             {
+                path: 'policy',
+                loadChildren: () =>
+                    import('app/modules/screen/policy/page.routes'),
+            },
+            {
+                path: 'position',
+                loadChildren: () =>
+                    import('app/modules/screen/position/page.routes'),
+            },
+            {
                 path: 'register',
                 loadChildren: () =>
                     import('app/modules/screen/register/page.routes'),
             },
             {
-                path: 'services',
+                path: 'register-kg/:id',
+                loadChildren: () =>
+                    import('app/modules/screen/register-kg/page.routes'),
+            },
+            {
+                path: 'services/:id',
                 loadChildren: () =>
                     import('app/modules/screen/services/page.routes'),
             },

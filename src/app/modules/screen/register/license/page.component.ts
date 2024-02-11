@@ -106,4 +106,8 @@ export class LicenseComponent implements OnInit {
             '$1-$2'
         );
     }
+
+    submit(){
+        alert(this.dataForm.value.license);
+    }
 }

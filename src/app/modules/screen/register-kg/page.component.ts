@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Subject, takeUntil } from 'rxjs';
-import { LicenseComponent } from './license/page.component';
+import { KgComponent } from './kg/page.component';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
@@ -49,7 +49,7 @@ import { MatSelectModule } from '@angular/material/select';
         NgClass,
         NgSwitch,
         NgSwitchCase,
-        LicenseComponent,
+        KgComponent,
         MatOptionModule,
         MatFormFieldModule,
         MatInputModule,
@@ -69,6 +69,9 @@ export class PageComponent implements OnInit, OnDestroy {
     activeBtn: any;
     licensePlate: string = '';
     disableBtn: boolean = true;
+
+    Id:any;
+    item:any;
 
     /**
      * Constructor
@@ -91,55 +94,52 @@ export class PageComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+
         this.dataForm = this._formBuilder.group({
-            license: [
+            mlie: [
                 '',
                 [Validators.required, Validators.pattern(/^([A-Z0-9]{1,7})$/)],
             ],
         });
+        
+        this.Id = this._activatedRoute.snapshot.paramMap.get('id');
+       
+        this._service.getById(this.Id).subscribe((resp: any) => {
+            this.item = resp.data;
+            if (resp.data) {
+                const obj = {
+                    data: resp.data,
+                };
 
-        this.activeBtn = false;
-        // Setup available panels
-        this.panels = [
-            {
-                id: 'policy',
-                icon: 'heroicons_outline:user-circle',
-                title: 'Account',
-                description:
-                    'Manage your public profile and private information',
-            },
-            {
-                id: 'license',
-                icon: 'heroicons_outline:lock-closed',
-                title: 'Security',
-                description:
-                    'Manage your password and 2-step verification preferences',
-            },
-            {
-                id: 'kg',
-                icon: 'heroicons_outline:credit-card',
-                title: 'Plan & Billing',
-                description:
-                    'Manage your subscription plan, payment method and billing information',
-            },
-        ];
-
-        // Subscribe to media changes
-        this._fuseMediaWatcherService.onMediaChange$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({ matchingAliases }) => {
-                // Set the drawerMode and drawerOpened
-                if (matchingAliases.includes('lg')) {
-                    this.drawerMode = 'side';
-                    this.drawerOpened = true;
-                } else {
-                    this.drawerMode = 'over';
-                    this.drawerOpened = false;
-                }
-
-                // Mark for check
+                // sessionStorage.setItem('data', JSON.stringify(obj));
+                // setCookie('data', JSON.stringify(obj))
                 this._changeDetectorRef.markForCheck();
-            });
+                // this._router.navigate(['screens/services/'+resp.data.id]);
+            } else {
+                this._fuseConfirmationService.open({
+                    title: 'เกิดข้อผิดพลาด',
+                    message: 'ไม่พบข้อมูลรถในระบบ กรุณาตรวจสอบข้อมูล',
+                    icon: {
+                        show: true,
+                        name: 'heroicons_outline:exclamation',
+                        color: 'warning',
+                    },
+                    actions: {
+                        confirm: {
+                            show: false,
+                            label: 'ตกลง',
+                            color: 'primary',
+                        },
+                        cancel: {
+                            show: false,
+                            label: 'ยกเลิก',
+                        },
+                    },
+                    dismissible: true,
+                });
+            }
+
+        });
     }
 
     /**
@@ -161,99 +161,8 @@ export class PageComponent implements OnInit, OnDestroy {
      * @param panel
      */
     goToPanel(): void {
-
-          this._service.getById(this.dataForm.value.license).subscribe((resp: any) => {
-                // this.item = resp.data;
-                if (resp.data) {
-                    const obj = {
-                        data: resp.data,
-                    };
-
-                    // sessionStorage.setItem('data', JSON.stringify(obj));
-                    setCookie('data', JSON.stringify(obj))
-                    this._changeDetectorRef.markForCheck();
-                    this._router.navigate(['screens/register-kg/'+resp.data.id]);
-                } else {
-                    this._fuseConfirmationService.open({
-                        title: 'เกิดข้อผิดพลาด',
-                        message: 'ไม่พบข้อมูลรถในระบบ กรุณาตรวจสอบข้อมูล',
-                        icon: {
-                            show: true,
-                            name: 'heroicons_outline:exclamation',
-                            color: 'warning',
-                        },
-                        actions: {
-                            confirm: {
-                                show: false,
-                                label: 'ตกลง',
-                                color: 'primary',
-                            },
-                            cancel: {
-                                show: false,
-                                label: 'ยกเลิก',
-                            },
-                        },
-                        dismissible: true,
-                    });
-                }
-
-            });
-
-        // if (this.selectedPanel == '' || this.selectedPanel == 'policy') {
-        //     this.selectedPanel = 'license';
-        // } else if (this.selectedPanel == 'license') {
-        //     this._router.navigate(['screens/register-kg']);
-            // var json = getCookie('license')
-            //     ? JSON.parse(getCookie('license'))
-            //     : [];
-            // this._service.getById(json.license).subscribe((resp: any) => {
-            //     // this.item = resp.data;
-            //     if (resp.data) {
-            //         const obj = {
-            //             data: resp.data,
-            //         };
-
-            //         // sessionStorage.setItem('data', JSON.stringify(obj));
-            //         setCookie('data', JSON.stringify(obj))
-            //         this._changeDetectorRef.markForCheck();
-            //         this.selectedPanel = 'kg';
-            //     } else {
-            //         this._fuseConfirmationService.open({
-            //             title: 'เกิดข้อผิดพลาด',
-            //             message: 'ไม่พบข้อมูลรถในระบบ กรุณาตรวจสอบข้อมูล',
-            //             icon: {
-            //                 show: true,
-            //                 name: 'heroicons_outline:exclamation',
-            //                 color: 'warning',
-            //             },
-            //             actions: {
-            //                 confirm: {
-            //                     show: false,
-            //                     label: 'ตกลง',
-            //                     color: 'primary',
-            //                 },
-            //                 cancel: {
-            //                     show: false,
-            //                     label: 'ยกเลิก',
-            //                 },
-            //             },
-            //             dismissible: true,
-            //         });
-            //     }
-
-            // });
-        // } else {
-        //     this.Submit();
-        //     return;
-        // }
-
-        // console.log(this.selectedPanel);
+        this.Submit();
         // this.selectedPanel = panel;
-
-        // Close the drawer on 'over' mode
-        // if (this.drawerMode === 'over') {
-        //     this.drawer.close();
-        // }
     }
 
     /**
@@ -315,16 +224,11 @@ export class PageComponent implements OnInit, OnDestroy {
         confirmation.afterClosed().subscribe((result) => {
             // If the confirm button pressed...
             if (result === 'confirmed') {
-                var license = getCookie('license')
-                    ? JSON.parse(getCookie('license'))
-                    : [];
-                var mlie = getCookie('mlie')
-                    ? JSON.parse(getCookie('mlie'))
-                    : [];
+          
 
-                this._service.create(license.license, mlie.mlie).subscribe({
+                this._service.create(this.item.license, this.dataForm.value.mlie).subscribe({
                     next: (resp: any) => {
-                        this._router.navigate(['screens/services']);
+                        this._router.navigate(['screens/services/'+this.Id]);
                     },
 
                     error: (err: any) => {
@@ -364,37 +268,13 @@ export class PageComponent implements OnInit, OnDestroy {
         }
 
         event.target.value = event.target.value
-            .replace(/[^ก-ฮ0-9]/g, '')
+            .replace(/[^0-9]/g, '')
             .toUpperCase();
-        event.target.value = event.target.value.replace(
-            /([ก-ฮ]{2})([0-9]{4})/,
-            '$1-$2'
-        );
-
-        this.dataForm.patchValue({
-            license: event.target.value.slice(0, 8),
-        });
 
         const obj = {
-            license: this.dataForm.value.license,
+            mlie: this.dataForm.value.mlie,
         };
 
-        // sessionStorage.setItem('license', JSON.stringify(obj));
-
-        // document.cookie = "license=" + JSON.stringify(obj);
-        setCookie('license', JSON.stringify(obj));
-    }
-
-    formatLicensePlate(): void {
-        // Implement the logic to format the license plate as per your requirements
-        // For example, you can add dashes or other separators
-        // Here's a simple example:
-        this.licensePlate = this.licensePlate
-            .replace(/[^A-Za-z0-9]/g, '')
-            .toUpperCase();
-        this.licensePlate = this.licensePlate.replace(
-            /([A-Z0-9]{3})([A-Z0-9]{3})/,
-            '$1-$2'
-        );
+        setCookie('mlie', JSON.stringify(obj));
     }
 }

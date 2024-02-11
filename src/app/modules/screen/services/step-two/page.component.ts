@@ -22,9 +22,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {NgStepperModule} from 'angular-ng-stepper';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { NgStepperModule } from 'angular-ng-stepper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {
+    MatBottomSheet,
+    MatBottomSheetModule,
+    MatBottomSheetRef,
+  } from '@angular/material/bottom-sheet';
+import { StarsComponent } from '../stars/page.component';
 
 @Component({
     selector: 'step-two',
@@ -46,7 +52,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         MatSelectModule,
         MatOptionModule,
         MatButtonModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatBottomSheetModule,
     ],
 })
 export class StepTwoComponent implements OnInit {
@@ -55,7 +62,14 @@ export class StepTwoComponent implements OnInit {
     /**
      * Constructor
      */
-    constructor(private _formBuilder: UntypedFormBuilder) {}
+    constructor(
+        private _formBuilder: UntypedFormBuilder,
+        private _bottomSheet: MatBottomSheet
+    ) {}
+
+    openBottomSheet(): void {
+        this._bottomSheet.open(StarsComponent);
+      }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -65,6 +79,7 @@ export class StepTwoComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        this.openBottomSheet();
         // Create the form
         this.addForm = this._formBuilder.group({
             name: ['Brian Hughes'],

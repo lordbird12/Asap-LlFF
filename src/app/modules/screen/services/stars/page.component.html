@@ -1,0 +1,33 @@
+<div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white">
+    <mat-form-field class="fuse-mat-dense fuse-mat-rounded fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
+        <textarea matInput cdkTextareaAutosize #messageInput [rows]="5"></textarea>
+    </mat-form-field>
+    <span class="text-mdf text-center md:text-xl font-bold  tracking-tight  leading-7 sm:leading-10 truncate mt-3">
+        คำแนะนำของคุณจะช่วยให้เราพัฒนาบริการให้ดียิ่งขึ้น
+    </span>
+</div>
+<div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white" *ngIf="this.ratingDisplay === 5 || this.ratingDisplay === 4">
+    <span class="text-mdf text-center md:text-xl font-bold  tracking-tight  leading-7 sm:leading-10 truncate mt-3">
+        อยากชื่นชมเราในเรื่องใด
+    </span>
+    <mat-form-field class="fuse-mat-dense fuse-mat-rounded fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
+        <textarea matInput cdkTextareaAutosize #messageInput [rows]="5"></textarea>
+    </mat-form-field>
+</div>
+<div class=" flex flex-col relative items-center justify-center w-full h-70 px-4 md:px-6 z-49 bg-white" *ngIf="this.ratingDisplay === 0">
+
+</div>
+
+
+<div class="grid grid-cols-1 bg-white justify-center rounded max-w-[100vh]">
+    <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
+        <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'">
+            อนุญาติให้เข้าถึงตำแหน่ง
+        </button>
+    </div>
+    <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
+        <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'warn'">
+            ระบุตำแหน่งด้วยตนเอง
+        </button>
+    </div>
+</div>

@@ -60,17 +60,22 @@
         <div class="mt-3">
             <form [formGroup]="dataForm">
                 <div class="flex items-center justify-center">
-                    <img class="w-50 h-auto items-center justify-center" src="assets/images/OBJECTS.png" alt="Cover image">
+                    <img class="w-50 h-auto items-center justify-center" src="assets/images/honda.png" alt="Cover image">
                 </div>
-                <div class="grid sm:grid-cols-4 gap-6 w-full mt-15">
+                <div class="w-full mt-15">
+                    <div class="text-xl">{{item ? item.license : "-"}}</div>
+                    <div class="text-secondary">{{item ? item.brand_model.name : "-"}} • {{item ? item.color : "-"}}
+                    </div>
+                </div>
+                <div class="grid sm:grid-cols-4 gap-6 mt-5 w-full">
                     <!-- Name -->
                     <div class="sm:col-span-4">
-                        <mat-form-field class="w-full">
-                            <mat-label>โปรดระบุเลขทะเบียนรถ</mat-label>
-                            <!-- <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon> -->
-                            <!-- <input type="text" [(ngModel)]="licensePlate" (input)="formatLicensePlate()"> -->
-
-                            <input [formControlName]="'license'" (keyup)="onChange($event)" max="8" placeholder="ตัวอย่าง 8กง-6780" matInput>
+                        <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                            <mat-label>โปรดระบุเลขไมล์ปัจจุบัน</mat-label>
+                            <input (keyup)="onChange($event)" class="w-full" [formControlName]="'mlie'" placeholder="" matInput>
+                            <mat-select [value]="'mlie'" matSuffix>
+                                <mat-option [value]="'mlie'">กิโลเมตร</mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                 </div>
