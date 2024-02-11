@@ -169,6 +169,10 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     submit() {
-       alert(this.dataForm.value.license);
+        this._service
+            .getById(this.dataForm.value.license)
+            .subscribe((resp: any) => {
+              alert(resp);
+            });
     }
 }
