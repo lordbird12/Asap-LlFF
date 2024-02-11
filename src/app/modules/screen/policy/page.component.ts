@@ -160,7 +160,7 @@ export class PageComponent implements OnInit, OnDestroy {
      * @param panel
      */
     goToPanel(): void {
-        this._router.navigate(['screens/position/list']);
+        this._router.navigate(['screens/reg-license-plate/list']);
         // if (this.selectedPanel == '' || this.selectedPanel == 'policy') {
         //     this.selectedPanel = 'license';
         // } else if (this.selectedPanel == 'license') {

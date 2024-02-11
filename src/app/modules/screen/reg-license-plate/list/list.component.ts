@@ -65,6 +65,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     // public dataRow: any[];
     dataRow: any[] = [];
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    private _fuseConfirmationService: any;
     constructor(
         private dialog: MatDialog,
         private _changeDetectorRef: ChangeDetectorRef,
@@ -168,6 +169,42 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     submit(){
-        alert(this.dataForm.value.license);
+        this._service.getById(this.dataForm.value.license).subscribe((resp: any) => {
+            // this.item = resp.data;
+            if (resp.data) {
+                const obj = {
+                    data: resp.data,
+                };
+
+                localStorage.setItem('data', JSON.stringify(obj));
+                // setCookie('data', JSON.stringify(obj))
+                this._changeDetectorRef.markForCheck();
+                this._router.navigate(['screens/reg-kg/list']);
+            } else {
+                this._fuseConfirmationService.open({
+                    title: 'เกิดข้อผิดพลาด',
+                    message: 'ไม่พบข้อมูลรถในระบบ กรุณาตรวจสอบข้อมูล',
+                    icon: {
+                        show: true,
+                        name: 'heroicons_outline:exclamation',
+                        color: 'warning',
+                    },
+                    actions: {
+                        confirm: {
+                            show: false,
+                            label: 'ตกลง',
+                            color: 'primary',
+                        },
+                        cancel: {
+                            show: false,
+                            label: 'ยกเลิก',
+                        },
+                    },
+                    dismissible: true,
+                });
+            }
+
+        });
     }
+    
 }

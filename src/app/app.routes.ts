@@ -36,9 +36,14 @@ export const appRoutes: Route[] = [
                     import('app/modules/screen/policy/page.routes'),
             },
             {
-                path: 'position',
+                path: 'reg-kg',
                 loadChildren: () =>
-                    import('app/modules/screen/position/page.routes'),
+                    import('app/modules/screen/reg-kg/page.routes'),
+            },
+            {
+                path: 'reg-license-plate',
+                loadChildren: () =>
+                    import('app/modules/screen/reg-license-plate/page.routes'),
             },
             {
                 path: 'register',
