@@ -169,6 +169,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     submit() {
-        this._router.navigate(['screens/reg-kg/list']);
+       alert(this.dataForm.value.license);
     }
 }
