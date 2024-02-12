@@ -170,7 +170,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     submit() {
         this._service
-            .getById("2กล-5443")
+            .getById(this.dataForm.value.license)
             .subscribe((resp: any) => {
                 try {
                     // this.item = resp.data;
@@ -179,9 +179,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                             data: resp.data,
                         };
 
-                        // localStorage.setItem('data', JSON.stringify(obj));
+                        localStorage.setItem('data', JSON.stringify(obj));
                         // setCookie('data', JSON.stringify(obj))
-                        // this._changeDetectorRef.markForCheck();
+                        this._changeDetectorRef.markForCheck();
                         this._router.navigate(['screens/reg-kg/list']);
                     } else {
                         this._fuseConfirmationService.open({

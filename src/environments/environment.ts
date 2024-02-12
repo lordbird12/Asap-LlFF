@@ -4,7 +4,8 @@
 
 export const environment = {
     production: false,
-    API_URL: 'https://pro-account.dev-asha.com/',
+    baseURL: "http://localhost:9080/asap-api/public",
+    // baseURL: 'https://asha-tech.co.th/asap/public',
 };
 
 /*
