@@ -13,7 +13,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { Subject, takeUntil } from 'rxjs';
-import { PolicyComponent } from './policy/page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -48,7 +47,6 @@ import { MatSelectModule } from '@angular/material/select';
         NgClass,
         NgSwitch,
         NgSwitchCase,
-        PolicyComponent,
         MatOptionModule,
         MatFormFieldModule,
         MatInputModule,

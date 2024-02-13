@@ -46,15 +46,12 @@ export class PageService {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    create(license: any, mile: any): Observable<any> {
+    create(data: FormData): Observable<any> {
         return this._httpClient
-            .post(environment.baseURL + '/api/register', {
-                license: license,
-                mile: mile,
-            })
+            .post<any>(environment.baseURL + '/api/permission', data)
             .pipe(
-                switchMap((response: any) => {
-                    return of(response.data);
+                tap((result) => {
+                    this._data.next(result);
                 })
             );
     }
@@ -84,9 +81,9 @@ export class PageService {
         );
     }
 
-    getPosition(): Observable<any> {
+    getServices(): Observable<any> {
         return this._httpClient
-            .get<any>(environment.baseURL + '/api/positions')
+            .get<any>(environment.baseURL + '/api/get_services')
             .pipe(
                 tap((result) => {
                     this._data.next(result);
@@ -123,6 +120,16 @@ export class PageService {
             .pipe(
                 switchMap((response: any) => {
                     return of(response.data);
+                })
+            );
+    }
+
+    getById(id: any): Observable<any> {
+        return this._httpClient
+            .get<any>(environment.baseURL + '/api/get_car_by_license_plate/' + id)
+            .pipe(
+                tap((result) => {
+                    this._data.next(result);
                 })
             );
     }

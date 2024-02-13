@@ -27,10 +27,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { FormDialogComponent } from '../form-dialog/form-dialog.component';
 import { PageService } from '../page.service';
-import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { Router } from '@angular/router';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'list',
@@ -70,61 +69,24 @@ export class ListComponent implements OnInit, AfterViewInit {
         private _changeDetectorRef: ChangeDetectorRef,
         private _service: PageService,
         private _router: Router,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private _fuseConfirmationService: FuseConfirmationService,
     ) {}
 
     ngOnInit() {
         this.dataForm = this._formBuilder.group({
-            mlie: [
+            mile: [
                 null,
                 [Validators.required, Validators.pattern('[0-9 ]{11}')],
             ],
         });
 
         this.item = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).data : [];
-        console.log(this.item);
+        // console.log(this.item);
     }
 
     ngAfterViewInit(): void {
         this._changeDetectorRef.detectChanges();
-    }
-    hiddenEdit() {
-        const getpermission = JSON.parse(localStorage.getItem('permission'));
-        const menu = getpermission.find((e) => e.menu_id === 4);
-        return menu.edit === 0;
-    }
-    hiddenDelete() {
-        const getpermission = JSON.parse(localStorage.getItem('permission'));
-        const menu = getpermission.find((e) => e.menu_id === 4);
-        return menu.delete === 0;
-    }
-    hiddenSave() {
-        const getpermission = JSON.parse(localStorage.getItem('permission'));
-        const menu = getpermission.find((e) => e.menu_id === 4);
-        return menu.save === 0;
-    }
-
-    // เพิ่มเมธอด editElement(element) และ deleteElement(element)
-    editElement(element: any) {
-        const dialogRef = this.dialog.open(EditDialogComponent, {
-            width: '500px', // กำหนดความกว้างของ Dialog
-            data: {
-                data: element,
-            }, // ส่งข้อมูลเริ่มต้นไปยัง Dialog
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-                // เมื่อ Dialog ถูกปิด ดำเนินการตามผลลัพธ์ที่คุณได้รับจาก Dialog
-            }
-        });
-    }
-    addElement() {
-        this._router.navigate(['admin/permission/form']);
-    }
-
-    deleteElement() {
-        // เขียนโค้ดสำหรับการลบออกองคุณ
     }
 
     onChange(event: any) {
@@ -139,13 +101,73 @@ export class ListComponent implements OnInit, AfterViewInit {
             .toUpperCase();
 
         const obj = {
-            mlie: this.dataForm.value.mlie,
+            mile: this.dataForm.value.mile,
         };
 
         // setCookie('mlie', JSON.stringify(obj));
     }
 
     submit() {
-        alert(this.dataForm.value.license);
+        // const confirmation = this._fuseConfirmationService.open({
+        //     title: 'เพิ่มข้อมูล',
+        //     message: 'คุณต้องการเพิ่มข้อมูลใช่หรือไม่ ?',
+        //     icon: {
+        //         show: false,
+        //         name: 'heroicons_outline:exclamation',
+        //         color: 'warning',
+        //     },
+        //     actions: {
+        //         confirm: {
+        //             show: true,
+        //             label: 'ตกลง',
+        //             color: 'primary',
+        //         },
+        //         cancel: {
+        //             show: true,
+        //             label: 'ยกเลิก',
+        //             color: 'primary',
+        //         },
+        //     },
+        //     dismissible: true,
+        // });
+
+        // // Subscribe to the confirmation dialog closed action
+        // confirmation.afterClosed().subscribe((result) => {
+        //     // If the confirm button pressed...
+        //     if (result === 'confirmed') {
+          
+
+                this._service.create(this.item.license, this.dataForm.value.mile).subscribe({
+                    next: (resp: any) => {
+                        this._router.navigate(['screens/services/'+this.item.id]);
+                    },
+
+                    error: (err: any) => {
+                        this._fuseConfirmationService.open({
+                            title: 'เกิดข้อผิดพลาด',
+                            message: err.error.message,
+                            icon: {
+                                show: true,
+                                name: 'heroicons_outline:exclamation',
+                                color: 'warning',
+                            },
+                            actions: {
+                                confirm: {
+                                    show: true,
+                                    label: 'ปิด',
+                                    color: 'primary',
+                                },
+                                cancel: {
+                                    show: false,
+                                    label: 'ยกเลิก',
+                                },
+                            },
+                            dismissible: true,
+                        });
+                        console.log(err.error.message);
+                    },
+                });
+        //     }
+        // });
     }
 }

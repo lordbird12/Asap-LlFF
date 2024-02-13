@@ -56,7 +56,7 @@ export const appRoutes: Route[] = [
                     import('app/modules/screen/register-kg/page.routes'),
             },
             {
-                path: 'services/:id',
+                path: 'services',
                 loadChildren: () =>
                     import('app/modules/screen/services/page.routes'),
             },

@@ -1,8 +1,10 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import {
-    ChangeDetectionStrategy,
+    AfterViewInit,
+    ChangeDetectorRef,
     Component,
     OnInit,
+    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -22,15 +24,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {NgStepperModule} from 'angular-ng-stepper';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { NgStepperModule } from 'angular-ng-stepper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { PageService } from '../page.service';
+import { CommonModule, NgClass } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'step-main',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -46,16 +50,24 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         MatSelectModule,
         MatOptionModule,
         MatButtonModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        CommonModule,
+        NgClass
     ],
 })
 export class ServicesMainComponent implements OnInit {
     addForm: UntypedFormGroup;
+    items:any[] = [];
 
     /**
      * Constructor
      */
-    constructor(private _formBuilder: UntypedFormBuilder) {}
+    constructor(
+        private _formBuilder: FormBuilder,
+        private _service: PageService,
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _router: Router,
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -65,19 +77,19 @@ export class ServicesMainComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // Create the form
-        this.addForm = this._formBuilder.group({
-            name: ['Brian Hughes'],
-            username: ['brianh'],
-            title: ['Senior Frontend Developer'],
-            company: ['YXZ Software'],
-            about: [
-                "Hey! This is Brian; husband, father and gamer. I'm mostly passionate about bleeding edge tech and chocolate! 🍫",
-            ],
-            email: ['hughes.brian@mail.com', Validators.email],
-            phone: ['121-490-33-12'],
-            country: ['usa'],
-            language: ['english'],
-        });
+        this._service
+            .getServices()
+            .subscribe((resp: any) => {
+                try {
+                    this.items = resp.data;
+                    this._changeDetectorRef.markForCheck();
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+    }
+
+    submit() {
+        this._router.navigate(['screens/services/step-two']);
     }
 }

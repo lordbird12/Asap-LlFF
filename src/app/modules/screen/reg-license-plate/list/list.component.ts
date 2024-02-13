@@ -27,9 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { FormDialogComponent } from '../form-dialog/form-dialog.component';
 import { PageService } from '../page.service';
-import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 
@@ -62,7 +60,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     disableBtn: boolean = true;
     licensePlate: string = '';
     isLoading: boolean = false;
-    positions: any[];
+    disableError: boolean = false;
     // public dataRow: any[];
     dataRow: any[] = [];
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -87,44 +85,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         this._changeDetectorRef.detectChanges();
     }
-    hiddenEdit() {
-        const getpermission = JSON.parse(localStorage.getItem('permission'));
-        const menu = getpermission.find((e) => e.menu_id === 4);
-        return menu.edit === 0;
-    }
-    hiddenDelete() {
-        const getpermission = JSON.parse(localStorage.getItem('permission'));
-        const menu = getpermission.find((e) => e.menu_id === 4);
-        return menu.delete === 0;
-    }
-    hiddenSave() {
-        const getpermission = JSON.parse(localStorage.getItem('permission'));
-        const menu = getpermission.find((e) => e.menu_id === 4);
-        return menu.save === 0;
-    }
 
-    // เพิ่มเมธอด editElement(element) และ deleteElement(element)
-    editElement(element: any) {
-        const dialogRef = this.dialog.open(EditDialogComponent, {
-            width: '500px', // กำหนดความกว้างของ Dialog
-            data: {
-                data: element,
-            }, // ส่งข้อมูลเริ่มต้นไปยัง Dialog
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-                // เมื่อ Dialog ถูกปิด ดำเนินการตามผลลัพธ์ที่คุณได้รับจาก Dialog
-            }
-        });
-    }
-    addElement() {
-        this._router.navigate(['admin/permission/form']);
-    }
-
-    deleteElement() {
-        // เขียนโค้ดสำหรับการลบออกองคุณ
-    }
 
     onChange(event: any) {
         if (event.target.value) {
@@ -149,10 +110,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             license: this.dataForm.value.license,
         };
 
-        // sessionStorage.setItem('license', JSON.stringify(obj));
-
-        // document.cookie = "license=" + JSON.stringify(obj);
-        // setCookie('license',JSON.stringify(obj));
+        this.disableError = false;
+        this._changeDetectorRef.markForCheck();
     }
 
     formatLicensePlate(): void {
@@ -180,34 +139,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                         };
 
                         localStorage.setItem('data', JSON.stringify(obj));
-                        // setCookie('data', JSON.stringify(obj))
-                        this._changeDetectorRef.markForCheck();
                         this._router.navigate(['screens/reg-kg/list']);
                     } else {
-                        this._fuseConfirmationService.open({
-                            title: 'เกิดข้อผิดพลาด',
-                            message: 'ไม่พบข้อมูลรถในระบบ กรุณาตรวจสอบข้อมูล',
-                            icon: {
-                                show: true,
-                                name: 'heroicons_outline:exclamation',
-                                color: 'warning',
-                            },
-                            actions: {
-                                confirm: {
-                                    show: false,
-                                    label: 'ตกลง',
-                                    color: 'primary',
-                                },
-                                cancel: {
-                                    show: false,
-                                    label: 'ยกเลิก',
-                                },
-                            },
-                            dismissible: true,
-                        });
+                        this.disableError = true;
                     }
+                    this._changeDetectorRef.markForCheck();
                 } catch (error) {
-                   alert(error);
+                   console.log(error);
                 }
             });
     }
