@@ -139,7 +139,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                 this._service.create(this.item.license, this.dataForm.value.mile).subscribe({
                     next: (resp: any) => {
-                        this._router.navigate(['screens/services/'+this.item.id]);
+                        this._router.navigate(['screens/services/main']);
                     },
 
                     error: (err: any) => {

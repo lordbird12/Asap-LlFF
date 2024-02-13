@@ -13,7 +13,7 @@ import { LayoutCalendarComponent } from './layout-calendar/layout-calendar.compo
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
     // Redirect empty path to '/dashboards/project'
-    { path: '', pathMatch: 'full', redirectTo: 'screens/policy' },
+    { path: '', pathMatch: 'full', redirectTo: 'screens/authen' },
 
     // Redirect signed-in user to the '/dashboards/project'
     //
@@ -30,6 +30,11 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver,
         },
         children: [
+            {
+                path: 'authen',
+                loadChildren: () =>
+                    import('app/modules/screen/login-line/page.routes'),
+            },
             {
                 path: 'policy',
                 loadChildren: () =>
