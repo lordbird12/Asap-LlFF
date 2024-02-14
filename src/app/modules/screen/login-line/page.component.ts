@@ -132,7 +132,7 @@ export class PageComponent implements OnInit, OnDestroy {
         liff.getProfile()
             .then((profile) => {
                 localStorage.setItem('profile', JSON.stringify(profile));
-                this._router.navigate(['screens/services/policy']);
+                this._router.navigate(['screens/policy']);
             })
             .catch((err) => console.error(err));
     }
