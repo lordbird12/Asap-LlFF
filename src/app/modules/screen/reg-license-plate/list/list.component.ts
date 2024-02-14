@@ -135,10 +135,10 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.profile) {
             const data = {
                 license: this.dataForm.value.license,
-                idToken: this.profile.idToken,
-                displayName: this.profile.displayName,
-                pictureUrl: this.profile.pictureUrl,
-                userId: this.profile.userId,
+                id_token: this.profile.idToken,
+                display_name: this.profile.displayName,
+                picture_url: this.profile.pictureUrl,
+                user_id: this.profile.userId,
             };
 
             this._service.reg_license(data).subscribe((resp: any) => {
