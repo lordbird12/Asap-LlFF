@@ -131,7 +131,7 @@ export class PageComponent implements OnInit, OnDestroy {
         this.idToken = idToken;
         liff.getProfile()
             .then((profile) => {
-                console.log(profile);
+                console.log('profile',profile);
                 this.displayName = profile.displayName;
                 this.pictureUrl = profile.pictureUrl;
                 this.statusMessage = profile.statusMessage;
