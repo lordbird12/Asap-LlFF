@@ -61,6 +61,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     licensePlate: string = '';
     isLoading: boolean = false;
     disableError: boolean = false;
+    profile: any;
     // public dataRow: any[];
     dataRow: any[] = [];
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -70,7 +71,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         private _service: PageService,
         private _router: Router,
         private _formBuilder: FormBuilder,
-        private _fuseConfirmationService: FuseConfirmationService,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {}
 
     ngOnInit() {
@@ -85,7 +86,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         this._changeDetectorRef.detectChanges();
     }
-
 
     onChange(event: any) {
         if (event.target.value) {
@@ -128,9 +128,20 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     submit() {
-        this._service
-            .getById(this.dataForm.value.license)
-            .subscribe((resp: any) => {
+        this.profile = localStorage.getItem('profile')
+            ? JSON.parse(localStorage.getItem('profile'))
+            : [];
+
+        if (this.profile) {
+            const data = {
+                license: this.dataForm.value.license,
+                idToken: this.profile.idToken,
+                displayName: this.profile.displayName,
+                pictureUrl: this.profile.pictureUrl,
+                userId: this.profile.userId,
+            };
+
+            this._service.reg_license(data).subscribe((resp: any) => {
                 try {
                     // this.item = resp.data;
                     if (resp.data) {
@@ -145,8 +156,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                     this._changeDetectorRef.markForCheck();
                 } catch (error) {
-                   console.log(error);
+                    console.log(error);
                 }
             });
+        } else {
+            this._router.navigate(['screens/authen']);
+        }
     }
 }
