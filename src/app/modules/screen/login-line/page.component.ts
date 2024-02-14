@@ -136,6 +136,7 @@ export class PageComponent implements OnInit, OnDestroy {
                 this.pictureUrl = profile.pictureUrl;
                 this.statusMessage = profile.statusMessage;
                 this.userId = profile.userId;
+                this._changeDetectorRef.markForCheck();
             })
             .catch((err) => console.error(err));
     }
