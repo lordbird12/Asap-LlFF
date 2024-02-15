@@ -57,7 +57,7 @@
                             "src/styles/styles.scss",
                             "src/styles/tailwind.scss"
                         ],
-
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {
@@ -120,9 +120,7 @@
                         "styles": [
                             "src/styles/styles.scss"
                         ],
-                        "scripts": [
-                            "https://api.longdo.com/map/?key=ca1a48a17e613c75c68d82fe7f71893b"
-                        ]
+                        "scripts": ["https://api.longdo.com/map/?key=ca1a48a17e613c75c68d82fe7f71893b"]
                     }
                 }
             }
