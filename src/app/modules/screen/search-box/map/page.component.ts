@@ -52,7 +52,7 @@ import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
     NgxStarsModule
   ],
 })
-export class StarsComponent implements OnInit, OnDestroy {
+export class MapComponent implements OnInit, OnDestroy {
   @ViewChild(NgxStarsComponent)
   starsComponent: NgxStarsComponent;
   @ViewChild('drawer') drawer: MatDrawer;
@@ -69,7 +69,7 @@ export class StarsComponent implements OnInit, OnDestroy {
    * Constructor
    */
   constructor(
-    private _bottomSheetRef: MatBottomSheetRef<StarsComponent>,
+    private _bottomSheetRef: MatBottomSheetRef<MapComponent>,
     private _changeDetectorRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private _fuseMediaWatcherService: FuseMediaWatcherService,

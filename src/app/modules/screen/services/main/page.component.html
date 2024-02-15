@@ -1,10 +1,10 @@
 <div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden">
-    <div class="flex-auto px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12">
+    <div class="flex-auto px-6 pt-9 pb-5 md:p-8 md:pb-5 lg:p-12">
         <div class="mt-3">
             <!-- Form -->
-            <form [formGroup]="addForm">
 
-                <!-- <ng-stepper #cdkStepper [linear]="true">
+
+            <!-- <ng-stepper #cdkStepper [linear]="true">
 
             <cdk-step [optional]="false">
                 <ng-template cdkStepLabel>
@@ -39,82 +39,101 @@
             </cdk-step>
 
         </ng-stepper> -->
-                <!-- <mat-progress-bar mode="determinate" value="25"></mat-progress-bar> -->
-                <!-- Section -->
-                <div class="w-full px-4 mb-2">
-                    <mat-progress-bar mode="determinate" value="25"></mat-progress-bar>
-                    <div class="step-title">ขั้นตอนที่ 1/4</div>
-                </div>
-                <div class="bg-card rounded-lg m-2">
-                    <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <!-- <mat-progress-bar mode="determinate" value="25"></mat-progress-bar> -->
+            <!-- Section -->
+            <div class="w-full px-4 mb-2">
+                <mat-progress-bar mode="determinate" value="25"></mat-progress-bar>
+                <div class="step-title">ขั้นตอนที่ 1/4</div>
+            </div>
+            <div class="bg-card rounded-lg m-2">
+                <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
 
-                        <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-12">
-                            <!-- Avatar and name -->
-                            <div class="flex flex-auto items-center min-w-0">
-                                <div class="flex-0 w-26 h-auto overflow-hidden">
-                                    <img class="w-full h-full object-cover" src="assets/images/honda.png">
+                    <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-12">
+                        <!-- Avatar and name -->
+                        <div class="flex flex-auto items-center min-w-0">
+                            <div class="flex-0 w-26 h-auto overflow-hidden">
+                                <img class="w-full h-full object-cover" src="assets/images/honda.png">
+                            </div>
+                            <div class="flex flex-col min-w-0 ml-4 justify-between">
+                                <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                                    {{item ? item.license : "-"}} &nbsp;&nbsp;
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'"></mat-icon>
+
                                 </div>
-                                <div class="flex flex-col min-w-0 ml-4 justify-between">
-                                    <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
-                                        6กท-6789 &nbsp;&nbsp;
-                                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'"></mat-icon>
-
+                                <div class="flex items-center">
+                                    <div class="ml-1.5 leading-6 truncate text-secondary">
+                                        {{item ? item.brand_model.name : "-"}} • {{item ? item.color : "-"}}
                                     </div>
-                                    <div class="flex items-center">
-                                        <div class="ml-1.5 leading-6 truncate text-secondary">
-                                            Honda Accord • Silver
-                                        </div>
-                                    </div>
-                                    <!-- <div class="flex items-end">
+                                </div>
+                                <!-- <div class="flex items-end">
                                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:bell'"></mat-icon>
                             </div> -->
 
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Section -->
-                <div class="w-full px-5 py-5">
-                    <div class="text-xl">ต้องการรับบริการ/แจ้งซ่อมเรื่องใด?</div>
-                    <div class="text-secondary">เลือกได้มากกว่า 1 รายการ</div>
-                </div>
+            <!-- Section -->
+            <div class="w-full px-5 py-5">
+                <div class="text-xl">ต้องการรับบริการ/แจ้งซ่อมเรื่องใด?</div>
+                <div class="text-secondary">เลือกได้มากกว่า 1 รายการ</div>
+            </div>
 
-                <div class="grid grid-cols-2 grid-flow-row ng-star-inserted">
-                    <ng-container *ngFor="let item of items">
-                        <div class="hover:border-4 hover:border-rose-600 relative group flex m-2 rounded-lg flex-col overflow-hidden bg-card border-r border-b even:border-r-0 ng-star-inserted">
-                            <!---->
-                            <!---->
-                            <div class="flex justify-end">
-                                <div class="ml-2 -mt-2 -mr-3 pr-5 pt-4">
-                                    <mat-icon class="icon-size-5 text-red-500" [svgIcon]="'mat_solid:check_circle'"></mat-icon>
+            <div class="grid grid-cols-2 grid-flow-row ng-star-inserted">
+                <ng-container *ngFor="let item of items_check; let  i = index">
+                    <div [ngClass]="{
+                        'border-4 border-rose-600':item.check === true,
+                      }" class="relative pointer group flex m-2 rounded-lg flex-col overflow-hidden bg-card ng-star-inserted" (click)="addService(i)">
+                        <!---->
+                        <!---->
+                        <div class="flex justify-end">
+                            <div class="ml-2 -mt-2 -mr-3 pr-5 pt-4">
+                                <mat-icon [ngClass]="{
+                                    'invisible':item.check === false,
+                                  }" class="icon-size-5 text-red-500" [svgIcon]="'mat_solid:check_circle'"></mat-icon>
 
-                                </div>
                             </div>
-                            <div class="flex flex-col items-center justify-center w-full h-full no-underline ng-star-inserted">
-                                <div class="relative flex shrink-0 items-center justify-center w-12 h-12 mb-3 rounded-full bg-gray-100 dark:bg-gray-700 ng-star-inserted">
-                                    <!---->
-                                    <img class="w-full h-full object-cover" [src]="item.image">
-                                </div>
-                                <div class="font-medium text-center ng-star-inserted">{{item.name}}</div>
+                        </div>
+                        <div class="flex flex-col mb-2 items-center justify-center w-full h-full no-underline ng-star-inserted">
+                            <div class="relative flex shrink-0 items-center justify-center w-12 h-12 mb-3 rounded-full bg-gray-100 dark:bg-gray-700 ng-star-inserted">
                                 <!---->
+                                <img class="w-full h-full object-cover" [src]="item.image">
                             </div>
-                            <!---->
+                            <div class="font-medium text-center ng-star-inserted">{{item.name}}</div>
                             <!---->
                         </div>
-                    </ng-container>
+                        <!---->
+                        <!---->
+                    </div>
+                </ng-container>
 
-                </div>
+            </div>
 
-            </form>
+
         </div>
 
     </div>
-    <div class="bottom-0 px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12">
+    <div class="bottom-0 px-6 pt-9 pb-5 md:p-8 md:pb-12 lg:p-12">
+        <div *ngIf="service_input" class="flex items-end p-4 dark:bg-transparent">
+            <mat-form-field class="fuse-mat-dense fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
+                <textarea class="textarea" matInput [placeholder]="'ระบุสาเหตุที่ต้องการแจ้งซ่อม'" [rows]="4"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="flex px-5" *ngIf="service_remark">
+            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:exclamation-circle'"></mat-icon>
+            <div class="ml-1.5 leading-6">{{service_remark}}</div>
+        </div>
 
-        <div class="relative items-center justify-start w-full h-14 py-5 z-49">
+        <div *ngIf="activeBtn" class="relative items-center justify-start w-full h-14 py-5 z-49">
             <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" (click)="submit()" mat-flat-button [color]="'primary'">
+                ถัดไป
+            </button>
+        </div>
+
+        <div *ngIf="!activeBtn" class="relative items-center justify-start w-full h-14 py-5 z-49">
+            <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'warn'">
                 ถัดไป
             </button>
         </div>

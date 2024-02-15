@@ -1,8 +1,10 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import {
-    ChangeDetectionStrategy,
+    AfterViewInit,
+    ChangeDetectorRef,
     Component,
     OnInit,
+    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -25,18 +27,21 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgStepperModule } from 'angular-ng-stepper';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { PageService } from '../page.service';
+import { CommonModule, NgClass } from '@angular/common';
+import { Router } from '@angular/router';
 import {
     MatBottomSheet,
     MatBottomSheetModule,
     MatBottomSheetRef,
-  } from '@angular/material/bottom-sheet';
+} from '@angular/material/bottom-sheet';
 import { MapComponent } from '../map/page.component';
 
 @Component({
-    selector: 'step-two',
+    selector: 'step-main',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -53,23 +58,30 @@ import { MapComponent } from '../map/page.component';
         MatOptionModule,
         MatButtonModule,
         MatProgressBarModule,
+        CommonModule,
+        NgClass,
         MatBottomSheetModule,
     ],
 })
-export class StepTwoComponent implements OnInit {
-    addForm: UntypedFormGroup;
+export class SearchBoxComponent implements OnInit {
+    dataForm: FormGroup;
+    items_check: any[] = [];
+    items: any;
+    service_remark: string;
+    service_input: boolean;
+    activeBtn: any;
+    num: any;
 
     /**
      * Constructor
      */
     constructor(
-        private _formBuilder: UntypedFormBuilder,
+        private _formBuilder: FormBuilder,
+        private _service: PageService,
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _router: Router,
         private _bottomSheet: MatBottomSheet
     ) {}
-
-    openBottomSheet(): void {
-        this._bottomSheet.open(MapComponent);
-      }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -79,20 +91,46 @@ export class StepTwoComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.openBottomSheet();
-        // Create the form
-        this.addForm = this._formBuilder.group({
-            name: ['Brian Hughes'],
-            username: ['brianh'],
-            title: ['Senior Frontend Developer'],
-            company: ['YXZ Software'],
-            about: [
-                "Hey! This is Brian; husband, father and gamer. I'm mostly passionate about bleeding edge tech and chocolate! 🍫",
-            ],
-            email: ['hughes.brian@mail.com', Validators.email],
-            phone: ['121-490-33-12'],
-            country: ['usa'],
-            language: ['english'],
+        this.dataForm = this._formBuilder.group({
+            search: ['', [Validators.required]],
         });
+    }
+
+    submit() {
+        localStorage.setItem('services', JSON.stringify(this.items_check));
+        this._bottomSheet.open(MapComponent);
+    }
+
+    clear() {
+        this.dataForm.patchValue({
+            search: '',
+        });
+        this.items = [];
+        this._changeDetectorRef.markForCheck();
+    }
+
+    selectPoint(index){
+        localStorage.setItem('mylocation', JSON.stringify(this.items[index]));
+
+        this._router.navigate(['screens/services/step-two-map']);
+    }
+
+    onChange(event: any) {
+        console.log(event.target.value);
+
+        const data = {
+            search: event.target.value,
+        };
+
+        this._service.get_loations(data).subscribe((resp: any) => {
+            try {
+                this.items = resp.data;
+                this._changeDetectorRef.markForCheck();
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        this._changeDetectorRef.markForCheck();
     }
 }

@@ -7,6 +7,7 @@ import { LayoutMainComponent } from 'app/layout-main/layout-main.component';
 import { Layout2Component } from './layout2/layout.component';
 import { LayoutBookingComponent } from './layout-booking/layout.component';
 import { LayoutCalendarComponent } from './layout-calendar/layout-calendar.component';
+import { LayoutSearchComponent } from './layout-search/layout.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -65,7 +66,6 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/screen/services/page.routes'),
             },
-
         ],
     },
     {
@@ -122,6 +122,24 @@ export const appRoutes: Route[] = [
                 path: 'next',
                 loadChildren: () =>
                     import('app/modules/screen/next/page.routes'),
+            },
+        ],
+    },
+
+    {
+        path: 'screens',
+        // canActivate: [AuthGuard],
+        // canActivateChild: [AuthGuard],
+        component: LayoutSearchComponent,
+        resolve: {
+            initialData: initialDataResolver,
+        },
+        children: [
+
+            {
+                path: 'search',
+                loadChildren: () =>
+                    import('app/modules/screen/search-box/page.routes'),
             },
         ],
     },

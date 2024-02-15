@@ -29,11 +29,12 @@ import {
     MatBottomSheet,
     MatBottomSheetModule,
     MatBottomSheetRef,
-  } from '@angular/material/bottom-sheet';
+} from '@angular/material/bottom-sheet';
 import { MapComponent } from '../map/page.component';
+declare const longdo: any; // Assuming longdo is a global variable or imported separately
 
 @Component({
-    selector: 'step-two',
+    selector: 'step-two-map',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -56,9 +57,10 @@ import { MapComponent } from '../map/page.component';
         MatBottomSheetModule,
     ],
 })
-export class StepTwoComponent implements OnInit {
-    addForm: UntypedFormGroup;
-
+export class StepTwoMapComponent implements OnInit {
+    dataForm: FormGroup;
+    map: any; // Assuming you have a reference to the map object
+    item: any;
     /**
      * Constructor
      */
@@ -69,7 +71,7 @@ export class StepTwoComponent implements OnInit {
 
     openBottomSheet(): void {
         this._bottomSheet.open(MapComponent);
-      }
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -79,20 +81,36 @@ export class StepTwoComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.openBottomSheet();
-        // Create the form
-        this.addForm = this._formBuilder.group({
-            name: ['Brian Hughes'],
-            username: ['brianh'],
-            title: ['Senior Frontend Developer'],
-            company: ['YXZ Software'],
-            about: [
-                "Hey! This is Brian; husband, father and gamer. I'm mostly passionate about bleeding edge tech and chocolate! 🍫",
-            ],
-            email: ['hughes.brian@mail.com', Validators.email],
-            phone: ['121-490-33-12'],
-            country: ['usa'],
-            language: ['english'],
-        });
+        this.item = localStorage.getItem('mylocation')
+            ? JSON.parse(localStorage.getItem('mylocation'))
+            : [];
+
+        if (this.item) {
+            // Initialize the map
+            this.map = new longdo.Map({
+                placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
+                zoom: 14,
+                // other map options
+            });
+
+            // Add a marker to the map
+            // const marker = new longdo.Marker({
+            //     lon: this.item.lat,
+            //     lat: this.item.lon,
+            // });
+
+            var marker = new longdo.Marker(
+                { lon: this.item.lon, lat: this.item.lat },
+                {
+                    title: 'Marker',
+                    icon: {
+                        url: 'https://asha-tech.co.th/pin.png',
+                    },
+
+                }
+            );
+
+            this.map.Overlays.add(marker);
+        }
     }
 }
