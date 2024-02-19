@@ -62,7 +62,7 @@
 
                 <!-- Section -->
                 <div class="flex items-center justify-center">
-                    <img class="w-50 h-auto items-center justify-center" src="assets/images/honda.png" alt="Cover image">
+                    <img class="w-50 h-auto items-center justify-center" [src]="item?.image" alt="Cover image">
                 </div>
                 <div class="w-full mt-15">
                     <div class="text-xl">{{item ? item.license : "-"}}</div>

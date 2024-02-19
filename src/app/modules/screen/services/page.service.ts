@@ -14,6 +14,7 @@ import {
     map,
     Observable,
     of,
+    Subject,
     switchMap,
     take,
     tap,
@@ -28,6 +29,7 @@ const token = localStorage.getItem('accessToken') || null;
 export class PageService {
     // Private
     private _data: BehaviorSubject<any | null> = new BehaviorSubject(null);
+    private positionSubject = new Subject<any>();
 
     /**
      * Constructor
@@ -126,7 +128,40 @@ export class PageService {
 
     getById(id: any): Observable<any> {
         return this._httpClient
-            .get<any>(environment.baseURL + '/api/get_car_by_license_plate/' + id)
+            .get<any>(
+                environment.baseURL + '/api/get_car_by_license_plate/' + id
+            )
+            .pipe(
+                tap((result) => {
+                    this._data.next(result);
+                })
+            );
+    }
+
+    getPosition(): Observable<any> {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => this.positionSubject.next(position),
+                (error) => this.positionSubject.error(error)
+            );
+        } else {
+            this.positionSubject.error(
+                'Geolocation is not supported by this browser.'
+            );
+        }
+
+        return this.positionSubject.asObservable();
+    }
+
+    get_loations(data: any): Observable<any> {
+        return this._httpClient
+            .get<any>(
+                'https://api.longdo.com/map/services/address?lon=' +
+                    data.lon +
+                    '&lat=' +
+                    data.lat +
+                    '&noelevation=1&key=ca1a48a17e613c75c68d82fe7f71893b'
+            )
             .pipe(
                 tap((result) => {
                     this._data.next(result);

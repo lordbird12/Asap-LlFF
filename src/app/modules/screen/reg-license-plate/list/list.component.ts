@@ -156,6 +156,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                     this._changeDetectorRef.markForCheck();
                 } catch (error) {
+                    this.disableError = true;
                     console.log(error);
                 }
             });

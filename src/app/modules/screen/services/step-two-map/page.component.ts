@@ -100,13 +100,15 @@ export class StepTwoMapComponent implements OnInit {
             // });
 
             var marker = new longdo.Marker(
-                { lon: this.item.lon, lat: this.item.lat },
+                {
+                    lon: this.item.lon ? this.item.lon : this.item.road_lon,
+                    lat: this.item.lat ? this.item.lat : this.item.road_lat,
+                },
                 {
                     title: 'Marker',
                     icon: {
                         url: 'https://asha-tech.co.th/pin.png',
                     },
-
                 }
             );
 
