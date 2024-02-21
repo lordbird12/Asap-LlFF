@@ -38,6 +38,7 @@ declare const longdo: any; // Assuming longdo is a global variable or imported s
 import { FuseCardComponent } from '@fuse/components/card';
 import { Router } from '@angular/router';
 import { PageService } from '../page.service';
+import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
     selector: 'step-two-map',
@@ -62,6 +63,8 @@ import { PageService } from '../page.service';
         MatProgressBarModule,
         MatBottomSheetModule,
         FuseCardComponent,
+        NgClass,
+        CommonModule
     ],
 })
 export class ServiceCenterComponent implements OnInit {
@@ -105,6 +108,7 @@ export class ServiceCenterComponent implements OnInit {
             this._service.get_service_centers(data).subscribe((resp: any) => {
                 try {
                     this.items = resp.data;
+                    console.log(this.items);
                     // if (resp.data) {
                     //     const obj = {
                     //         data: resp.data,
