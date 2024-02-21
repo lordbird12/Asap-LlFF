@@ -22,15 +22,29 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {NgStepperModule} from 'angular-ng-stepper';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { NgStepperModule } from 'angular-ng-stepper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
     selector: 'step-three',
     templateUrl: './page.component.html',
+    styles: [
+        `
+            .mat-calendar-body-selected {
+                background-color: #ff595a !important;
+                color: #ffffff !important;
+            }
+
+            .mat-calendar-header-select {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        `,
+    ],
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -46,12 +60,13 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         MatSelectModule,
         MatOptionModule,
         MatButtonModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatDatepickerModule,
     ],
 })
 export class StepThreeComponent implements OnInit {
     addForm: UntypedFormGroup;
-
+    selected: Date | null;
     /**
      * Constructor
      */

@@ -146,6 +146,7 @@ export class MapComponent implements OnInit, OnDestroy {
                                             'mylocation',
                                             JSON.stringify(resp)
                                         );
+                                        this._bottomSheetRef.dismiss()
 
                                         this._router.navigate([
                                             'screens/services/step-two-map',
