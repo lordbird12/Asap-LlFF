@@ -1,10 +1,12 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import {
-    ChangeDetectionStrategy,
+    AfterViewInit,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     OnInit,
     QueryList,
+    ViewChild,
     ViewChildren,
     ViewEncapsulation,
 } from '@angular/core';
@@ -44,7 +46,6 @@ import { CommonModule, NgClass } from '@angular/common';
     selector: 'step-two-map',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -81,7 +82,8 @@ export class ServiceCenterComponent implements OnInit {
         private _formBuilder: UntypedFormBuilder,
         private _bottomSheet: MatBottomSheet,
         private _service: PageService,
-        private _router: Router
+        private _router: Router,
+        private _changeDetectorRef: ChangeDetectorRef,
     ) {}
 
     openBottomSheet(): void {
@@ -108,7 +110,8 @@ export class ServiceCenterComponent implements OnInit {
             this._service.get_service_centers(data).subscribe((resp: any) => {
                 try {
                     this.items = resp.data;
-                    console.log(this.items);
+                    // console.log("test",this.items);
+                    this._changeDetectorRef.markForCheck();
                     // if (resp.data) {
                     //     const obj = {
                     //         data: resp.data,
