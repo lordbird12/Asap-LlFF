@@ -2,7 +2,10 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import {
     ChangeDetectionStrategy,
     Component,
+    ElementRef,
     OnInit,
+    QueryList,
+    ViewChildren,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -31,8 +34,10 @@ import {
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { MapComponent } from '../map/page.component';
-import { Router } from '@angular/router';
 declare const longdo: any; // Assuming longdo is a global variable or imported separately
+import { FuseCardComponent } from '@fuse/components/card';
+import { Router } from '@angular/router';
+import { PageService } from '../page.service';
 
 @Component({
     selector: 'step-two-map',
@@ -56,11 +61,15 @@ declare const longdo: any; // Assuming longdo is a global variable or imported s
         MatButtonModule,
         MatProgressBarModule,
         MatBottomSheetModule,
+        FuseCardComponent,
     ],
 })
-export class StepTwoMapComponent implements OnInit {
+export class ServiceCenterComponent implements OnInit {
+    @ViewChildren(FuseCardComponent, { read: ElementRef })
+    private _fuseCards: QueryList<ElementRef>;
     dataForm: FormGroup;
     map: any; // Assuming you have a reference to the map object
+    items: any;
     item: any;
     /**
      * Constructor
@@ -68,7 +77,8 @@ export class StepTwoMapComponent implements OnInit {
     constructor(
         private _formBuilder: UntypedFormBuilder,
         private _bottomSheet: MatBottomSheet,
-        private _router: Router,
+        private _service: PageService,
+        private _router: Router
     ) {}
 
     openBottomSheet(): void {
@@ -88,37 +98,29 @@ export class StepTwoMapComponent implements OnInit {
             : [];
 
         if (this.item) {
-            // Initialize the map
-            this.map = new longdo.Map({
-                placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
-                zoom: 14,
-                // other map options
-            });
+            const data = {
+                lat: this.item.lat,
+                lon: this.item.lon,
+            };
+            this._service.get_service_centers(data).subscribe((resp: any) => {
+                try {
+                    this.items = resp.data;
+                    // if (resp.data) {
+                    //     const obj = {
+                    //         data: resp.data,
+                    //     };
 
-            // Add a marker to the map
-            // const marker = new longdo.Marker({
-            //     lon: this.item.lat,
-            //     lat: this.item.lon,
-            // });
-
-            var marker = new longdo.Marker(
-                {
-                    lon: this.item.lon ? this.item.lon : this.item.road_lon,
-                    lat: this.item.lat ? this.item.lat : this.item.road_lat,
-                },
-                {
-                    title: 'Marker',
-                    icon: {
-                        url: 'https://asha-tech.co.th/pin.png',
-                    },
+                        // localStorage.setItem('data', JSON.stringify(obj));
+                        // this._router.navigate(['screens/reg-kg/list']);
+                    // } else {
+                    //     // this.disableError = true;
+                    // }
+                    // this._changeDetectorRef.markForCheck();
+                } catch (error) {
+                    // this.disableError = true;
+                    console.log(error);
                 }
-            );
-
-            this.map.Overlays.add(marker);
+            });
         }
-    }
-
-    goToServicesCenter() {
-        this._router.navigate(['screens/services/step-two-service-centers']);
     }
 }

@@ -168,4 +168,17 @@ export class PageService {
                 })
             );
     }
+
+    get_service_centers(data: any): Observable<any> {
+        return this._httpClient
+            .post<any>(
+                environment.baseURL + '/api/get_service_center_by_lat_lng',
+                data
+            )
+            .pipe(
+                tap((result) => {
+                    this._data.next(result);
+                })
+            );
+    }
 }

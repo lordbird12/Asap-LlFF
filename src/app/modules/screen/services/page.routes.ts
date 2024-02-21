@@ -3,6 +3,7 @@ import { PageComponent } from './page.component';
 import { ServicesMainComponent } from './main/page.component';
 import { StepTwoComponent } from './step-two/page.component';
 import { StepTwoMapComponent } from './step-two-map/page.component';
+import { ServiceCenterComponent } from './step-two-service-centers/page.component';
 
 export default [
     // {
@@ -37,6 +38,16 @@ export default [
             {
                 path: 'step-two-map',
                 component: StepTwoMapComponent,
+            },
+        ],
+    },
+    {
+        path: '',
+        component: PageComponent,
+        children: [
+            {
+                path: 'step-two-service-centers',
+                component: ServiceCenterComponent,
             },
         ],
     },
