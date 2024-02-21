@@ -5,6 +5,7 @@ import {
     OnInit,
     ViewEncapsulation,
 } from '@angular/core';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import {
     FormBuilder,
     FormGroup,
@@ -26,6 +27,21 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgStepperModule } from 'angular-ng-stepper';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CustomCalendarHeaderComponent } from './custom-header';
+import moment from 'moment';
+import { Router } from '@angular/router';
+
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'YYYY-MM-DD',
+    },
+    display: {
+        dateInput: 'YYYY-MM-DD',
+        monthYearLabel: 'YYYY-MM-DD',
+        dateA11yLabel: 'YYYY-MM-DD',
+        monthYearA11yLabel: 'YYYY-MM-DD',
+    },
+};
 
 @Component({
     selector: 'step-three',
@@ -34,13 +50,40 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
         `
             .mat-calendar-body-selected {
                 background-color: #ff595a !important;
-                color: #ffffff !important;
+            }
+            .mat-calendar-body-today:not(.mat-calendar-body-selected):not(
+                    .mat-calendar-body-comparison-identical
+                ) {
+                border: unset !important;
+                color: #ff595a !important;
+            }
+            .mat-calendar {
+                background: white;
+                padding: 5px;
+                border-radius: 10px;
+            }
+            .mat-calendar-body-label {
+                visibility: hidden !important;
             }
 
-            .mat-calendar-header-select {
+            .mat-calendar-label {
+                display: none !important;
+            }
+            .example-header {
                 display: flex;
-                justify-content: center;
                 align-items: center;
+                padding: 0.5em;
+            }
+
+            .example-header-label {
+                flex: 1;
+                // height: 1em;
+                font-weight: 500;
+                text-align: center;
+            }
+
+            .example-double-arrow .mat-icon {
+                margin: -22%;
             }
         `,
     ],
@@ -63,14 +106,19 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
         MatProgressBarModule,
         MatDatepickerModule,
     ],
+    providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }],
 })
 export class StepThreeComponent implements OnInit {
     addForm: UntypedFormGroup;
     selected: Date | null;
+    customHeader = CustomCalendarHeaderComponent;
     /**
      * Constructor
      */
-    constructor(private _formBuilder: UntypedFormBuilder) {}
+    constructor(
+        private _formBuilder: UntypedFormBuilder,
+        private _router: Router
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -94,5 +142,10 @@ export class StepThreeComponent implements OnInit {
             country: ['usa'],
             language: ['english'],
         });
+    }
+
+    onSelect(event) {
+        var date = event.c.year + '-' + event.c.month + '-' + event.c.day;
+        this._router.navigate(['screens/services/step-three-time/'+date]);
     }
 }

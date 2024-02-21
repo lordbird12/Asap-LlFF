@@ -5,6 +5,7 @@ import { StepTwoComponent } from './step-two/page.component';
 import { StepTwoMapComponent } from './step-two-map/page.component';
 import { ServiceCenterComponent } from './step-two-service-centers/page.component';
 import { StepThreeComponent } from './step-three/page.component';
+import { StepThreeTimeComponent } from './step-three-time/page.component';
 
 export default [
     // {
@@ -59,6 +60,16 @@ export default [
             {
                 path: 'step-three',
                 component: StepThreeComponent,
+            },
+        ],
+    },
+    {
+        path: '',
+        component: PageComponent,
+        children: [
+            {
+                path: 'step-three-time/:date',
+                component: StepThreeTimeComponent,
             },
         ],
     },

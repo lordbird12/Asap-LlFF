@@ -130,4 +130,10 @@ export class ServiceCenterComponent implements OnInit {
             });
         }
     }
+
+    selectServiceCenter(item){
+        localStorage.setItem('myServiceCenter', JSON.stringify(item));
+
+        this._router.navigate(['screens/services/step-three']);
+    }
 }
