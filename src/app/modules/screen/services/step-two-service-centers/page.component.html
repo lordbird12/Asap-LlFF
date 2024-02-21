@@ -25,7 +25,7 @@
         <div class="flex flex-col divide-y">
 
             <div class="flex flex-wrap items-start w-full max-w-400">
-                <ng-container *ngFor="let item of items;">
+                <ng-container *ngFor="let item of this.items; let i = index">
                     <fuse-card class="flex flex-col max-w-80 w-full p-2 m-2 filter-article">
                         <div class="p-2 sm:p-8 lg:p-10">
                             <div class="text-3xl font-bold">{{item?.name}}</div>
