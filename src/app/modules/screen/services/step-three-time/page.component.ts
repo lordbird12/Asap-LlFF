@@ -29,12 +29,12 @@ import { NgStepperModule } from 'angular-ng-stepper';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PageService } from '../page.service';
 import { CommonModule, NgClass } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
     MatBottomSheet,
     MatBottomSheetModule,
     MatBottomSheetRef,
-  } from '@angular/material/bottom-sheet';
+} from '@angular/material/bottom-sheet';
 import { MapComponent } from '../map/page.component';
 
 @Component({
@@ -59,7 +59,7 @@ import { MapComponent } from '../map/page.component';
         MatProgressBarModule,
         CommonModule,
         NgClass,
-        MatBottomSheetModule
+        MatBottomSheetModule,
     ],
 })
 export class StepThreeTimeComponent implements OnInit {
@@ -71,7 +71,24 @@ export class StepThreeTimeComponent implements OnInit {
     service_input: boolean;
     activeBtn: any;
     num: any;
-
+    date: any;
+    time: any;
+    date_format: any;
+    months: any = [
+        '',
+        'jan',
+        'feb',
+        'mar',
+        'apr',
+        'may',
+        'jun',
+        'jul',
+        'aug',
+        'sep',
+        'oct',
+        'nov',
+        'dec',
+    ];
     /**
      * Constructor
      */
@@ -80,7 +97,8 @@ export class StepThreeTimeComponent implements OnInit {
         private _service: PageService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _bottomSheet: MatBottomSheet
+        private _bottomSheet: MatBottomSheet,
+        private _activatedRoute: ActivatedRoute
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -91,7 +109,12 @@ export class StepThreeTimeComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-       
+        this.date = this._activatedRoute.snapshot.paramMap.get('date');
+
+        if (this.date) {
+            this.date_format = this.date.split('-');
+        }
+
         this.service_input = false;
         this.item = localStorage.getItem('data')
             ? JSON.parse(localStorage.getItem('data')).data
@@ -156,5 +179,18 @@ export class StepThreeTimeComponent implements OnInit {
                 this.activeBtn = true;
             }
         });
+    }
+
+    addTime(time) {
+        this.time = time;
+        const data = {
+            date: this.date,
+            time: time,
+        };
+        localStorage.setItem('sevice_date_time', JSON.stringify(data));
+    }
+
+    editDate() {
+        this._router.navigate(['screens/services/step-three']);
     }
 }

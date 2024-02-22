@@ -22,15 +22,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {NgStepperModule} from 'angular-ng-stepper';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { NgStepperModule } from 'angular-ng-stepper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {
+    MatBottomSheet,
+    MatBottomSheetModule,
+    MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+import { StepFourOtpComponent } from '../step-four-otp/page.component';
 @Component({
     selector: 'step-four',
     templateUrl: './page.component.html',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -46,16 +49,20 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         MatSelectModule,
         MatOptionModule,
         MatButtonModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatBottomSheetModule,
     ],
 })
 export class StepFourComponent implements OnInit {
-    addForm: UntypedFormGroup;
+    dataForm: FormGroup;
 
     /**
      * Constructor
      */
-    constructor(private _formBuilder: UntypedFormBuilder) {}
+    constructor(
+        private _formBuilder: UntypedFormBuilder,
+        private _bottomSheet: MatBottomSheet
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -66,18 +73,13 @@ export class StepFourComponent implements OnInit {
      */
     ngOnInit(): void {
         // Create the form
-        this.addForm = this._formBuilder.group({
-            name: ['Brian Hughes'],
-            username: ['brianh'],
-            title: ['Senior Frontend Developer'],
-            company: ['YXZ Software'],
-            about: [
-                "Hey! This is Brian; husband, father and gamer. I'm mostly passionate about bleeding edge tech and chocolate! 🍫",
-            ],
-            email: ['hughes.brian@mail.com', Validators.email],
-            phone: ['121-490-33-12'],
-            country: ['usa'],
-            language: ['english'],
+        this.dataForm = this._formBuilder.group({
+            name: [null, [Validators.required]],
+            phone: [null, [Validators.required]],
         });
+    }
+
+    openBottomSheet(): void {
+        this._bottomSheet.open(StepFourOtpComponent);
     }
 }

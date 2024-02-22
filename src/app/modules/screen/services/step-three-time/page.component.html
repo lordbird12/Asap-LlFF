@@ -22,12 +22,12 @@
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                 <div class="flex items-center">
                                     <mat-icon class="icon-size-5 text-hint" [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>
-                                    <div class="ml-1.5 text-xl">4 Oct 2024</div>
+                                    <div class="ml-1.5 text-xl">{{date_format[2]}} {{months[date_format[1]]}} {{date_format[0]}}</div>
                                 </div>
                             </div>
 
                             <div class="ml-2 -mr-3">
-                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'"></mat-icon>
+                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil'" (click)="editDate()"></mat-icon>
                             </div>
                         </div>
                     </div>
@@ -47,31 +47,31 @@
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                 <div class="flex items-center">
                                     <mat-icon class="icon-size-5 text-hint" [svgIcon]="'feather:sunrise'"></mat-icon>
-                                    <div class="ml-1.5 text-secondary">ช่วงเช้า</div>
+                                    <div class="ml-1.5 text-sm">ช่วงเช้า</div>
                                 </div>
                             </div>
                         </div>
                         <div class="flex items-start justify-between">
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '08:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '08:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('08:00')">
                                     <span class="text-md font-medium whitespace-nowrap">08:00 am</span>
                                 </div>
                             </div>
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '09:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '09:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('09:00')">
                                     <span class="text-md font-medium whitespace-nowrap">09:00 am</span>
                                 </div>
                             </div>
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '10:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '10:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('10:00')">
                                     <span class="text-md font-medium whitespace-nowrap">10:00 am</span>
                                 </div>
                             </div>
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '11:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '11:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('11:00')">
                                     <span class="text-md font-medium whitespace-nowrap">11:00 am</span>
                                 </div>
                             </div>
@@ -80,32 +80,32 @@
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                 <div class="flex items-center">
                                     <mat-icon class="icon-size-5 text-hint" [svgIcon]="'feather:sun'"></mat-icon>
-                                    <div class="ml-1.5 text-secondary">ช่วงบ่าย</div>
+                                    <div class="ml-1.5 text-sm">ช่วงบ่าย</div>
                                 </div>
                             </div>
                         </div>
                         <div class="flex items-start justify-between">
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                    <span class="text-md font-medium whitespace-nowrap">08:00 am</span>
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '12:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '12:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('12:00')">
+                                    <span class="text-md font-medium whitespace-nowrap">12:00 am</span>
                                 </div>
                             </div>
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                    <span class="text-md font-medium whitespace-nowrap">09:00 am</span>
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '01:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '01:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('01:00')">
+                                    <span class="text-md font-medium whitespace-nowrap">01:00 pm</span>
                                 </div>
                             </div>
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                    <span class="text-md font-medium whitespace-nowrap">10:00 am</span>
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '02:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '02:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('02:00')">
+                                    <span class="text-md font-medium whitespace-nowrap">02:00 pm</span>
                                 </div>
                             </div>
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                    <span class="text-md font-medium whitespace-nowrap">11:00 am</span>
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '03:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '03:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('03:00')">
+                                    <span class="text-md font-medium whitespace-nowrap">03:00 pm</span>
                                 </div>
                             </div>
                         </div>
@@ -113,32 +113,32 @@
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                 <div class="flex items-center">
                                     <mat-icon class="icon-size-5 text-hint" [svgIcon]="'feather:sunset'"></mat-icon>
-                                    <div class="ml-1.5 text-secondary">ช่วงเย็น</div>
+                                    <div class="ml-1.5 text-sm">ช่วงเย็น</div>
                                 </div>
                             </div>
                         </div>
                         <div class="flex items-start justify-between">
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                    <span class="text-md font-medium whitespace-nowrap">08:00 am</span>
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '04:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '04:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('04:00')">
+                                    <span class="text-md font-medium whitespace-nowrap">04:00 pm</span>
                                 </div>
                             </div>
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                    <span class="text-md font-medium whitespace-nowrap">09:00 am</span>
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '05:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '05:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('05:00')">
+                                    <span class="text-md font-medium whitespace-nowrap">05:00 pm</span>
                                 </div>
                             </div>
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                    <span class="text-md font-medium whitespace-nowrap">10:00 am</span>
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '06:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '06:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('06:00')">
+                                    <span class="text-md font-medium whitespace-nowrap">06:00 pm</span>
                                 </div>
                             </div>
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9 text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                    <span class="text-md font-medium whitespace-nowrap">11:00 am</span>
+                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '07:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '07:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('07:00')">
+                                    <span class="text-md font-medium whitespace-nowrap">07:00 pm</span>
                                 </div>
                             </div>
                         </div>
