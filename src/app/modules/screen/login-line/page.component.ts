@@ -114,7 +114,7 @@ export class PageComponent implements OnInit, OnDestroy {
 
     initLine(): void {
         liff.init(
-            { liffId: '2002365478-n7pXx0jW' },
+            { liffId: '2003760286-Mk9gQ2gG' },
             () => {
                 if (liff.isLoggedIn()) {
                     this.runApp();
