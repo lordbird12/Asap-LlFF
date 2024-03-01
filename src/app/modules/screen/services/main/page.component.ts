@@ -127,10 +127,9 @@ export class ServicesMainComponent implements OnInit {
     }
 
     addService(index) {
-     this.service_remark = 0;
+        this.service_remark = 0;
         if (this.items_check[index].check) {
             this.items_check[index].check = false;
-           
 
             if (this.items_check[index].type == 'Input') {
                 this.service_input = false;
@@ -148,14 +147,20 @@ export class ServicesMainComponent implements OnInit {
         this.items_check.forEach((element) => {
             if (element.check == false) {
                 this.num--;
-                if (element.remark) {
-                    this.service_remark = this.service_remark - element.remark;
-                }
+                // if (element.remark) {
+                //     this.service_remark =
+                //         this.service_remark - Number(element.remark);
+                //     if (this.service_remark < 0) {
+                //         this.service_remark = 0;
+                //     }
+                // }
             } else {
                 if (element.remark) {
-                    this.service_remark = this.service_remark + element.remark;
+                    this.service_remark =
+                        this.service_remark + Number(element.remark);
                 }
             }
+  
 
             if (this.num <= 0) {
                 this.activeBtn = false;
