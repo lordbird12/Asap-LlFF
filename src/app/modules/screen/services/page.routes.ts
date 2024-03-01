@@ -7,6 +7,7 @@ import { ServiceCenterComponent } from './step-two-service-centers/page.componen
 import { StepThreeComponent } from './step-three/page.component';
 import { StepThreeTimeComponent } from './step-three-time/page.component';
 import { StepFourComponent } from './step-four/page.component';
+import { StepTwoMapRecommendComponent } from './step-two-map-recommend/page.component';
 
 export default [
     // {
@@ -41,6 +42,16 @@ export default [
             {
                 path: 'step-two-map',
                 component: StepTwoMapComponent,
+            },
+        ],
+    },
+    {
+        path: '',
+        component: PageComponent,
+        children: [
+            {
+                path: 'step-two-map-recommend',
+                component: StepTwoMapRecommendComponent,
             },
         ],
     },

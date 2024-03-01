@@ -181,4 +181,17 @@ export class PageService {
                 })
             );
     }
+
+    get_service_centers_recommend(data: any): Observable<any> {
+        return this._httpClient
+            .post<any>(
+                environment.baseURL + '/api/get_service_center_by_lat_lng_recommend',
+                data
+            )
+            .pipe(
+                tap((result) => {
+                    this._data.next(result);
+                })
+            );
+    }
 }

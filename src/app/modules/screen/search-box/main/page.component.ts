@@ -112,7 +112,7 @@ export class SearchBoxComponent implements OnInit {
     selectPoint(index){
         localStorage.setItem('mylocation', JSON.stringify(this.items[index]));
 
-        this._router.navigate(['screens/services/step-two-map']);
+        this._router.navigate(['screens/services/step-two-map-recommend']);
     }
 
     onChange(event: any) {

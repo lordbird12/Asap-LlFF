@@ -149,7 +149,7 @@ export class MapComponent implements OnInit, OnDestroy {
                                         this._bottomSheetRef.dismiss()
 
                                         this._router.navigate([
-                                            'screens/services/step-two-map',
+                                            'screens/services/step-two-map-recommend',
                                         ]);
                                     }
                                 } catch (error) {

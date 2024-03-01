@@ -36,7 +36,7 @@
                             <!-- Features -->
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4 mt-3">
 
-                                <div class="flex items-center p-2 mb-2 rounded-lg font-semibold text-green-800 bg-green-100 dark:text-green-50 dark:bg-green-500 w-max">
+                                <div *ngIf="item?.recommend == 'Yes'" class="flex items-center p-2 mb-2 rounded-lg font-semibold text-green-800 bg-green-100 dark:text-green-50 dark:bg-green-500 w-max">
                                     <mat-icon class="icon-size-5 p-1 rounded-full text-white bg-green-500" svgIcon="mat_solid:thumb_up_alt"></mat-icon>
                                     <div class="ml-2 text-green-500">แนะนำ</div>
                                 </div>
