@@ -58,6 +58,16 @@ export class PageService {
             );
     }
 
+    otp(data: FormData): Observable<any> {
+        return this._httpClient
+            .post<any>(environment.baseURL + '/api/confirm_otp', { tel: data })
+            .pipe(
+                tap((result) => {
+                    this._data.next(result);
+                })
+            );
+    }
+
     update(data: any, id: any): Observable<any> {
         return this._httpClient
             .put<any>(environment.baseURL + '/api/permission/' + id, data)

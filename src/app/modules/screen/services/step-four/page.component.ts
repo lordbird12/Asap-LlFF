@@ -31,6 +31,10 @@ import {
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { StepFourOtpComponent } from '../step-four-otp/page.component';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { PageService } from '../page.service';
+import { Router } from '@angular/router';
+
 @Component({
     selector: 'step-four',
     templateUrl: './page.component.html',
@@ -61,7 +65,10 @@ export class StepFourComponent implements OnInit {
      */
     constructor(
         private _formBuilder: UntypedFormBuilder,
-        private _bottomSheet: MatBottomSheet
+        private _bottomSheet: MatBottomSheet,
+        private _fuseConfirmationService: FuseConfirmationService,
+        private _service: PageService,
+        private _router: Router
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -79,7 +86,77 @@ export class StepFourComponent implements OnInit {
         });
     }
 
-    openBottomSheet(): void {
-        this._bottomSheet.open(StepFourOtpComponent);
+    // submit(): void {
+    //     localStorage.setItem(
+    //         'contact',
+    //         JSON.stringify(this.dataForm.value)
+    //     );
+    //     this._bottomSheet.open(StepFourOtpComponent);
+    // }
+
+    submit() {
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'เพิ่มข้อมูล',
+            message: 'คุณต้องการเพิ่มข้อมูลใช่หรือไม่ ?',
+            icon: {
+                show: false,
+                name: 'heroicons_outline:exclamation',
+                color: 'warning',
+            },
+            actions: {
+                confirm: {
+                    show: true,
+                    label: 'ตกลง',
+                    color: 'primary',
+                },
+                cancel: {
+                    show: true,
+                    label: 'ยกเลิก',
+                },
+            },
+            dismissible: true,
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                localStorage.setItem(
+                    'contact',
+                    JSON.stringify(this.dataForm.value)
+                );
+
+                this._service.otp(this.dataForm.value.phone).subscribe({
+                    next: (resp: any) => {
+                        this._bottomSheet.open(StepFourOtpComponent);
+                    },
+
+                    error: (err: any) => {
+                        this._fuseConfirmationService.open({
+                            title: 'เกิดข้อผิดพลาด',
+                            message: err.error.message,
+                            icon: {
+                                show: true,
+                                name: 'heroicons_outline:exclamation',
+                                color: 'warning',
+                            },
+                            actions: {
+                                confirm: {
+                                    show: true,
+                                    label: 'ปิด',
+                                    color: 'primary',
+                                },
+                                cancel: {
+                                    show: false,
+                                    label: 'ยกเลิก',
+                                },
+                            },
+                            dismissible: true,
+                        });
+                        console.log(err.error.message);
+                    },
+                });
+            }
+        });
     }
 }

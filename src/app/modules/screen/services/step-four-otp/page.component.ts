@@ -58,7 +58,7 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
     selectedPanel: string = 'main';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     formFieldHelpers: string[] = ['fuse-mat-dense'];
-    phone : string = '085-036-0033'
+    phone : string = ''
     // otp: string[] = new Array(6).fill('');
     otpForm: FormGroup;
     /**
