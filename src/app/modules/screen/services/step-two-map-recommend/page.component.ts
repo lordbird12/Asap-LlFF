@@ -72,6 +72,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
     map: any; // Assuming you have a reference to the map object
     items: any;
     item: any;
+    item2: any;
     /**
      * Constructor
      */
@@ -95,14 +96,14 @@ export class StepTwoMapRecommendComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.item = localStorage.getItem('mylocation')
+        this.item2 = localStorage.getItem('mylocation')
             ? JSON.parse(localStorage.getItem('mylocation'))
             : [];
 
-        if (this.item) {
+        if (this.item2) {
             const data = {
-                lat: this.item.lat,
-                lon: this.item.lon,
+                lat: this.item2.lat,
+                lon: this.item2.lon,
             };
             this._service.get_service_centers_recommend(data).subscribe((resp: any) => {
                 try {
@@ -136,9 +137,10 @@ export class StepTwoMapRecommendComponent implements OnInit {
                         );
             
                         this.map.Overlays.add(marker);
+                        this._changeDetectorRef.markForCheck();
+
                     }
                     // console.log("test",this.items);
-                    this._changeDetectorRef.markForCheck();
                     // if (resp.data) {
                     //     const obj = {
                     //         data: resp.data,
@@ -159,6 +161,12 @@ export class StepTwoMapRecommendComponent implements OnInit {
     
 
        
+    }
+
+    selectServiceCenter(item){
+        localStorage.setItem('myServiceCenter', JSON.stringify(item));
+
+        this._router.navigate(['screens/services/step-three']);
     }
 
     goToServicesCenter() {
