@@ -34,7 +34,7 @@ import {
     MatBottomSheet,
     MatBottomSheetModule,
     MatBottomSheetRef,
-  } from '@angular/material/bottom-sheet';
+} from '@angular/material/bottom-sheet';
 import { MapComponent } from '../map/page.component';
 
 @Component({
@@ -59,7 +59,7 @@ import { MapComponent } from '../map/page.component';
         MatProgressBarModule,
         CommonModule,
         NgClass,
-        MatBottomSheetModule
+        MatBottomSheetModule,
     ],
 })
 export class ServicesMainComponent implements OnInit {
@@ -67,7 +67,7 @@ export class ServicesMainComponent implements OnInit {
     items: any[] = [];
     items_check: any[] = [];
     item: any;
-    service_remark: string;
+    service_remark: number;
     service_input: boolean;
     activeBtn: any;
     num: any;
@@ -91,7 +91,6 @@ export class ServicesMainComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-       
         this.service_input = false;
         this.item = localStorage.getItem('data')
             ? JSON.parse(localStorage.getItem('data')).data
@@ -128,16 +127,17 @@ export class ServicesMainComponent implements OnInit {
     }
 
     addService(index) {
+     this.service_remark = 0;
         if (this.items_check[index].check) {
             this.items_check[index].check = false;
-            this.service_remark = '';
+           
 
             if (this.items_check[index].type == 'Input') {
                 this.service_input = false;
             }
         } else {
             this.items_check[index].check = true;
-            this.service_remark = this.items_check[index].remark;
+            // this.service_remark = this.items_check[index].remark;
 
             if (this.items_check[index].type == 'Input') {
                 this.service_input = true;
@@ -148,6 +148,13 @@ export class ServicesMainComponent implements OnInit {
         this.items_check.forEach((element) => {
             if (element.check == false) {
                 this.num--;
+                if (element.remark) {
+                    this.service_remark = this.service_remark - element.remark;
+                }
+            } else {
+                if (element.remark) {
+                    this.service_remark = this.service_remark + element.remark;
+                }
             }
 
             if (this.num <= 0) {

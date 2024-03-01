@@ -78,7 +78,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.dataForm = this._formBuilder.group({
             license: [
                 '',
-                [Validators.required, Validators.pattern(/^([A-Z0-9]{1,7})$/)],
+                [Validators.required],
             ],
         });
     }
