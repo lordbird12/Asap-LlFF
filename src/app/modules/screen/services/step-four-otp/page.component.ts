@@ -18,10 +18,21 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { FuseCardComponent } from '@fuse/components/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import {
+    MatFormFieldControl,
+    MatFormFieldModule,
+} from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { PageService } from '../page.service';
+import { Router } from '@angular/router';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'otp',
@@ -47,7 +58,7 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
         MatFormFieldModule,
         MatButtonModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
     ],
 })
 export class StepFourOtpComponent implements OnInit, OnDestroy {
@@ -58,9 +69,10 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
     selectedPanel: string = 'main';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     formFieldHelpers: string[] = ['fuse-mat-dense'];
-    phone : string = ''
+    phone: string = '';
     // otp: string[] = new Array(6).fill('');
     otpForm: FormGroup;
+    dataForm: FormGroup;
     /**
      * Constructor
      */
@@ -76,8 +88,17 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private formBuilder: FormBuilder,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        
+        private _service: PageService,
+        private _router: Router,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {
+        this.dataForm = this.formBuilder.group({
+            otp: [null, [Validators.required]],
+            tel: [null, [Validators.required]],
+            otp_code: [null, [Validators.required]],
+            otp_ref: [null, [Validators.required]],
+            token_otp: [null, [Validators.required]],
+        });
 
         this.otpForm = this.formBuilder.group({
             otp1: ['', [Validators.required, Validators.pattern(/^\d$/)]],
@@ -87,89 +108,155 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
             otp5: ['', [Validators.required, Validators.pattern(/^\d$/)]],
             otp6: ['', [Validators.required, Validators.pattern(/^\d$/)]],
             // Add more fields as needed
-          });
+        });
     }
- 
-      // เมื่อผู้ใช้ป้อนค่าในช่อง 1
-  onFirstDigitInput(event) {
-    // ให้ focus ที่ช่องที่ 2
-    if (event.inputType === 'deleteContentBackward') {
-        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
-        this.otpInput1.nativeElement.focus();
-      } else {
-        // ให้ focus ที่ช่องที่ 2
-        this.otpInput2.nativeElement.focus();
-      }
-  }
 
-  // เมื่อผู้ใช้ป้อนค่าในช่อง 2 (และสามารถทำในลำดับต่อไปได้)
-  onSelect2(event) {
-    if (event.inputType === 'deleteContentBackward') {
-        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
-        this.otpInput1.nativeElement.focus();
-      } else {
+    // เมื่อผู้ใช้ป้อนค่าในช่อง 1
+    onFirstDigitInput(event) {
         // ให้ focus ที่ช่องที่ 2
-        this.otpInput3.nativeElement.focus();
-      }
-    // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
-    
-  }
-  onSelect3(event) {
-    // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
-  
-    if (event.inputType === 'deleteContentBackward') {
-        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
-        this.otpInput2.nativeElement.focus();
-      } else {
-        // ให้ focus ที่ช่องที่ 2
-        this.otpInput4.nativeElement.focus();
-      }
-  }
-  onSelect4(event) {
-    // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
-    this.otpInput5.nativeElement.focus();
+        if (event.inputType === 'deleteContentBackward') {
+            // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+            this.otpInput1.nativeElement.focus();
+        } else {
+            // ให้ focus ที่ช่องที่ 2
+            this.otpInput2.nativeElement.focus();
+        }
+    }
 
-    if (event.inputType === 'deleteContentBackward') {
-        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
-        this.otpInput3.nativeElement.focus();
-      } else {
-        // ให้ focus ที่ช่องที่ 2
+    // เมื่อผู้ใช้ป้อนค่าในช่อง 2 (และสามารถทำในลำดับต่อไปได้)
+    onSelect2(event) {
+        if (event.inputType === 'deleteContentBackward') {
+            // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+            this.otpInput1.nativeElement.focus();
+        } else {
+            // ให้ focus ที่ช่องที่ 2
+            this.otpInput3.nativeElement.focus();
+        }
+        // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
+    }
+    onSelect3(event) {
+        // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
+
+        if (event.inputType === 'deleteContentBackward') {
+            // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+            this.otpInput2.nativeElement.focus();
+        } else {
+            // ให้ focus ที่ช่องที่ 2
+            this.otpInput4.nativeElement.focus();
+        }
+    }
+    onSelect4(event) {
+        // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
         this.otpInput5.nativeElement.focus();
-      }
-  }
-  onSelect5(event) {
-    // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
-    if (event.inputType === 'deleteContentBackward') {
-        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
-        this.otpInput4.nativeElement.focus();
-      } else {
-        // ให้ focus ที่ช่องที่ 2
-        this.otpInput6.nativeElement.focus();
-      }
-  
-  }
 
-  submit(event) {
-    if (event.inputType === 'deleteContentBackward') {
-        // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
-        this.otpInput5.nativeElement.focus();
-      } else {
-        // ให้ focus ที่ช่องที่ 2
-        this.closeBottomSheet(event);
-        
-      }
+        if (event.inputType === 'deleteContentBackward') {
+            // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+            this.otpInput3.nativeElement.focus();
+        } else {
+            // ให้ focus ที่ช่องที่ 2
+            this.otpInput5.nativeElement.focus();
+        }
+    }
+    onSelect5(event) {
+        // ตัวอย่าง: ให้ focus ที่ช่องที่ 3
+        if (event.inputType === 'deleteContentBackward') {
+            // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+            this.otpInput4.nativeElement.focus();
+        } else {
+            // ให้ focus ที่ช่องที่ 2
+            this.otpInput6.nativeElement.focus();
+        }
+    }
 
-  }
+    submit(event) {
+        this.dataForm.patchValue({
+            otp_ref: 111,
+            otp:
+                this.otpForm.value.otp1 +
+                this.otpForm.value.otp2 +
+                this.otpForm.value.otp3 +
+                this.otpForm.value.otp4 +
+                this.otpForm.value.otp5 +
+                this.otpForm.value.otp6,
+        });
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'เพิ่มข้อมูล',
+            message: 'คุณต้องการเพิ่มข้อมูลใช่หรือไม่ ?',
+            icon: {
+                show: false,
+                name: 'heroicons_outline:exclamation',
+                color: 'warning',
+            },
+            actions: {
+                confirm: {
+                    show: true,
+                    label: 'ตกลง',
+                    color: 'primary',
+                },
+                cancel: {
+                    show: true,
+                    label: 'ยกเลิก',
+                },
+            },
+            dismissible: true,
+        });
 
-  closeBottomSheet(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
-  }
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                this._service.otp(this.dataForm.value.phone).subscribe({
+                    next: (resp: any) => {
+                        // this._bottomSheet.open(StepFourOtpComponent);
+                    },
 
-  ngAfterViewInit() {
-    // ให้ focus ที่ช่องแรกทันที
-    this.otpInput1.nativeElement.focus();
-  }
+                    error: (err: any) => {
+                        this._fuseConfirmationService.open({
+                            title: 'เกิดข้อผิดพลาด',
+                            message: err.error.message,
+                            icon: {
+                                show: true,
+                                name: 'heroicons_outline:exclamation',
+                                color: 'warning',
+                            },
+                            actions: {
+                                confirm: {
+                                    show: true,
+                                    label: 'ปิด',
+                                    color: 'primary',
+                                },
+                                cancel: {
+                                    show: false,
+                                    label: 'ยกเลิก',
+                                },
+                            },
+                            dismissible: true,
+                        });
+                        // console.log(err.error.message);
+                    },
+                });
+            }
+        });
+
+        // return;
+        // if (event.inputType === 'deleteContentBackward') {
+        //     // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+        //     this.otpInput5.nativeElement.focus();
+        // } else {
+        //     // ให้ focus ที่ช่องที่ 2
+        //     this.closeBottomSheet(event);
+        // }
+    }
+
+    closeBottomSheet(event: MouseEvent): void {
+        this._bottomSheetRef.dismiss();
+        event.preventDefault();
+    }
+
+    ngAfterViewInit() {
+        // ให้ focus ที่ช่องแรกทันที
+        this.otpInput1.nativeElement.focus();
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -194,7 +281,7 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
                 title: 'Security',
                 description:
                     'Manage your password and 2-step verification preferences',
-            }
+            },
         ];
 
         // Subscribe to media changes
@@ -215,7 +302,6 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
             });
     }
 
-    
     /**
      * On destroy
      */
@@ -235,10 +321,10 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
      * @param panel
      */
     goToPanel(): void {
-        if(this.selectedPanel == ""){
-            this.selectedPanel  = "main";
-        }else if(this.selectedPanel  == "main"){
-            this.selectedPanel  = "list";
+        if (this.selectedPanel == '') {
+            this.selectedPanel = 'main';
+        } else if (this.selectedPanel == 'main') {
+            this.selectedPanel = 'list';
         }
 
         console.log(this.selectedPanel);

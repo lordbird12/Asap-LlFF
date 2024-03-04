@@ -148,8 +148,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                             message: err.error.message,
                             icon: {
                                 show: true,
-                                name: 'heroicons_outline:exclamation',
-                                color: 'warning',
+                                name: 'heroicons_outline:exclamation-triangle',
+                                color: 'accent',
                             },
                             actions: {
                                 confirm: {
