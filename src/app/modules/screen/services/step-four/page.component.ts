@@ -96,12 +96,12 @@ export class StepFourComponent implements OnInit {
 
     submit() {
         const confirmation = this._fuseConfirmationService.open({
-            title: 'เพิ่มข้อมูล',
-            message: 'คุณต้องการเพิ่มข้อมูลใช่หรือไม่ ?',
+            title: 'ยืนยันข้อมูลติดต่อ',
+            message: 'คุณต้องการยืนยันข้อมูลติดต่อใช่หรือไม่ ?',
             icon: {
                 show: false,
-                name: 'heroicons_outline:exclamation',
-                color: 'warning',
+                name: 'heroicons_outline:exclamation-triangle',
+                color: 'accent',
             },
             actions: {
                 confirm: {
@@ -110,7 +110,7 @@ export class StepFourComponent implements OnInit {
                     color: 'primary',
                 },
                 cancel: {
-                    show: true,
+                    show: false,
                     label: 'ยกเลิก',
                 },
             },
@@ -128,6 +128,7 @@ export class StepFourComponent implements OnInit {
 
                 this._service.otp(this.dataForm.value.phone).subscribe({
                     next: (resp: any) => {
+                        localStorage.setItem('otp', JSON.stringify(resp));
                         this._bottomSheet.open(StepFourOtpComponent);
                     },
 
@@ -137,8 +138,8 @@ export class StepFourComponent implements OnInit {
                             message: err.error.message,
                             icon: {
                                 show: true,
-                                name: 'heroicons_outline:exclamation',
-                                color: 'warning',
+                                name: 'heroicons_outline:exclamation-triangle',
+                                color: 'accent',
                             },
                             actions: {
                                 confirm: {

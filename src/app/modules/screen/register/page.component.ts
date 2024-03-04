@@ -180,7 +180,7 @@ export class PageComponent implements OnInit, OnDestroy {
                         icon: {
                             show: true,
                             name: 'heroicons_outline:exclamation',
-                            color: 'warning',
+                            color: 'primary',
                         },
                         actions: {
                             confirm: {

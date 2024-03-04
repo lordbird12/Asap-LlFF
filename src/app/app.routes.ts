@@ -69,15 +69,20 @@ export const appRoutes: Route[] = [
         ],
     },
     {
-        path: 'booking',
-        canActivate: [NoAuthGuard],
-        canActivateChild: [NoAuthGuard],
+        path: 'screens',
+        // canActivate: [AuthGuard],
+        // canActivateChild: [AuthGuard],
         component: LayoutBookingComponent,
-        // resolve: {
-        //     initialData: initialDataResolver,
-        // },
-        loadChildren: () =>
-            import('app/modules/screen/booking/page.routes'),
+        resolve: {
+            initialData: initialDataResolver,
+        },
+        children: [
+            {
+                path: 'booking',
+                loadChildren: () =>
+                    import('app/modules/screen/booking/page.routes'),
+            },
+        ],
     },
     {
         path: 'calendar',
@@ -87,8 +92,7 @@ export const appRoutes: Route[] = [
         // resolve: {
         //     initialData: initialDataResolver,
         // },
-        loadChildren: () =>
-            import('app/modules/screen/calendar/page.routes'),
+        loadChildren: () => import('app/modules/screen/calendar/page.routes'),
     },
     {
         path: 'screens',
@@ -99,7 +103,6 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver,
         },
         children: [
-
             {
                 path: 'home',
                 loadChildren: () =>
@@ -117,7 +120,6 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver,
         },
         children: [
-
             {
                 path: 'next',
                 loadChildren: () =>
@@ -135,7 +137,6 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver,
         },
         children: [
-
             {
                 path: 'search',
                 loadChildren: () =>
@@ -226,7 +227,6 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/landing/home/home.routes'),
             },
-
         ],
     },
 

@@ -73,6 +73,7 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
     // otp: string[] = new Array(6).fill('');
     otpForm: FormGroup;
     dataForm: FormGroup;
+    otp: any;
     /**
      * Constructor
      */
@@ -93,7 +94,6 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
         private _fuseConfirmationService: FuseConfirmationService
     ) {
         this.dataForm = this.formBuilder.group({
-            otp: [null, [Validators.required]],
             tel: [null, [Validators.required]],
             otp_code: [null, [Validators.required]],
             otp_ref: [null, [Validators.required]],
@@ -169,23 +169,42 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
     }
 
     submit(event) {
-        this.dataForm.patchValue({
-            otp_ref: 111,
-            otp:
+        this.otp = localStorage.getItem('otp')
+            ? JSON.parse(localStorage.getItem('otp'))
+            : [];
+
+        const data = {
+            otp_ref: this.otp.otp.otp_ref,
+            token_otp: this.otp.otp.token,
+            tel: this.otp.otp.tel,
+            otp_code:
                 this.otpForm.value.otp1 +
                 this.otpForm.value.otp2 +
                 this.otpForm.value.otp3 +
                 this.otpForm.value.otp4 +
                 this.otpForm.value.otp5 +
                 this.otpForm.value.otp6,
-        });
+        };
+
+        // this.dataForm.patchValue({
+        //     otp_ref: this.otp.otp.otp_ref,
+        //     token_otp: this.otp.otp.token,
+        //     tel: this.otp.otp.tel,
+        //     otp_code:
+        //         this.otpForm.value.otp1 +
+        //         this.otpForm.value.otp2 +
+        //         this.otpForm.value.otp3 +
+        //         this.otpForm.value.otp4 +
+        //         this.otpForm.value.otp5 +
+        //         this.otpForm.value.otp6,
+        // });
         const confirmation = this._fuseConfirmationService.open({
-            title: 'เพิ่มข้อมูล',
-            message: 'คุณต้องการเพิ่มข้อมูลใช่หรือไม่ ?',
+            title: 'ยืนยัน OTP',
+            message: 'คุณต้องการยืนยัน OTPใช่หรือไม่ ?',
             icon: {
                 show: false,
-                name: 'heroicons_outline:exclamation',
-                color: 'warning',
+                name: 'heroicons_outline:exclamation-triangle',
+                color: 'accent',
             },
             actions: {
                 confirm: {
@@ -194,7 +213,7 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
                     color: 'primary',
                 },
                 cancel: {
-                    show: true,
+                    show: false,
                     label: 'ยกเลิก',
                 },
             },
@@ -205,9 +224,87 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
         confirmation.afterClosed().subscribe((result) => {
             // If the confirm button pressed...
             if (result === 'confirmed') {
-                this._service.otp(this.dataForm.value.phone).subscribe({
+                this._service.confirm_otp(data).subscribe({
                     next: (resp: any) => {
-                        // this._bottomSheet.open(StepFourOtpComponent);
+                        const contact = localStorage.getItem('contact')
+                            ? JSON.parse(localStorage.getItem('contact'))
+                            : [];
+
+                        const sevice_date_time = localStorage.getItem(
+                            'sevice_date_time'
+                        )
+                            ? JSON.parse(
+                                  localStorage.getItem('sevice_date_time')
+                              )
+                            : [];
+
+                        const data2 = localStorage.getItem('data')
+                            ? JSON.parse(localStorage.getItem('data'))
+                            : [];
+
+                        const myServiceCenter = localStorage.getItem(
+                            'myServiceCenter'
+                        )
+                            ? JSON.parse(
+                                  localStorage.getItem('myServiceCenter')
+                              )
+                            : [];
+
+                        if (contact && sevice_date_time) {
+                            const data_book = {
+                                client_id: data2.data.client_id,
+                                car_id: data2.data.id,
+                                phone: data.tel,
+                                name: contact.name,
+                                service_center_id: myServiceCenter.id,
+                                reason: '',
+                                date: sevice_date_time.date,
+                                time: sevice_date_time.time,
+                                services: [
+                                    {
+                                        service_id: 1,
+                                    },
+                                    {
+                                        service_id: 2,
+                                    },
+                                    {
+                                        service_id: 3,
+                                    },
+                                ],
+                            };
+
+                            this._service.booking(data_book).subscribe({
+                                next: (resp: any) => {
+                                    this._bottomSheetRef.dismiss();
+                                    this._router.navigate(['screens/booking']);
+                                },
+
+                                error: (err: any) => {
+                                    this._fuseConfirmationService.open({
+                                        title: 'เกิดข้อผิดพลาด',
+                                        message: err.error.message,
+                                        icon: {
+                                            show: true,
+                                            name: 'heroicons_outline:exclamation-triangle',
+                                            color: 'accent',
+                                        },
+                                        actions: {
+                                            confirm: {
+                                                show: true,
+                                                label: 'ปิด',
+                                                color: 'primary',
+                                            },
+                                            cancel: {
+                                                show: false,
+                                                label: 'ยกเลิก',
+                                            },
+                                        },
+                                        dismissible: true,
+                                    });
+                                    // console.log(err.error.message);
+                                },
+                            });
+                        }
                     },
 
                     error: (err: any) => {
@@ -216,8 +313,8 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
                             message: err.error.message,
                             icon: {
                                 show: true,
-                                name: 'heroicons_outline:exclamation',
-                                color: 'warning',
+                                name: 'heroicons_outline:exclamation-triangle',
+                                color: 'accent',
                             },
                             actions: {
                                 confirm: {
