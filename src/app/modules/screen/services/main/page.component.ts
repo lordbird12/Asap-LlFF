@@ -106,6 +106,7 @@ export class ServicesMainComponent implements OnInit {
                         name: this.items[index].name,
                         remark: this.items[index].remark,
                         type: this.items[index].type,
+                        id: this.items[index].id,
                     };
 
                     // 👇 Push object to array

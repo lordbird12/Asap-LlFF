@@ -85,6 +85,19 @@ export const appRoutes: Route[] = [
         ],
     },
     {
+        path: 'screens',
+        resolve: {
+            initialData: initialDataResolver,
+        },
+        children: [
+            {
+                path: 'booking-finish',
+                loadChildren: () =>
+                    import('app/modules/screen/booking-finish/page.routes'),
+            },
+        ],
+    },
+    {
         path: 'calendar',
         canActivate: [NoAuthGuard],
         canActivateChild: [NoAuthGuard],

@@ -226,85 +226,8 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
             if (result === 'confirmed') {
                 this._service.confirm_otp(data).subscribe({
                     next: (resp: any) => {
-                        const contact = localStorage.getItem('contact')
-                            ? JSON.parse(localStorage.getItem('contact'))
-                            : [];
-
-                        const sevice_date_time = localStorage.getItem(
-                            'sevice_date_time'
-                        )
-                            ? JSON.parse(
-                                  localStorage.getItem('sevice_date_time')
-                              )
-                            : [];
-
-                        const data2 = localStorage.getItem('data')
-                            ? JSON.parse(localStorage.getItem('data'))
-                            : [];
-
-                        const myServiceCenter = localStorage.getItem(
-                            'myServiceCenter'
-                        )
-                            ? JSON.parse(
-                                  localStorage.getItem('myServiceCenter')
-                              )
-                            : [];
-
-                        if (contact && sevice_date_time) {
-                            const data_book = {
-                                client_id: data2.data.client_id,
-                                car_id: data2.data.id,
-                                phone: data.tel,
-                                name: contact.name,
-                                service_center_id: myServiceCenter.id,
-                                reason: '',
-                                date: sevice_date_time.date,
-                                time: sevice_date_time.time,
-                                services: [
-                                    {
-                                        service_id: 1,
-                                    },
-                                    {
-                                        service_id: 2,
-                                    },
-                                    {
-                                        service_id: 3,
-                                    },
-                                ],
-                            };
-
-                            this._service.booking(data_book).subscribe({
-                                next: (resp: any) => {
-                                    this._bottomSheetRef.dismiss();
-                                    this._router.navigate(['screens/booking']);
-                                },
-
-                                error: (err: any) => {
-                                    this._fuseConfirmationService.open({
-                                        title: 'เกิดข้อผิดพลาด',
-                                        message: err.error.message,
-                                        icon: {
-                                            show: true,
-                                            name: 'heroicons_outline:exclamation-triangle',
-                                            color: 'accent',
-                                        },
-                                        actions: {
-                                            confirm: {
-                                                show: true,
-                                                label: 'ปิด',
-                                                color: 'primary',
-                                            },
-                                            cancel: {
-                                                show: false,
-                                                label: 'ยกเลิก',
-                                            },
-                                        },
-                                        dismissible: true,
-                                    });
-                                    // console.log(err.error.message);
-                                },
-                            });
-                        }
+                        this._bottomSheetRef.dismiss();
+                        this._router.navigate(['screens/booking/confirm']);
                     },
 
                     error: (err: any) => {
