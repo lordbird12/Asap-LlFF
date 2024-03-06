@@ -22,14 +22,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {NgStepperModule} from 'angular-ng-stepper';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { NgStepperModule } from 'angular-ng-stepper';
 import { FuseCardComponent } from '@fuse/components/card';
 import { NgClass, NgIf } from '@angular/common';
 
-
 @Component({
-    selector: 'home-main',
+    selector: 'home-list',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -56,6 +55,7 @@ import { NgClass, NgIf } from '@angular/common';
 export class PageBookingComponent implements OnInit {
     addForm: UntypedFormGroup;
     yearlyBilling: boolean = true;
+    bookings: any;
 
     /**
      * Constructor
@@ -70,19 +70,8 @@ export class PageBookingComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // Create the form
-        this.addForm = this._formBuilder.group({
-            name: ['Brian Hughes'],
-            username: ['brianh'],
-            title: ['Senior Frontend Developer'],
-            company: ['YXZ Software'],
-            about: [
-                "Hey! This is Brian; husband, father and gamer. I'm mostly passionate about bleeding edge tech and chocolate! 🍫",
-            ],
-            email: ['hughes.brian@mail.com', Validators.email],
-            phone: ['121-490-33-12'],
-            country: ['usa'],
-            language: ['english'],
-        });
+        this.bookings = localStorage.getItem('MyBooking')
+            ? JSON.parse(localStorage.getItem('MyBooking'))
+            : [];
     }
 }

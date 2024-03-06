@@ -1,14 +1,15 @@
 import { Routes } from '@angular/router';
-import { PageComponent } from 'app/modules/screen/home/page.component';
-import { PageBookingComponent } from 'app/modules/screen/home/booking/page.component';
+import { PageComponent } from './page.component';
+import { HomeMainComponent } from './main/page.component';
+import { PageBookingComponent } from './booking/page.component';
 
 export default [
     {
-        path     : '',
-        component: PageComponent,
+        path: '',
+        component: HomeMainComponent,
     },
     {
-        path     : 'booking',
+        path: 'booking',
         component: PageBookingComponent,
     },
 ] as Routes;

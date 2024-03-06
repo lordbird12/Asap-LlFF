@@ -46,7 +46,6 @@ export class PageService {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-
     update(data: any, id: any): Observable<any> {
         return this._httpClient
             .put<any>(environment.baseURL + '/api/client/' + id, data)
@@ -109,7 +108,9 @@ export class PageService {
 
     getById(id: any): Observable<any> {
         return this._httpClient
-            .get<any>(environment.baseURL + '/api/get_car_by_license_plate/' + id)
+            .get<any>(
+                environment.baseURL + '/api/get_car_by_license_plate/' + id
+            )
             .pipe(
                 tap((result) => {
                     this._data.next(result);
@@ -122,6 +123,18 @@ export class PageService {
             .post(environment.baseURL + '/api/register', {
                 license: license,
                 mlie: mlie,
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    getProfile(userId: any): Observable<any> {
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_profile', {
+                user_id: userId,
             })
             .pipe(
                 switchMap((response: any) => {
