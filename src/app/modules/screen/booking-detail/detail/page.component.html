@@ -42,7 +42,8 @@
                     <div>
                         <span class="text-2xl font-extrabold">{{item ? item.car.license : "-"}}</span>
                         <br>
-                        <span class="text-slate-400">{{item ? item.car.brand_model.name : "-"}} • {{item ? item.car.color :
+                        <span class="text-slate-400">{{item ? item.car.brand_model.name : "-"}} • {{item ?
+                            item.car.color :
                             "-"}}</span>
                     </div>
                 </div>
@@ -102,18 +103,17 @@
         </form>
     </div>
 
-</div>
+    <div class="bottom-10 px-6 pt-9 pb-5 md:p-8 md:pb-12 lg:p-12 fixed w-full bg-card">
+        <div class="flex justify-center mt-6">
+            แก้ไขการจองได้จนถึง 13 Dec 2023 10:00
+        </div>
+        <div class="relative items-center justify-start w-full h-14 py-5 z-49">
+            <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'primary'">
+                จัดการจอง
+            </button>
+        </div>
 
-<div class="bottom-10 px-6 pt-9 pb-5 md:p-8 md:pb-12 lg:p-12 fixed w-full bg-card">
-    <div class="flex justify-center mt-6">
-        แก้ไขการจองได้จนถึง 13 Dec 2023 10:00
     </div>
-    <div class="relative items-center justify-start w-full h-14 py-5 z-49">
-        <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'primary'">
-            จัดการจอง
-        </button>
-    </div>
-
 </div>
 
 
