@@ -2,19 +2,15 @@ import { Routes } from '@angular/router';
 import { PageComponent } from './page.component';
 import { HomeMainComponent } from './main/page.component';
 import { PageBookingComponent } from './booking/page.component';
-import { FinishComponent } from './finish/page.component';
+import { DetailComponent } from './detail/page.component';
 
 export default [
     {
-        path: '',
-        component: HomeMainComponent,
+        path: ':id',
+        component: DetailComponent,
     },
     {
         path: 'booking',
         component: PageBookingComponent,
-    },
-    {
-        path: 'detail',
-        component: FinishComponent,
     },
 ] as Routes;

@@ -8,6 +8,7 @@ import { Layout2Component } from './layout2/layout.component';
 import { LayoutBookingComponent } from './layout-booking/layout.component';
 import { LayoutCalendarComponent } from './layout-calendar/layout-calendar.component';
 import { LayoutSearchComponent } from './layout-search/layout.component';
+import { LayoutFinishComponent } from './layout-finish/layout.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -26,7 +27,7 @@ export const appRoutes: Route[] = [
         path: 'screens',
         // canActivate: [AuthGuard],
         // canActivateChild: [AuthGuard],
-        component: LayoutComponent,
+        // component: LayoutComponent,
         resolve: {
             initialData: initialDataResolver,
         },
@@ -36,6 +37,17 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/screen/login-line/page.routes'),
             },
+        ]
+    },
+    {
+        path: 'screens',
+        // canActivate: [AuthGuard],
+        // canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: initialDataResolver,
+        },
+        children: [
             {
                 path: 'policy',
                 loadChildren: () =>
@@ -86,6 +98,7 @@ export const appRoutes: Route[] = [
     },
     {
         path: 'screens',
+        component: LayoutFinishComponent,
         resolve: {
             initialData: initialDataResolver,
         },
@@ -134,9 +147,9 @@ export const appRoutes: Route[] = [
         },
         children: [
             {
-                path: 'next',
+                path: 'booking-detail',
                 loadChildren: () =>
-                    import('app/modules/screen/next/page.routes'),
+                    import('app/modules/screen/booking-detail/page.routes'),
             },
         ],
     },

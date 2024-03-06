@@ -1,0 +1,156 @@
+<div class="w-full">
+
+    <!-- Form -->
+    <form [formGroup]="addForm">
+
+        <div class="flex flex-col items-center">
+
+            <!-- Recurring selector -->
+            <div class="flex items-center mt-8 sm:mt-16 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+                <button class="px-10 swif-btn" [ngClass]="{'bg-card pointer-events-none shadow': yearlyBilling,
+                                'bg-transparent': !yearlyBilling}" mat-flat-button (click)="yearlyBilling = true" disableRipple>
+                    กำลังดำเนินการ
+                </button>
+                <button class="px-10 swif-btn" [ngClass]="{'bg-card pointer-events-none shadow': !yearlyBilling,
+                                'bg-transparent': yearlyBilling}" mat-flat-button (click)="yearlyBilling = false" disableRipple>
+                    เสร็จสิ้น/ยกเลิก
+                </button>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+        <div class="flex items-center sm:mx-8 mt-6 mb-4">
+            <div class="flex flex-col">
+                <span class="font-semibold leading-none">14 Dec 2023</span>
+                <span class="text-sm text-secondary leading-none mt-1">10:00 AM</span>
+            </div>
+            <div class="ml-auto flex items-center justify-center px-4 py-3 rounded-full cursor-pointer ring-inset ring-primary bg-hover">
+                <div class="flex-0 w-3 h-3 rounded-full bg-primary"></div>
+                <div class="ml-2.5 font-medium leading-5 truncate">
+                    กำลังดำเนินการ
+                </div>
+            </div>
+
+        </div>
+        <hr class="border-b sm:mx-8 mt-4 mb-6">
+        <div class="flex flex-col mt-5">
+            <div class="flex items-center">
+                <img class="w-40 h-auto mr-4 object-cover" src="assets/images/honda.png" alt="Card cover image">
+                <div class="flex flex-col min-w-0">
+                    <div class="font-medium leading-none">6กท-6789</div>
+                    <div class="text-md leading-none text-secondary mt-2">Toyota Accord • Silver</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="flex flex-col mt-5">
+            <div class="flex">
+                <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+                <div> ฮอนด้าปากเกร็ด 59/3 Thanon Tiwanon - Pat ดูแผนที่</div>
+            </div>
+
+        </div>
+        <hr class="border-b sm:mx-8 mt-4 mb-6">
+        <div class="flex items-center sm:mx-8 mt-6 mb-4">
+            <div class="flex">
+                <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                <span class="font-semibold leading-none">จัดการจอง</span>
+            </div>
+            <button class="ml-auto flex items-center justify-center px-4 py-3 rounded-full cursor-pointer fuse-mat-button" mat-flat-button [color]="'primary' ">
+                รายละเอียด
+            </button>
+
+        </div>
+
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+        <div class="flex items-center sm:mx-8 mt-6 mb-4">
+            <div class="flex flex-col">
+                <span class="font-semibold leading-none">14 Dec 2023</span>
+                <span class="text-sm text-secondary leading-none mt-1">10:00 AM</span>
+            </div>
+            <div class="ml-auto flex items-center justify-center px-4 py-3 rounded-full cursor-pointer ring-inset ring-primary bg-hover">
+                <div class="flex-0 w-3 h-3 rounded-full bg-primary"></div>
+                <div class="ml-2.5 font-medium leading-5 truncate">
+                    กำลังดำเนินการ
+                </div>
+            </div>
+
+        </div>
+        <hr class="border-b sm:mx-8 mt-4 mb-6">
+        <div class="flex flex-col mt-5">
+            <div class="flex items-center">
+                <img class="w-40 h-auto mr-4 object-cover" src="assets/images/honda.png" alt="Card cover image">
+                <div class="flex flex-col min-w-0">
+                    <div class="font-medium leading-none">6กท-6789</div>
+                    <div class="text-md leading-none text-secondary mt-2">Toyota Accord • Silver</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="flex flex-col mt-5">
+            <div class="flex">
+                <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+                <div> ฮอนด้าปากเกร็ด 59/3 Thanon Tiwanon - Pat ดูแผนที่</div>
+            </div>
+
+        </div>
+        <hr class="border-b sm:mx-8 mt-4 mb-6">
+        <div class="flex items-center sm:mx-8 mt-6 mb-4">
+            <div class="flex">
+                <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                <span class="font-semibold leading-none">จัดการจอง</span>
+            </div>
+            <button class="ml-auto flex items-center justify-center px-4 py-3 rounded-full cursor-pointer fuse-mat-button" mat-flat-button [color]="'primary' ">
+                รายละเอียด
+            </button>
+
+        </div>
+
+
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+        <div class="flex items-center sm:mx-8 mt-6 mb-4">
+            <div class="flex flex-col">
+                <span class="font-semibold leading-none">14 Dec 2023</span>
+                <span class="text-sm text-secondary leading-none mt-1">10:00 AM</span>
+            </div>
+            <div class="ml-auto flex items-center justify-center px-4 py-3 rounded-full cursor-pointer ring-inset ring-primary bg-hover">
+                <div class="flex-0 w-3 h-3 rounded-full bg-primary"></div>
+                <div class="ml-2.5 font-medium leading-5 truncate">
+                    กำลังดำเนินการ
+                </div>
+            </div>
+
+        </div>
+        <hr class="border-b sm:mx-8 mt-4 mb-6">
+        <div class="flex flex-col mt-5">
+            <div class="flex items-center">
+                <img class="w-40 h-auto mr-4 object-cover" src="assets/images/honda.png" alt="Card cover image">
+                <div class="flex flex-col min-w-0">
+                    <div class="font-medium leading-none">6กท-6789</div>
+                    <div class="text-md leading-none text-secondary mt-2">Toyota Accord • Silver</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="flex flex-col mt-5">
+            <div class="flex">
+                <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+                <div> ฮอนด้าปากเกร็ด 59/3 Thanon Tiwanon - Pat ดูแผนที่</div>
+            </div>
+
+        </div>
+        <hr class="border-b sm:mx-8 mt-4 mb-6">
+        <div class="flex items-center sm:mx-8 mt-6 mb-4">
+            <div class="flex">
+                <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+                <span class="font-semibold leading-none">จัดการจอง</span>
+            </div>
+            <button class="ml-auto flex items-center justify-center px-4 py-3 rounded-full cursor-pointer fuse-mat-button" mat-flat-button [color]="'primary' ">
+                รายละเอียด
+            </button>
+        </div>
+    </form>
+</div>

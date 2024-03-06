@@ -113,11 +113,7 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
         if (number == 2) {
             this.yearlyBilling == false;
         }
-
+       
         this._changeDetectorRef.detectChanges();
-    }
-
-    viewDetail(booking: any): void {
-        this._router.navigate(['screens/booking-detail/' + booking.id]);
     }
 }
