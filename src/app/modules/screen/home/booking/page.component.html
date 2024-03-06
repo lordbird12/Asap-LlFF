@@ -5,11 +5,11 @@
         <!-- Recurring selector -->
         <div class="flex items-center mt-8 sm:mt-16 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700 p-0.5">
             <button class="px-8 swif-btn" [ngClass]="{'bg-card pointer-events-none shadow': yearlyBilling,
-                            'bg-transparent': !yearlyBilling}" mat-flat-button (click)="yearlyBilling = true" disableRipple>
+                                'bg-transparent': !yearlyBilling}" mat-flat-button (click)="yearlyBilling = true">
                 กำลังดำเนินการ
             </button>
             <button class="px-8 swif-btn" [ngClass]="{'bg-card pointer-events-none shadow': !yearlyBilling,
-                            'bg-transparent': yearlyBilling}" mat-flat-button (click)="yearlyBilling = false" disableRipple>
+                                'bg-transparent': yearlyBilling}" mat-flat-button (click)="yearlyBilling = false">
                 เสร็จสิ้น/ยกเลิก
             </button>
         </div>
@@ -20,60 +20,128 @@
 
             <div class="flex flex-wrap items-start w-full max-w-400">
                 <!-- Divider -->
-                <ng-container *ngFor="let booking of bookings; let i = index">
-                    <fuse-card class="flex flex-col max-w-80 w-full p-2 m-2 filter-article">
-                        <div class="flex items-center sm:mx-8">
-                            <div class="flex flex-col">
-                                <span class="font-semibold leading-none">{{booking?.date}}</span>
-                                <span class="text-sm text-secondary leading-none mt-1">{{booking?.time}}</span>
-                            </div>
-                            <div class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer ring-inset ring-primary bg-hover">
-                                <div class="flex-0 w-3 h-3 rounded-full bg-primary"></div>
-                                <div class="ml-2.5 font-medium leading-5 truncate">
-                                    {{booking?.status}}
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="my-2 border-t"></div>
-                        <div class="flex flex-col">
-                            <div class="flex items-center">
-                                <img class="w-30 h-auto mr-4 object-cover" [src]="booking?.car?.image" alt="Card cover image">
-                                <div class="flex flex-col min-w-0">
-                                    <div class="font-medium leading-none">{{booking?.car?.license ?? "-"}}</div>
-                                    <div class="text-md leading-none text-secondary mt-2">
-                                        {{booking?.car?.brand_model?.name ?? "-"}} • {{booking?.car?.color ?? "-"}}
+                <ng-container *ngIf="yearlyBilling == true">
+                    <ng-container *ngIf="bookings?.length > 0">
+                        <ng-container *ngFor="let booking of bookings; let i = index">
+                            <fuse-card class="flex flex-col max-w-80 w-full p-2 m-2 filter-article" *ngIf="booking?.status == 'กำลังดำเนินการ'">
+                                <div class="flex items-center sm:mx-8">
+                                    <div class="flex flex-col">
+                                        <span class="font-semibold leading-none">{{booking?.date}}</span>
+                                        <span class="text-sm text-secondary leading-none mt-1">{{booking?.time}}</span>
                                     </div>
+                                    <div class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer ring-inset ring-primary bg-hover">
+                                        <div class="flex-0 w-2 h-2 rounded-full bg-gray-300"></div>
+                                        <div class="ml-2.5 font-medium leading-5 truncate">
+                                            {{booking?.status}}
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
+                                <div class="my-2 border-t"></div>
+                                <div class="flex flex-col">
+                                    <div class="flex items-center">
+                                        <img class="w-30 h-auto mr-4 object-cover" [src]="booking?.car?.image" alt="Card cover image">
+                                        <div class="flex flex-col min-w-0">
+                                            <div class="font-medium leading-none">{{booking?.car?.license ?? "-"}}</div>
+                                            <div class="text-md leading-none text-secondary mt-2">
+                                                {{booking?.car?.brand_model?.name ?? "-"}} • {{booking?.car?.color ?? "-"}}
+                                            </div>
+                                        </div>
+                                    </div>
 
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="flex">
-                                <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
-                                <div> {{booking?.service_center?.name ?? "-"}} ดูแผนที่</div>
-                            </div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="flex">
+                                        <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+                                        <div> {{booking?.service_center?.name ?? "-"}} ดูแผนที่</div>
+                                    </div>
 
-                        </div>
-                        <div class="my-2 border-t"></div>
-                        <div class="flex items-center sm:mx-8">
-                            <div class="flex">
-                                <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'asha:edit'"></mat-icon>
-                                <span class="font-semibold m-1">จัดการจอง</span>
-                            </div>
-                            <button class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer fuse-mat-button" mat-flat-button [color]="'primary' ">
-                                รายละเอียด
-                            </button>
+                                </div>
+                                <div class="my-2 border-t"></div>
+                                <div class="flex items-center sm:mx-8">
+                                    <div class="flex">
+                                        <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'asha:edit'"></mat-icon>
+                                        <span class="font-semibold m-1">จัดการจอง</span>
+                                    </div>
+                                    <button class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer fuse-mat-button" mat-flat-button [color]="'primary' ">
+                                        รายละเอียด
+                                    </button>
 
+                                </div>
+                            </fuse-card>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="bookings?.length == 0">
+                        <div class="w-full flex items-center justify-center mt-8">
+                            <img class="w-40 h-auto object-cover" src="assets/images/Frame 17.png">
                         </div>
-                    </fuse-card>
+                        <div class="w-full flex items-center justify-center">
+                            <div class="text-xl items-center justify-center">คุณยังไม่มีการจอง</div>
+                        </div>
+                    </ng-container>
                 </ng-container>
-                <div class="w-full flex items-center justify-center mt-8">
-                    <img class="w-40 h-auto object-cover" src="assets/images/Frame 17.png">
-                </div>
-                <div class="w-full flex items-center justify-center">
-                    <div class="text-xl items-center justify-center">คุณยังไม่มีการจอง</div>
-                </div>
+                <ng-container *ngIf="yearlyBilling == false">
+                    <ng-container *ngIf="bookings?.length > 0">
+                        <ng-container *ngFor="let booking of bookings; let i = index">
+                            <fuse-card class="flex flex-col max-w-80 w-full p-2 m-2 filter-article" *ngIf="booking?.status == 'รายการจองสิ้นสุดแล้ว' || booking?.status == 'รายการจองถูกยกเลิก'">
+                                <div class="flex items-center sm:mx-8">
+                                    <div class="flex flex-col">
+                                        <span class="font-semibold leading-none">{{booking?.date}}</span>
+                                        <span class="text-sm text-secondary leading-none mt-1">{{booking?.time}}</span>
+                                    </div>
+                                    <div class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer ring-inset ring-primary bg-hover">
+                                        <div class="flex-0 w-2 h-2 rounded-full bg-gray-300"></div>
+                                        <div class="ml-2.5 font-medium leading-5 truncate">
+                                            {{booking?.status}}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="my-2 border-t"></div>
+                                <div class="flex flex-col">
+                                    <div class="flex items-center">
+                                        <img class="w-30 h-auto mr-4 object-cover" [src]="booking?.car?.image" alt="Card cover image">
+                                        <div class="flex flex-col min-w-0">
+                                            <div class="font-medium leading-none">{{booking?.car?.license ?? "-"}}</div>
+                                            <div class="text-md leading-none text-secondary mt-2">
+                                                {{booking?.car?.brand_model?.name ?? "-"}} • {{booking?.car?.color ?? "-"}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="flex">
+                                        <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+                                        <div> {{booking?.service_center?.name ?? "-"}} ดูแผนที่</div>
+                                    </div>
+
+                                </div>
+                                <div class="my-2 border-t"></div>
+                                <div class="flex items-center sm:mx-8">
+                                    <div class="flex">
+                                        <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'asha:edit'"></mat-icon>
+                                        <span class="font-semibold m-1">จัดการจอง</span>
+                                    </div>
+                                    <button class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer fuse-mat-button" mat-flat-button [color]="'primary' ">
+                                        รายละเอียด
+                                    </button>
+
+                                </div>
+                            </fuse-card>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="bookings?.length == 0">
+                        <div class="w-full flex items-center justify-center mt-8">
+                            <img class="w-40 h-auto object-cover" src="assets/images/Frame 17.png">
+                        </div>
+                        <div class="w-full flex items-center justify-center">
+                            <div class="text-xl items-center justify-center">คุณยังไม่มีการจอง</div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+
             </div>
         </div>
     </div>

@@ -3,8 +3,11 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     OnInit,
+    QueryList,
     ViewChild,
+    ViewChildren,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -35,6 +38,7 @@ import {
     MatBottomSheetModule,
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
+import { FuseCardComponent } from '@fuse/components/card';
 
 @Component({
     selector: 'home-list',
@@ -59,9 +63,12 @@ import {
         CommonModule,
         NgClass,
         MatBottomSheetModule,
+        FuseCardComponent,
     ],
 })
-export class PageBookingComponent implements OnInit {
+export class PageBookingComponent implements OnInit, AfterViewInit {
+    @ViewChildren(FuseCardComponent, { read: ElementRef })
+    private _fuseCards: QueryList<ElementRef>;
     yearlyBilling: boolean = true;
     dataForm: FormGroup;
     items_check: any[] = [];
@@ -93,5 +100,20 @@ export class PageBookingComponent implements OnInit {
         this.bookings = localStorage.getItem('MyBooking')
             ? JSON.parse(localStorage.getItem('MyBooking'))
             : [];
+    }
+
+    ngAfterViewInit(): void {
+        this._changeDetectorRef.detectChanges();
+    }
+
+    tapSelect(number: any): void {
+        if (number == 1) {
+            this.yearlyBilling == true;
+        }
+        if (number == 2) {
+            this.yearlyBilling == false;
+        }
+       
+        this._changeDetectorRef.detectChanges();
     }
 }
