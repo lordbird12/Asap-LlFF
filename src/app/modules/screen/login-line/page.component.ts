@@ -86,7 +86,7 @@ export class PageComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // this.initLine();
+        this.initLine();
     }
 
     /**
