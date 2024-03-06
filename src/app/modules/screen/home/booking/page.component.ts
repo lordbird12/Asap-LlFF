@@ -1,8 +1,10 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import {
-    ChangeDetectionStrategy,
+    AfterViewInit,
+    ChangeDetectorRef,
     Component,
     OnInit,
+    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -24,19 +26,22 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgStepperModule } from 'angular-ng-stepper';
-import { FuseCardComponent } from '@fuse/components/card';
-import { NgClass, NgIf } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { PageService } from '../page.service';
+import { CommonModule, NgClass } from '@angular/common';
+import { Router } from '@angular/router';
+import {
+    MatBottomSheet,
+    MatBottomSheetModule,
+    MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
 
 @Component({
     selector: 'home-list',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
-        NgClass,
-        NgIf,
-        FuseCardComponent,
         CdkStepperModule,
         NgStepperModule,
         MatStepperModule,
@@ -50,17 +55,32 @@ import { NgClass, NgIf } from '@angular/common';
         MatSelectModule,
         MatOptionModule,
         MatButtonModule,
+        MatProgressBarModule,
+        CommonModule,
+        NgClass,
+        MatBottomSheetModule,
     ],
 })
 export class PageBookingComponent implements OnInit {
-    addForm: UntypedFormGroup;
     yearlyBilling: boolean = true;
+    dataForm: FormGroup;
+    items_check: any[] = [];
+    items: any;
+    service_remark: string;
+    service_input: boolean;
+    activeBtn: any;
     bookings: any;
 
     /**
      * Constructor
      */
-    constructor(private _formBuilder: UntypedFormBuilder) {}
+    constructor(
+        private _formBuilder: FormBuilder,
+        private _service: PageService,
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _router: Router,
+        private _bottomSheet: MatBottomSheet
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
