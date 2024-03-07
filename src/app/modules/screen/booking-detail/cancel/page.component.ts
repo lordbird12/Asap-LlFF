@@ -29,23 +29,17 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
-import {
-    MatBottomSheet,
-    MatBottomSheetModule,
-    MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
 import { Router } from '@angular/router';
 import { AnalyticsMockApi } from 'app/mock-api/dashboards/analytics/api';
 import { PageService } from '../page.service';
-import { CancelComponent } from '../cancel/page.component';
 
 @Component({
     selector: 'start',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CommonModule,
@@ -67,10 +61,9 @@ import { CancelComponent } from '../cancel/page.component';
         MatInputModule,
         ReactiveFormsModule,
         NgxStarsModule,
-        MatBottomSheetModule
     ],
 })
-export class StatusComponent implements OnInit, OnDestroy {
+export class CancelComponent implements OnInit, OnDestroy {
     @ViewChild(NgxStarsComponent)
     starsComponent: NgxStarsComponent;
     @ViewChild('drawer') drawer: MatDrawer;
@@ -89,14 +82,12 @@ export class StatusComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _bottomSheetRef: MatBottomSheetRef<StatusComponent>,
+        private _bottomSheetRef: MatBottomSheetRef<CancelComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
         private formBuilder: FormBuilder,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _router: Router,
-        private _service: PageService,
-        private _bottomSheet: MatBottomSheet
-
+        private _service: PageService
     ) {}
     ngAfterViewInit() {}
 
@@ -127,8 +118,7 @@ export class StatusComponent implements OnInit, OnDestroy {
         this._router.navigate(['screens/search/main']);
     }
 
-    openCancel() {
-        this._bottomSheetRef.dismiss();
-        this._bottomSheet.open(CancelComponent);
+    getLocation() {
+        
     }
 }

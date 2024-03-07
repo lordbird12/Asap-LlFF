@@ -140,4 +140,10 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
             panelClass: 'my-component-bottom-sheet',
         });
     }
+
+    openCancel(): void {
+        this._bottomSheet.open(StatusComponent, {
+            panelClass: 'my-component-bottom-sheet',
+        });
+    }
 }
