@@ -40,6 +40,13 @@ import {
 } from '@angular/material/bottom-sheet';
 import { FuseCardComponent } from '@fuse/components/card';
 import { StatusComponent } from '../../booking-detail/status/page.component';
+import { ToastService } from 'app/toast.service';
+import {
+    MatSnackBar,
+    MatSnackBarConfig,
+    MatSnackBarHorizontalPosition,
+} from '@angular/material/snack-bar';
+import { SnackBarComponent } from '../../booking-detail/snackbar/page.component';
 
 @Component({
     selector: 'home-list',
@@ -81,7 +88,7 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
     bookings: any;
     activeBtn1: boolean = true;
     activeBtn2: boolean = true;
-
+    toasts = [];
     /**
      * Constructor
      */
@@ -90,7 +97,9 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
         private _service: PageService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _bottomSheet: MatBottomSheet
+        private _bottomSheet: MatBottomSheet,
+        private toastService: ToastService,
+        private _snackBar: MatSnackBar
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -136,8 +145,43 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
     }
 
     openStatus(): void {
-        this._bottomSheet.open(StatusComponent);
+        const bottomSheetRef = this._bottomSheet.open(StatusComponent);
+
+        bottomSheetRef.afterDismissed().subscribe((data) => {
+            if (data) {
+                this._snackBar.openFromComponent(SnackBarComponent, {
+                    duration: 3000,
+                    verticalPosition: 'top',
+                });
+            }
+
+            // this.openSnackBar(
+            //     'ยกเลิกการจองสำเร็จ',
+            //     'ปิด',
+            //     'custom-snackbar',
+            //     'end'
+            // );
+        });
     }
 
- 
+    removeToast(id: string) {
+        this.toastService.removeToast(id);
+    }
+
+    openSnackBar(
+        message: string,
+        action: string,
+        panelClass: string,
+        position: MatSnackBarHorizontalPosition
+    ): void {
+        const config: MatSnackBarConfig = {
+            duration: 333000, // Duration in milliseconds
+            horizontalPosition: position,
+            verticalPosition: 'top', // Vertical position (top or bottom)
+            panelClass: [panelClass], // Array of additional CSS classes
+            data: { message: message, icon: 'done' },
+        };
+
+        this._snackBar.open(message, action, config);
+    }
 }

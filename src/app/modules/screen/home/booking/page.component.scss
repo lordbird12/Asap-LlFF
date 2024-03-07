@@ -2,3 +2,14 @@ mat-bottom-sheet-container {
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
 }
+
+.mdc-snackbar__surface {
+    background-color: #D8FBDE !important;
+    /* Set your desired background color */
+    color: #0A5554 !important;
+    /* Set your desired text color */
+}
+
+.mat-mdc-snack-bar-label {
+    color: #0A5554 !important;
+}

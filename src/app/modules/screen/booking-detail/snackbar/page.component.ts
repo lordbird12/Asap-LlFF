@@ -53,7 +53,7 @@ import { NgClass, NgIf } from '@angular/common';
         MatButtonModule,
     ],
 })
-export class HomeMainComponent implements OnInit {
+export class SnackBarComponent implements OnInit {
     addForm: UntypedFormGroup;
     yearlyBilling: boolean = true;
 
