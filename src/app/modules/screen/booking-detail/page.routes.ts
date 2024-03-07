@@ -12,5 +12,5 @@ export default [
     {
         path: 'booking',
         component: PageBookingComponent,
-    },
+    }
 ] as Routes;

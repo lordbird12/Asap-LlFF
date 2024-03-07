@@ -63,7 +63,7 @@ import { CommonModule, NgClass } from '@angular/common';
         MatBottomSheetModule,
         FuseCardComponent,
         NgClass,
-        CommonModule
+        CommonModule,
     ],
 })
 export class CarsComponent implements OnInit {
@@ -72,7 +72,7 @@ export class CarsComponent implements OnInit {
     dataForm: FormGroup;
     map: any; // Assuming you have a reference to the map object
     items: any;
-    item: any;
+    profile: any;
     /**
      * Constructor
      */
@@ -81,7 +81,7 @@ export class CarsComponent implements OnInit {
         private _bottomSheet: MatBottomSheet,
         private _service: PageService,
         private _router: Router,
-        private _changeDetectorRef: ChangeDetectorRef,
+        private _changeDetectorRef: ChangeDetectorRef
     ) {}
 
     openBottomSheet(): void {
@@ -96,16 +96,46 @@ export class CarsComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.item = localStorage.getItem('MyCars')
-            ? JSON.parse(localStorage.getItem('MyCars'))
+        this.profile = localStorage.getItem('profile')
+            ? JSON.parse(localStorage.getItem('profile'))
             : [];
 
-       
+        this._service
+            .get_my_cars(this.profile.userId)
+            .subscribe((resp: any) => {
+                this.items = resp;
+                this._changeDetectorRef.markForCheck();
+            });
     }
 
-    selectServiceCenter(item){
-        localStorage.setItem('myServiceCenter', JSON.stringify(item));
+    booking(item:any): void {
+        const data = {
+            license: item.license,
+            id_token: this.profile.idToken,
+            display_name: this.profile.displayName,
+            picture_url: this.profile.pictureUrl,
+            user_id: this.profile.userId,
+        };
 
-        this._router.navigate(['screens/services/step-three']);
+        this._service.reg_license(data).subscribe((resp: any) => {
+            try {
+                // this.item = resp.data;
+                if (resp.data) {
+                    const obj = {
+                        data: resp.data,
+                    };
+
+                    localStorage.setItem('data', JSON.stringify(obj));
+                    this._router.navigate(['screens/reg-kg/list']);
+                }
+                this._changeDetectorRef.markForCheck();
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    submit():void{
+        this._router.navigate(['screens/reg-license-plate/list']);
     }
 }

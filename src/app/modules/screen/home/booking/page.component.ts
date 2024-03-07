@@ -186,6 +186,6 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
     }
 
     openCars():void{
-        this._router.navigate(['screens/home/cars']);
+        this._router.navigate(['screens/services/cars']);
     }
 }

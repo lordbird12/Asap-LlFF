@@ -225,4 +225,26 @@ export class PageService {
                 })
             );
     }
+
+    get_my_cars(userId: any): Observable<any> {
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_my_cars', {
+                user_id: userId,
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    reg_license(data: any): Observable<any> {
+        return this._httpClient
+            .post<any>(environment.baseURL + '/api/get_car_by_license_plate', data)
+            .pipe(
+                tap((result) => {
+                    this._data.next(result);
+                })
+            );
+    }
 }

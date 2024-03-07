@@ -8,6 +8,7 @@ import { StepThreeComponent } from './step-three/page.component';
 import { StepThreeTimeComponent } from './step-three-time/page.component';
 import { StepFourComponent } from './step-four/page.component';
 import { StepTwoMapRecommendComponent } from './step-two-map-recommend/page.component';
+import { CarsComponent } from './cars/page.component';
 
 export default [
     // {
@@ -92,6 +93,16 @@ export default [
             {
                 path: 'step-four',
                 component: StepFourComponent,
+            },
+        ],
+    },
+    {
+        path: '',
+        component: PageComponent,
+        children: [
+            {
+                path: 'cars',
+                component: CarsComponent,
             },
         ],
     },
