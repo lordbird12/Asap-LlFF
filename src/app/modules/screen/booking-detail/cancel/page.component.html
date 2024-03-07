@@ -1,22 +1,43 @@
-<div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white rounded-full">
+<div class="flex flex-row">
 
-    <span class="text-2xl text-left md:text-xl font-bold tracking-tight leading-7 sm:leading-10 truncate mt-3 ">
-        ยกเลิกการจอง
-    </span>
+    <div class="flex flex-col overflow-y-auto py-2">
+        <div class="flex flex-row justify-between items-center">
+            <div class="flex flex-col items-center">
+                <div class="text-2xl font-bold items-center justify-center"> เหตุผลที่ต้องการยกเลิกการจอง</div>
+                <div class="text-lg">กรุณาเลือกเหตุผล</div>
+            </div>
+        </div>
+        <form>
+            <div class="flex flex-col my-5">
+                <div class="grid grid-row-4 gap-4">
+                    <div class="flex flex-col">
+                        <div class="flex items-center mb-4">
+                            <input id="red-radio1" type="radio" value="ติดธุระ" name="colored-radio" (change)="onRadioChange($event)" [formControl]="statusData" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="red-radio1" class="ms-2 text-lg font-medium text-gray-900 dark:text-gray-300">ติดธุระ</label>
+                        </div>
+                        <div class="flex items-center mb-4">
+                            <input id="red-radio2" type="radio" value="เปลี่ยนใจ" name="colored-radio" (change)="onRadioChange($event)" [formControl]="statusData" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="red-radio2" class="ms-2 text-lg font-medium text-gray-900 dark:text-gray-300">เปลี่ยนใจ</label>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <input id="red-radio3" type="radio" value="อื่นๆ โปรดระบุเหตุผล" name="colored-radio" (change)="onRadioChange($event)" [formControl]="statusData" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="red-radio4" class="ms-2 text-lg font-medium text-gray-900 dark:text-gray-300">อื่นๆ
+                                โปรดระบุเหตุผล</label>
+                        </div>
+                        <div *ngIf="other" class="flex items-end dark:bg-transparent">
+                            <mat-form-field class="fuse-mat-dense fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
+                                <textarea class="textarea" matInput [placeholder]="'ระบุสาเหตุที่ต้องการแจ้งซ่อม'" [rows]="4"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+
 </div>
-
-<div class="grid grid-cols-1 mt-2 bg-white justify-center rounded max-w-[100vh] ">
-    <div class=" flex relative items-start justify-start w-full h-35 px-4 md:px-6 z-49 bg-white ">
-        <div class="flex">
-            <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'asha:calendar-bg'"></mat-icon>
-            <span class="font-semibold m-1">เลื่อนวัน เวลา เข้าใช้บริการ</span>
-        </div>
-    </div>
-    <div class="my-2 border-t"></div>
-    <div class=" flex relative items-start justify-start w-full h-35 px-4 md:px-6 z-49 bg-white ">
-        <div class="flex">
-            <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'asha:x'"></mat-icon>
-            <span class="font-semibold m-1">ยกเลิกการจอง</span>
-        </div>
-    </div>
+<div class="flex flex-row">
+    <button class="px-6 rounded-md mt-5 w-full" mat-flat-button [color]="'primary'" (click)="onSaveClick()">ยกเลิกการจอง</button>
 </div>

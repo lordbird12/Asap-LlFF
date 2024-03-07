@@ -1,124 +1,109 @@
-import { NgClass, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
-import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
-import { Subject, takeUntil } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
-import { FuseCardComponent } from '@fuse/components/card';
-import { MatDividerModule } from '@angular/material/divider';
-import {
-    MatFormFieldControl,
-    MatFormFieldModule,
-} from '@angular/material/form-field';
-import { MatInput, MatInputModule } from '@angular/material/input';
-import {
-    FormBuilder,
-    FormGroup,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
-import { Router } from '@angular/router';
-import { AnalyticsMockApi } from 'app/mock-api/dashboards/analytics/api';
+import { DropdownTimeComponent } from 'app/shared/dropdown-time/dropdown-time.component';
 import { PageService } from '../page.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CheckboxTopicComponent } from 'app/shared/checkbox-topic/checkbox.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { Router } from '@angular/router';
 
 @Component({
-    selector: 'start',
-    templateUrl: './page.component.html',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-booking-cancel',
     standalone: true,
     imports: [
-        CommonModule,
-        MatButtonModule,
-        NgClass,
-        MatIconModule,
-        MatSidenavModule,
-        MatButtonModule,
-        MatIconModule,
-        NgFor,
-        NgClass,
-        NgSwitch,
-        NgSwitchCase,
-        MatMenuModule,
-        FuseCardComponent,
         MatDividerModule,
-        MatFormFieldModule,
-        MatButtonModule,
+        FormsModule,
+        CommonModule,
+        MatSelectModule,
         MatInputModule,
+        MatDatepickerModule,
+        MatButtonModule,
+        MatIconModule,
+        DropdownTimeComponent,
+        CheckboxTopicComponent,
         ReactiveFormsModule,
-        NgxStarsModule,
     ],
+    templateUrl: './page.component.html',
+    styleUrls: ['./page.component.scss'],
 })
-export class CancelComponent implements OnInit, OnDestroy {
-    @ViewChild(NgxStarsComponent)
-    starsComponent: NgxStarsComponent;
-    @ViewChild('drawer') drawer: MatDrawer;
-    drawerMode: 'over' | 'side' = 'side';
-    drawerOpened: boolean = true;
-    panels: any[] = [];
-    selectedPanel: string = 'main';
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
-    formFieldHelpers: string[] = ['fuse-mat-dense'];
-    phone: string = '085-036-0033';
-    // otp: string[] = new Array(6).fill('');
-    otpForm: FormGroup;
-    public lat;
-    public lng;
-    /**
-     * Constructor
-     */
+export class CancelDialogComponent implements OnInit {
+    serviceData: any[] = [];
+    serviceCenterData: any[] = [];
+    activities: any[] = [];
+    dataArray: any[] = [];
+    topics: any[] = [
+        'รถเสียฉุกเฉิน',
+        'อุบัติเหตุ',
+        'ติดตามรถทดแทน',
+        'ติดตามงานบริหารรถยนต์',
+        'อื่นๆ',
+    ];
+    items: any[] = [];
+    statusData = new FormControl('');
+    checkAll = false;
+    selectedItems: any[] = [];
+    other: boolean = false;
     constructor(
-        private _bottomSheetRef: MatBottomSheetRef<CancelComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
-        private formBuilder: FormBuilder,
-        private _fuseMediaWatcherService: FuseMediaWatcherService,
+        private _service: PageService,
+        private dialogRef: MatDialogRef<CancelDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private _fuseConfirmationService: FuseConfirmationService,
         private _router: Router,
-        private _service: PageService
-    ) {}
-    ngAfterViewInit() {}
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
-    ngOnInit(): void {}
-
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
+    ) {
+        console.log('dta', this.data.value);
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    selectMap() {
-        this._bottomSheetRef.dismiss();
-        this._router.navigate(['screens/search/main']);
+    ngOnInit(): void {
+        this.items = this.data.value;
+        // this.updateSelectedItems();
     }
 
-    getLocation() {
-        
+    onClose() {
+        this.dialogRef.close();
+    }
+
+    checkAllItems() {
+        for (const item of this.items) {
+            item.isSelected = this.checkAll;
+        }
+        this.updateSelectedItems();
+        this._changeDetectorRef.detectChanges();
+    }
+
+    updateSelectedItems() {
+        this.selectedItems = this.items.filter((item) => item.isSelected);
+        if (this.selectedItems.length !== this.items.length) {
+            this.checkAll = false;
+        }
+    }
+    uncheckAllItems() {
+        this.checkAll = false;
+        for (const item of this.items) {
+            item.isSelected = false;
+        }
+        this.updateSelectedItems();
+    }
+
+    onSaveClick(): void {
+        // alert(this.statusData.value)
+        this.dialogRef.close(true);
+        // this._router.navigate(['screens/home/booking']);
+    }
+
+    onRadioChange(event: any): void {
+        if (event.target.value != 'อื่นๆ โปรดระบุเหตุผล') {
+            this.other = false;
+        } else if (event.target.value == 'อื่นๆ โปรดระบุเหตุผล') {
+            this.other = true;
+        }
+        return;
     }
 }

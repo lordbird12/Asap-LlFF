@@ -38,7 +38,9 @@ import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
 import { Router } from '@angular/router';
 import { AnalyticsMockApi } from 'app/mock-api/dashboards/analytics/api';
 import { PageService } from '../page.service';
-import { CancelComponent } from '../cancel/page.component';
+import { CancelDialogComponent } from '../cancel/page.component';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'start',
@@ -67,7 +69,7 @@ import { CancelComponent } from '../cancel/page.component';
         MatInputModule,
         ReactiveFormsModule,
         NgxStarsModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
     ],
 })
 export class StatusComponent implements OnInit, OnDestroy {
@@ -95,8 +97,9 @@ export class StatusComponent implements OnInit, OnDestroy {
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _router: Router,
         private _service: PageService,
-        private _bottomSheet: MatBottomSheet
-
+        private _bottomSheet: MatBottomSheet,
+        private _fuseConfirmationService: FuseConfirmationService,
+        private dialog: MatDialog
     ) {}
     ngAfterViewInit() {}
 
@@ -127,8 +130,174 @@ export class StatusComponent implements OnInit, OnDestroy {
         this._router.navigate(['screens/search/main']);
     }
 
+    // openCancel(): void {
+    //     this._bottomSheetRef.dismiss();
+
+    //     this._bottomSheet.open(CancelDialogComponent, {
+    //         panelClass: 'my-component-bottom-sheet',
+    //     });
+    // }
+
     openCancel() {
-        this._bottomSheetRef.dismiss();
-        this._bottomSheet.open(CancelComponent);
+        const dialogRef = this.dialog.open(CancelDialogComponent, {
+            width: '500px', // กำหนดความกว้างของ Dialog
+            data: {
+                data: 1,
+            },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                const confirmation = this._fuseConfirmationService.open({
+                    title: 'เปลี่ยนสถานะ',
+                    message: 'คุณต้องการเปลี่ยนสถานะใช่หรือไม่ ',
+                    icon: {
+                        show: false,
+                        name: 'heroicons_outline:exclamation',
+                        color: 'warning',
+                    },
+                    actions: {
+                        confirm: {
+                            show: true,
+                            label: 'ยืนยัน',
+                            color: 'primary',
+                        },
+                    },
+                    dismissible: true,
+                });
+
+                // Subscribe to the confirmation dialog closed action
+                confirmation.afterClosed().subscribe((result) => {
+                    if (result === 'confirmed') {
+                        this._bottomSheet.dismiss();
+                        // this.multiItems.map((item: any) => {
+                        //     const reason = result;
+                        //     const formValue = item;
+                        //     const services = item.services.map((data) => ({
+                        //         service_id: data.service_id,
+                        //     }));
+                        //     this._service
+                        //         .updateStatus(
+                        //             formValue.id,
+                        //             this.status.value,
+                        //             reason,
+                        //             services
+                        //         )
+                        //         .subscribe({
+                        //             next: (resp: any) => {
+                        //                 this.multiItems = [];
+                        //                 this.isChecked1 = [];
+                        //                 this.isChecked2 = [];
+                        //                 const data = {
+                        //                     users: this.employeeDep.filter(
+                        //                         (e) => e.isSelected
+                        //                     ),
+                        //                 };
+                        //                 this.task = [
+                        //                     {
+                        //                         id: 1,
+                        //                         name: 'งานใหม่ / Todo',
+                        //                         detail: 'งานใหม่รอรับ',
+                        //                         status: 'Process',
+                        //                         task: [],
+                        //                     },
+                        //                     {
+                        //                         id: 2,
+                        //                         name: 'กำลังดำเนินงาน',
+                        //                         detail: 'โทรจองศูนย์ซ่อมและโทรยืนยันลูกค้า',
+                        //                         status: 'Waiting',
+                        //                         task: [],
+                        //                     },
+                        //                     {
+                        //                         id: 3,
+                        //                         name: 'รอเข้ารับบริการ',
+                        //                         detail: 'โทรยืนยันการเข้ารับบริการกับทางศูนย์',
+                        //                         status: 'Finish',
+                        //                         task: [],
+                        //                     },
+                        //                     {
+                        //                         id: 4,
+                        //                         name: 'เสร็จสิ้น',
+                        //                         detail: '-',
+                        //                         status: 'Cancel',
+                        //                         task: [],
+                        //                     },
+                        //                 ];
+                        //                 this._service
+                        //                     .getBookingByDep(
+                        //                         this.user.department_id,
+                        //                         data
+                        //                     )
+                        //                     .subscribe((resp: any) => {
+                        //                         const news = resp.data.news;
+                        //                         const all = resp.data.all;
+                        //                         // console.log(resp.data.all)
+                        //                         for (const item of news) {
+                        //                             if (item.status === 'New') {
+                        //                                 this.task[0].task.push(
+                        //                                     item
+                        //                                 );
+                        //                             }
+                        //                         }
+                        //                         for (const item of all) {
+                        //                             if (
+                        //                                 item.status ===
+                        //                                 'Process'
+                        //                             ) {
+                        //                                 this.task[1].task.push(
+                        //                                     item
+                        //                                 );
+                        //                             } else if (
+                        //                                 item.status ===
+                        //                                 'Waiting'
+                        //                             ) {
+                        //                                 this.task[2].task.push(
+                        //                                     item
+                        //                                 );
+                        //                             } else if (
+                        //                                 item.status === 'Finish'
+                        //                             ) {
+                        //                                 this.task[3].task.push(
+                        //                                     item
+                        //                                 );
+                        //                             } else if (
+                        //                                 item.status === 'Cancel'
+                        //                             ) {
+                        //                                 this.task[0].task.push(
+                        //                                     item
+                        //                                 );
+                        //                             }
+                        //                         }
+                        //                         this._changeDetectorRef.detectChanges();
+                        //                     });
+                        //             },
+                        //             error: (err: any) => {
+                        //                 this._fuseConfirmationService.open({
+                        //                     title: 'กรุณาระบุข้อมูล',
+                        //                     message: err.error.message,
+                        //                     icon: {
+                        //                         show: true,
+                        //                         name: 'heroicons_outline:exclamation',
+                        //                         color: 'warning',
+                        //                     },
+                        //                     actions: {
+                        //                         confirm: {
+                        //                             show: false,
+                        //                             label: 'ยืนยัน',
+                        //                             color: 'primary',
+                        //                         },
+                        //                         cancel: {
+                        //                             show: false,
+                        //                             label: 'ยกเลิก',
+                        //                         },
+                        //                     },
+                        //                     dismissible: true,
+                        //                 });
+                        //             },
+                        //         });
+                        // });
+                    }
+                });
+            }
+        });
     }
 }
