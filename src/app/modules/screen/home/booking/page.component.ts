@@ -39,11 +39,13 @@ import {
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { FuseCardComponent } from '@fuse/components/card';
+import { StatusComponent } from '../../booking-detail/status/page.component';
 
 @Component({
     selector: 'home-list',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -77,6 +79,8 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
     service_input: boolean;
     activeBtn: any;
     bookings: any;
+    activeBtn1: boolean = true;
+    activeBtn2: boolean = true;
 
     /**
      * Constructor
@@ -100,6 +104,16 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
         this.bookings = localStorage.getItem('MyBooking')
             ? JSON.parse(localStorage.getItem('MyBooking'))
             : [];
+
+        this.bookings.forEach((element) => {
+            if (element.status == 'กำลังดำเนินการ') {
+                this.activeBtn1 = false;
+            }
+
+            if (element.status == 'รายการจองสิ้นสุดแล้ว') {
+                this.activeBtn2 = false;
+            }
+        });
     }
 
     ngAfterViewInit(): void {
@@ -119,5 +133,11 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
 
     viewDetail(booking: any): void {
         this._router.navigate(['screens/booking-detail/' + booking.id]);
+    }
+
+    openStatus(): void {
+        this._bottomSheet.open(StatusComponent, {
+            panelClass: 'my-component-bottom-sheet',
+        });
     }
 }

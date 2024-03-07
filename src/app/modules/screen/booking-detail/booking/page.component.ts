@@ -75,7 +75,8 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
     items: any;
     service_remark: string;
     service_input: boolean;
-    activeBtn: any;
+    activeBtn1: boolean = false;
+    activeBtn2: boolean = false;
     bookings: any;
 
     /**
@@ -100,6 +101,16 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
         this.bookings = localStorage.getItem('MyBooking')
             ? JSON.parse(localStorage.getItem('MyBooking'))
             : [];
+
+        this.bookings.forEach((element) => {
+            if (element.status == 'กำลังดำเนินการ') {
+                this.activeBtn1 = true;
+            }
+
+            if (element.status == 'รายการจองสิ้นสุดแล้ว') {
+                this.activeBtn2 = true;
+            }
+        });
     }
 
     ngAfterViewInit(): void {
@@ -113,7 +124,7 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
         if (number == 2) {
             this.yearlyBilling == false;
         }
-       
+
         this._changeDetectorRef.detectChanges();
     }
 }

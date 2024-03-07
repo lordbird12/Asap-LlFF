@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -17,19 +18,25 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { FuseCardComponent } from '@fuse/components/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { ActivatedRoute, Router } from '@angular/router';
 import {
-    MatBottomSheet,
-    MatBottomSheetModule,
-    MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
+    MatFormFieldControl,
+    MatFormFieldModule,
+} from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
+import {
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
+import { Router } from '@angular/router';
+import { AnalyticsMockApi } from 'app/mock-api/dashboards/analytics/api';
 import { PageService } from '../page.service';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { StatusComponent } from '../status/page.component';
 
 @Component({
-    selector: 'services',
+    selector: 'start',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,10 +58,14 @@ import { StatusComponent } from '../status/page.component';
         MatDividerModule,
         MatFormFieldModule,
         MatButtonModule,
-        MatBottomSheetModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        NgxStarsModule,
     ],
 })
-export class DetailComponent implements OnInit, OnDestroy {
+export class StatusComponent implements OnInit, OnDestroy {
+    @ViewChild(NgxStarsComponent)
+    starsComponent: NgxStarsComponent;
     @ViewChild('drawer') drawer: MatDrawer;
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
@@ -62,20 +73,23 @@ export class DetailComponent implements OnInit, OnDestroy {
     selectedPanel: string = 'main';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     formFieldHelpers: string[] = ['fuse-mat-dense'];
-    item: any;
-
+    phone: string = '085-036-0033';
+    // otp: string[] = new Array(6).fill('');
+    otpForm: FormGroup;
+    public lat;
+    public lng;
     /**
      * Constructor
      */
     constructor(
+        private _bottomSheetRef: MatBottomSheetRef<StatusComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
+        private formBuilder: FormBuilder,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _bottomSheet: MatBottomSheet,
-        private _service: PageService,
         private _router: Router,
-        private _fuseConfirmationService: FuseConfirmationService,
-        public activatedRoute: ActivatedRoute
+        private _service: PageService
     ) {}
+    ngAfterViewInit() {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -84,15 +98,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     /**
      * On init
      */
-    ngOnInit(): void {
-        this.activatedRoute.params.subscribe((params) => {
-            const id = params.id;
-            this._service.getById(id).subscribe((resp: any) => {
-                this.item = resp.data;
-                this._changeDetectorRef.markForCheck();
-            });
-        });
-    }
+    ngOnInit(): void {}
 
     /**
      * On destroy
@@ -107,22 +113,12 @@ export class DetailComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    submit(): void {}
-
-    openMap(): void {
-        window.open(
-            'https://www.google.com/maps/search/?api=1&query=' +
-                this.item.service_center.lat +
-                ',' +
-                this.item.service_center.lon
-        );
+    selectMap() {
+        this._bottomSheetRef.dismiss();
+        this._router.navigate(['screens/search/main']);
     }
 
-    openLine(): void {
-        window.open('https://lin.ee/ElR0GHv');
-    }
-
-    openStatus(): void {
-        this._bottomSheet.open(StatusComponent);
+    getLocation() {
+        
     }
 }
