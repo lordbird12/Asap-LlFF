@@ -184,4 +184,8 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
 
         this._snackBar.open(message, action, config);
     }
+
+    openCars():void{
+        this._router.navigate(['screens/home/cars']);
+    }
 }
