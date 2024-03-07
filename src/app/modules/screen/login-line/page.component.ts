@@ -135,11 +135,13 @@ export class PageComponent implements OnInit, OnDestroy {
                 this._service
                     .getProfile(profile.userId)
                     .subscribe((resp: any) => {
-                        console.log(resp);
-                        try {
-                            localStorage.setItem('MyBooking', JSON.stringify(resp));
+                        if (resp.length > 0) {
+                            localStorage.setItem(
+                                'MyBooking',
+                                JSON.stringify(resp)
+                            );
                             this._router.navigate(['screens/home/booking']);
-                        } catch (error) {
+                        } else {
                             this._router.navigate(['screens/policy']);
                         }
                     });
