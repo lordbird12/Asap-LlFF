@@ -118,6 +118,6 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
     }
 
     viewDetail(booking: any): void {
-        this._router.navigate(['screens/booking-detail/' + booking.id]);
+        this._router.navigate(['screens/booking-detail/' + booking.car_id]);
     }
 }
