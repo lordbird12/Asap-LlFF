@@ -27,7 +27,7 @@ export const appRoutes: Route[] = [
         path: 'screens',
         // canActivate: [AuthGuard],
         // canActivateChild: [AuthGuard],
-        component: Layout2Component,
+        component: LayoutFinishComponent,
         resolve: {
             initialData: initialDataResolver,
         },
