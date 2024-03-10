@@ -92,6 +92,8 @@ export class PageComponent implements OnInit, OnDestroy {
             const paramValue = params;
             console.log('Query Parameter:', paramValue);
             var id = paramValue.toString().replace('?template_id=', '');
+            console.log(id);
+            return;
             if (id == '1') {
                 this._router.navigate(['screens/postpon/finish']);
             } else {
