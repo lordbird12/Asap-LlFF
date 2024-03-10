@@ -92,11 +92,11 @@ export class PageComponent implements OnInit, OnDestroy {
             const paramValue = params;
             console.log('Query Parameter:', paramValue);
 
-            // if(paramValue == 1){
-            //     this.initLine();
-            // }else{
-
-            // }
+            if(paramValue.replace("?template_id=", "") == "1"){
+                this._router.navigate(['screens/postpon/finish']);
+            }else{
+                this.initLine();
+            }
           });
         
     }
