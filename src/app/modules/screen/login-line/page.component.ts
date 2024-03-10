@@ -36,7 +36,7 @@ import liff from '@line/liff';
     selector: 'page',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CommonModule,
