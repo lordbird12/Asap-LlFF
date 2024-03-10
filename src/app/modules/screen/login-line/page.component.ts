@@ -90,10 +90,8 @@ export class PageComponent implements OnInit, OnDestroy {
         this.route.queryParams.subscribe((params) => {
             // Access and use query parameters here
             const paramValue = params;
-            console.log('Query Parameter:', paramValue['liff.state']);
-            var id = paramValue.toString().replace('?template_id=', '');
-            console.log(id);
-            return;
+            var id = paramValue['liff.state'].toString().replace('?template_id=', '');
+
             if (id == '1') {
                 this._router.navigate(['screens/postpon/finish']);
             } else {
