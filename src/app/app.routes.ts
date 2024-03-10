@@ -9,6 +9,7 @@ import { LayoutBookingComponent } from './layout-booking/layout.component';
 import { LayoutCalendarComponent } from './layout-calendar/layout-calendar.component';
 import { LayoutSearchComponent } from './layout-search/layout.component';
 import { LayoutFinishComponent } from './layout-finish/layout.component';
+import { LayoutPostponComponent } from './layout-postpon/layout-postpon.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -36,6 +37,22 @@ export const appRoutes: Route[] = [
                 path: 'authen',
                 loadChildren: () =>
                     import('app/modules/screen/login-line/page.routes'),
+            },
+        ]
+    },
+    {
+        path: 'screens',
+        // canActivate: [AuthGuard],
+        // canActivateChild: [AuthGuard],
+        component: LayoutPostponComponent,
+        resolve: {
+            initialData: initialDataResolver,
+        },
+        children: [
+            {
+                path: 'postpon',
+                loadChildren: () =>
+                    import('app/modules/screen/postpon/page.routes'),
             },
         ]
     },

@@ -38,13 +38,12 @@ import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
 import { Router } from '@angular/router';
 import { AnalyticsMockApi } from 'app/mock-api/dashboards/analytics/api';
 import { PageService } from '../page.service';
-import { CancelDialogComponent } from '../cancel/page.component';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastService } from 'app/toast.service';
 
 @Component({
-    selector: 'start',
+    selector: 'confirm',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -73,7 +72,7 @@ import { ToastService } from 'app/toast.service';
         MatBottomSheetModule,
     ],
 })
-export class StatusComponent implements OnInit, OnDestroy {
+export class ConfirmComponent implements OnInit, OnDestroy {
     @ViewChild(NgxStarsComponent)
     starsComponent: NgxStarsComponent;
     @ViewChild('drawer') drawer: MatDrawer;
@@ -91,7 +90,7 @@ export class StatusComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _bottomSheetRef: MatBottomSheetRef<StatusComponent>,
+        private _bottomSheetRef: MatBottomSheetRef<ConfirmComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
         private formBuilder: FormBuilder,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
@@ -126,38 +125,7 @@ export class StatusComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    selectMap() {
-        this._bottomSheetRef.dismiss();
-        this._router.navigate(['screens/search/main']);
-    }
-
-    // openCancel(): void {
-    //     this._bottomSheetRef.dismiss();
-
-    //     this._bottomSheet.open(CancelDialogComponent, {
-    //         panelClass: 'my-component-bottom-sheet',
-    //     });
-    // }
-
-    openCancel() {
-        const dialogRef = this.dialog.open(CancelDialogComponent, {
-            width: '500px', // กำหนดความกว้างของ Dialog
-            data: {
-                data: 1,
-            },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-                this._bottomSheet.dismiss(result);
-                // if (result) {
-                //     this.toastService.toastsSubject.subscribe((toasts) => {
-                //         this.toasts = toasts;
-                //     });
-                // }
-            }
-        });
-    }
-
+ 
     removeToast(id: string) {
         this.toastService.removeToast(id);
     }
