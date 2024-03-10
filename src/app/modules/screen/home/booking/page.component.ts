@@ -47,6 +47,7 @@ import {
     MatSnackBarHorizontalPosition,
 } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../booking-detail/snackbar/page.component';
+import { StarsComponent } from '../stars/page.component';
 
 @Component({
     selector: 'home-list',
@@ -187,5 +188,9 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
 
     openCars():void{
         this._router.navigate(['screens/services/cars']);
+    }
+
+    openEva(): void {
+        this._bottomSheet.open(StarsComponent);
     }
 }
