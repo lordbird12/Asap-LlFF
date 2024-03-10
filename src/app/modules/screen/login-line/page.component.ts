@@ -89,14 +89,14 @@ export class PageComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.route.queryParams.subscribe(params => {
             // Access and use query parameters here
-            const paramValue = params['template_id'];
+            const paramValue = params;
             console.log('Query Parameter:', paramValue);
 
-            if(paramValue == 1){
-                this.initLine();
-            }else{
+            // if(paramValue == 1){
+            //     this.initLine();
+            // }else{
 
-            }
+            // }
           });
         
     }
