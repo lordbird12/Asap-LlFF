@@ -132,6 +132,6 @@ export class ConfirmComponent implements OnInit, OnDestroy {
 
     openPostpon():void{
         this._bottomSheetRef.dismiss();
-        this._router.navigate(['screens/postpon/date']);
+        this._router.navigate(['screens/postpon/finish']);
     }
 }

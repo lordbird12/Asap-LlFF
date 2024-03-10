@@ -73,6 +73,7 @@ export class PageComponent implements OnInit, OnDestroy {
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
+        private route: ActivatedRoute,
         private _service: PageService,
         private _fuseConfirmationService: FuseConfirmationService,
         private _formBuilder: UntypedFormBuilder
@@ -86,7 +87,18 @@ export class PageComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this.initLine();
+        this.route.queryParams.subscribe(params => {
+            // Access and use query parameters here
+            const paramValue = params['template_id'];
+            console.log('Query Parameter:', paramValue);
+
+            if(paramValue == 1){
+                this.initLine();
+            }else{
+
+            }
+          });
+        
     }
 
     /**

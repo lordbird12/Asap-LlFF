@@ -1,0 +1,122 @@
+<div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden bg-gray-100">
+    <div class="px-2 pt-3 pb-2 md:p-8 md:pb-2 lg:p-12">
+        <div class="flex flex-row md:flex mb-5">
+            <div class="flex items-center pl-2 m-auto space-x-0.5 sm:space-x-2">
+                <mat-icon [svgIcon]="'asha:check'" class="text-red-300 w-30 h-30"></mat-icon>
+            </div>
+        </div>
+        <div class="flex flex-row md:flex mb-5">
+            <div class="flex items-center pl-2 m-auto space-x-0.5 sm:space-x-2">
+                <div class="text-2xl tracking-tight font-bold leading-none">เลื่อนวันเข้าใช้บริการแล้ว</div>
+            </div>
+        </div>
+        <form class="bg-card rounded-2xl md:shadow overflow-hidden sm:px-8 pt-6 pb-8 m-5 flex flex-col bg-no-repeat" style="background:white !important;">
+            <div>
+                <span class="text-2xl md:text-xl font-bold text-red-500 tracking-tight  leading-7 sm:leading-10 truncate m-5">
+                    กำลังดำเนินการ
+                </span>
+            </div>
+            <div class="">
+                <span class="text-sm md:text-xl font-bold text-gray-400 tracking-tight  leading-7 sm:leading-10 truncate m-5">
+                    รอศูนย์ให้บริการลูกค้ายืนยันภายใน 3 ชั่วโมง
+                </span>
+            </div>
+            <div class="flex-row">
+
+                <div class="flex">
+                    <div class="w-5 h-7  bg-gray-100 rounded-tr-full rounded-br-full"></div>
+                    <hr class="w-full border-t mt-4 border-gray-300 mt-3 justify-center mx-5">
+                    <div class="w-5 h-7  bg-gray-100 rounded-tl-full rounded-bl-full"></div>
+                </div>
+
+            </div>
+            <div class="flex flex-row -mx-3 md:flex mb-6">
+                <div class="flex ml-10">
+                    <button class="bg-red-100 p-1 rounded-xl">
+                        <mat-icon [svgIcon]="'asha:calendar-bg'" class="text-red-300 icon-size-10"></mat-icon>
+                    </button>
+                </div>
+                <div class="flex ml-5">
+                    <div>
+                        <span class="text-md font-extrabold">{{sevice_date_time?.date}}</span>
+                        <br> {{sevice_date_time?.time}}
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-row -mx-3 md:flex mb-6">
+                <div class="flex ml-10">
+                    <img class="h-15 w-20" [src]="item?.image">
+                </div>
+                <div class="flex ml-5">
+                    <div>
+                        <span class="text-2xl font-extrabold">{{item ? item.license : "-"}}</span>
+                        <br>
+                        <span class="text-slate-400">{{item ? item.brand_model.name : "-"}} • {{item ? item.color :
+                            "-"}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center -m-1.5 mb-5 mx-5">
+                <!-- Tags -->
+                <ng-container *ngIf="services.length">
+                    <ng-container *ngFor="let item of services; trackBy: trackByFn">
+                        <div *ngIf="item.check" class="flex items-center justify-center px-2 py-0 m-1.5 rounded-md leading-9 text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                            <span class="text-md font-medium whitespace-nowrap">{{item.name}}</span>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+
+            <div class="flex flex-row -mx-3 md:flex mb-6">
+                <div class="flex ml-5">
+                    <div class="mx-5">
+                        <span class="text-md font-extrabold  tracking-tight leading-7 md:leading-snug truncate">
+                            ศูนย์บริการ
+                        </span>
+                        <br>
+                        <span class="text-slate-400"> {{service ? service.address : "-"}}</span> <span (click)="openMap()" class="underline text-slate-400">ดูแผนที่</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="mx-5 ml-7">
+                    <span class="text-md font-extrabold">Order ID</span>
+                    <br>
+                    <span class="text-slate-400"> #815915</span>
+                </div>
+                <div class="mx-5">
+                    <span class="text-md font-extrabold">ข้อมูลผู้จอง</span>
+                    <br>
+                    <span class="text-slate-400">{{contact?.name}}</span>
+                </div>
+                <div class="mx-5 ml-7">
+                    <span class="text-md font-extrabold">วันที่ทำการจอง</span>
+                    <br>
+                    <span class="text-md text-slate-400">{{sevice_date_time?.date}}, {{sevice_date_time?.time}}</span>
+                </div>
+            </div>
+            <div class="flex flex-row md:flex mt-5 bg-slate-50 rounded-md mx-5">
+                <div class="flex p-2">
+                    <img class="h-10 w-10" src="https://i0.wp.com/www.gochoon.com/wp-content/uploads/2018/11/line-icon-png-transparent-3.png?ssl=1">
+                </div>
+                <div class="flex p-2">
+                    <div (click)="openLine()">
+                        <span class="text-md font-bold">ติดตามสถานะการจองผ่าน LINE</span>
+                        <br>
+                        <span class="text-sm text-slate-400"> เปิดแจ้งเตือนเพื่อรับแจ้งเตือนแบบเรียลไทม์</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="relative items-center justify-start w-full h-35 px-4 md:px-6 z-49 bg-white">
+
+        <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
+            เสร็จสิ้น
+        </button>
+    </div>
+</div>
+
+
+<!-- Footer -->

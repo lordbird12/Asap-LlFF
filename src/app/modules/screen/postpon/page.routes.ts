@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { PageComponent } from './page.component';
 import { PostponDateComponent } from './postpon-date/page.component';
 import { PostponTimeComponent } from './postpon-time/page.component';
+import { FinishComponent } from './finish/page.component';
 
 export default [
     // {
@@ -29,5 +30,14 @@ export default [
             },
         ],
     },
-  
+    {
+        path: '',
+        component: PageComponent,
+        children: [
+            {
+                path: 'finish',
+                component: FinishComponent,
+            },
+        ],
+    },
 ] as Routes;

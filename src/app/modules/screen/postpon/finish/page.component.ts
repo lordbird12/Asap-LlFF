@@ -24,13 +24,12 @@ import {
     MatBottomSheetModule,
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
-import { OtpComponent } from './../otp/page.component';
-import { StarsComponent } from './../stars/page.component';
 import { PageService } from '../page.service';
 import { Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+
 @Component({
-    selector: 'services',
+    selector: 'finsish',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,6 +52,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
         MatFormFieldModule,
         MatButtonModule,
         MatBottomSheetModule,
+        
     ],
 })
 export class FinishComponent implements OnInit, OnDestroy {
@@ -63,11 +63,13 @@ export class FinishComponent implements OnInit, OnDestroy {
     selectedPanel: string = 'main';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     formFieldHelpers: string[] = ['fuse-mat-dense'];
+
     item: any;
     service: any;
     services: any[] = [];
     sevice_date_time: any;
     contact: any;
+
     /**
      * Constructor
      */
@@ -80,9 +82,6 @@ export class FinishComponent implements OnInit, OnDestroy {
         private _fuseConfirmationService: FuseConfirmationService
     ) {}
 
-    openBottomSheet(): void {
-        this._bottomSheet.open(StarsComponent);
-    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -92,25 +91,40 @@ export class FinishComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this.item = localStorage.getItem('data')
-            ? JSON.parse(localStorage.getItem('data')).data
-            : [];
+        // Setup available panels
+        this.panels = [
+            {
+                id: 'home-main',
+                icon: 'heroicons_outline:user-circle',
+                title: 'Account',
+                description:
+                    'Manage your public profile and private information',
+            },
+            {
+                id: 'home-list',
+                icon: 'heroicons_outline:lock-closed',
+                title: 'Security',
+                description:
+                    'Manage your password and 2-step verification preferences',
+            }
+        ];
 
-        this.service = localStorage.getItem('myServiceCenter')
-            ? JSON.parse(localStorage.getItem('myServiceCenter'))
-            : [];
+        // Subscribe to media changes
+        this._fuseMediaWatcherService.onMediaChange$
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(({ matchingAliases }) => {
+                // Set the drawerMode and drawerOpened
+                if (matchingAliases.includes('lg')) {
+                    this.drawerMode = 'side';
+                    this.drawerOpened = true;
+                } else {
+                    this.drawerMode = 'over';
+                    this.drawerOpened = false;
+                }
 
-        this.sevice_date_time = localStorage.getItem('sevice_date_time')
-            ? JSON.parse(localStorage.getItem('sevice_date_time'))
-            : [];
-
-        this.contact = localStorage.getItem('contact')
-            ? JSON.parse(localStorage.getItem('contact'))
-            : [];
-
-        this.services = localStorage.getItem('services')
-            ? JSON.parse(localStorage.getItem('services'))
-            : [];
+                // Mark for check
+                this._changeDetectorRef.markForCheck();
+            });
     }
 
     /**
@@ -132,10 +146,10 @@ export class FinishComponent implements OnInit, OnDestroy {
      * @param panel
      */
     goToPanel(): void {
-        if (this.selectedPanel == '') {
-            this.selectedPanel = 'main';
-        } else if (this.selectedPanel == 'main') {
-            this.selectedPanel = 'list';
+        if(this.selectedPanel == ""){
+            this.selectedPanel  = "main";
+        }else if(this.selectedPanel  == "main"){
+            this.selectedPanel  = "list";
         }
 
         console.log(this.selectedPanel);
