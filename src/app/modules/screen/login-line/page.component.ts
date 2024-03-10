@@ -87,18 +87,17 @@ export class PageComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this.route.queryParams.subscribe(params => {
+        this.route.queryParams.subscribe((params) => {
             // Access and use query parameters here
             const paramValue = params;
             console.log('Query Parameter:', paramValue);
-
-            if(paramValue.replace("?template_id=", "") == "1"){
+            var id = paramValue.toString().replace('?template_id=', '');
+            if (id == '1') {
                 this._router.navigate(['screens/postpon/finish']);
-            }else{
+            } else {
                 this.initLine();
             }
-          });
-        
+        });
     }
 
     /**
