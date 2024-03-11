@@ -1,8 +1,13 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import {
-    ChangeDetectionStrategy,
+    AfterViewInit,
+    ChangeDetectorRef,
     Component,
+    ElementRef,
     OnInit,
+    QueryList,
+    ViewChild,
+    ViewChildren,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -22,22 +27,35 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {NgStepperModule} from 'angular-ng-stepper';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { NgStepperModule } from 'angular-ng-stepper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { PageService } from '../page.service';
+import { CommonModule, NgClass } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+    MatBottomSheet,
+    MatBottomSheetModule,
+    MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
 import { FuseCardComponent } from '@fuse/components/card';
-import { NgClass, NgIf } from '@angular/common';
-
+import { StatusComponent } from '../../booking-detail/status/page.component';
+import { ToastService } from 'app/toast.service';
+import {
+    MatSnackBar,
+    MatSnackBarConfig,
+    MatSnackBarHorizontalPosition,
+} from '@angular/material/snack-bar';
+import { SnackBarComponent } from '../../booking-detail/snackbar/page.component';
+import { StarsComponent } from '../stars/page.component';
 
 @Component({
     selector: 'home-list',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
-        NgClass,
-        NgIf,
-        FuseCardComponent,
         CdkStepperModule,
         NgStepperModule,
         MatStepperModule,
@@ -51,16 +69,41 @@ import { NgClass, NgIf } from '@angular/common';
         MatSelectModule,
         MatOptionModule,
         MatButtonModule,
+        MatProgressBarModule,
+        CommonModule,
+        NgClass,
+        MatBottomSheetModule,
+        FuseCardComponent,
     ],
 })
-export class HomeListComponent implements OnInit {
-    addForm: UntypedFormGroup;
+export class ListComponent implements OnInit, AfterViewInit {
+    @ViewChildren(FuseCardComponent, { read: ElementRef })
+    private _fuseCards: QueryList<ElementRef>;
     yearlyBilling: boolean = true;
-
+    dataForm: FormGroup;
+    items_check: any[] = [];
+    items: any;
+    service_remark: string;
+    service_input: boolean;
+    activeBtn: any;
+    bookings: any;
+    activeBtn1: boolean = true;
+    activeBtn2: boolean = true;
+    toasts = [];
+    id: any;
     /**
      * Constructor
      */
-    constructor(private _formBuilder: UntypedFormBuilder) {}
+    constructor(
+        private _formBuilder: FormBuilder,
+        private _service: PageService,
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _router: Router,
+        private _bottomSheet: MatBottomSheet,
+        private toastService: ToastService,
+        private _snackBar: MatSnackBar,
+        private _activatedRoute: ActivatedRoute
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -70,19 +113,92 @@ export class HomeListComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // Create the form
-        this.addForm = this._formBuilder.group({
-            name: ['Brian Hughes'],
-            username: ['brianh'],
-            title: ['Senior Frontend Developer'],
-            company: ['YXZ Software'],
-            about: [
-                "Hey! This is Brian; husband, father and gamer. I'm mostly passionate about bleeding edge tech and chocolate! 🍫",
-            ],
-            email: ['hughes.brian@mail.com', Validators.email],
-            phone: ['121-490-33-12'],
-            country: ['usa'],
-            language: ['english'],
+        this.bookings = localStorage.getItem('MyBooking')
+            ? JSON.parse(localStorage.getItem('MyBooking'))
+            : [];
+
+        this.bookings.forEach((element) => {
+            if (element.status == 'กำลังดำเนินการ') {
+                this.activeBtn1 = false;
+            }
+
+            if (element.status == 'รายการจองสิ้นสุดแล้ว') {
+                this.activeBtn2 = false;
+            }
         });
+
+        this.id = this._activatedRoute.snapshot.paramMap.get('id');
+
+        if (this.id) {
+            this._bottomSheet.open(StarsComponent);
+        }
+    }
+
+    ngAfterViewInit(): void {
+        this._changeDetectorRef.detectChanges();
+    }
+
+    tapSelect(number: any): void {
+        if (number == 1) {
+            this.yearlyBilling == true;
+        }
+        if (number == 2) {
+            this.yearlyBilling == false;
+        }
+
+        this._changeDetectorRef.detectChanges();
+    }
+
+    viewDetail(booking: any): void {
+        this._router.navigate(['screens/booking-detail/' + booking.id]);
+    }
+
+    openStatus(): void {
+        const bottomSheetRef = this._bottomSheet.open(StatusComponent);
+
+        bottomSheetRef.afterDismissed().subscribe((data) => {
+            if (data) {
+                this._snackBar.openFromComponent(SnackBarComponent, {
+                    duration: 3000,
+                    verticalPosition: 'top',
+                });
+            }
+
+            // this.openSnackBar(
+            //     'ยกเลิกการจองสำเร็จ',
+            //     'ปิด',
+            //     'custom-snackbar',
+            //     'end'
+            // );
+        });
+    }
+
+    removeToast(id: string) {
+        this.toastService.removeToast(id);
+    }
+
+    openSnackBar(
+        message: string,
+        action: string,
+        panelClass: string,
+        position: MatSnackBarHorizontalPosition
+    ): void {
+        const config: MatSnackBarConfig = {
+            duration: 333000, // Duration in milliseconds
+            horizontalPosition: position,
+            verticalPosition: 'top', // Vertical position (top or bottom)
+            panelClass: [panelClass], // Array of additional CSS classes
+            data: { message: message, icon: 'done' },
+        };
+
+        this._snackBar.open(message, action, config);
+    }
+
+    openCars(): void {
+        this._router.navigate(['screens/services/cars']);
+    }
+
+    openEva(): void {
+        this._bottomSheet.open(StarsComponent);
     }
 }

@@ -154,7 +154,7 @@ export class PageComponent implements OnInit, OnDestroy {
                                         JSON.stringify(resp)
                                     );
                                     this._router.navigate([
-                                        'screens/postpon/finish',
+                                        'screens/postpon/eva/' + id,
                                     ]);
                                 } else {
                                     this._router.navigate(['screens/policy']);
