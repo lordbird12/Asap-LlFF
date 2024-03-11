@@ -144,7 +144,7 @@ export class PageComponent implements OnInit, OnDestroy {
                         ''
                     );
 
-                    if (id != '') {
+                    if (id) {
                         this._service
                             .getProfile(profile.userId)
                             .subscribe((resp: any) => {
