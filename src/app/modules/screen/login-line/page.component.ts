@@ -64,7 +64,7 @@ export class PageComponent implements OnInit, OnDestroy {
     statusMessage = '';
     userId = '';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-
+    param: any;
     /**
      * Constructor
      */
@@ -89,19 +89,9 @@ export class PageComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.route.queryParams.subscribe((params) => {
             // Access and use query parameters here
-            const paramValue = params;
-            if(paramValue['liff.state']){
-                const id = paramValue['liff.state'].replace('?template_id=', '');
+            this.param = params;
 
-                if (id == '1') {
-                    this._router.navigate(['screens/postpon/finish']);
-                } else {
-                    this.initLine();
-                }
-            }else{
-                this.initLine();
-            }
-           
+            this.initLine();
         });
     }
 
@@ -148,19 +138,62 @@ export class PageComponent implements OnInit, OnDestroy {
         liff.getProfile()
             .then((profile) => {
                 localStorage.setItem('profile', JSON.stringify(profile));
-                this._service
-                    .getProfile(profile.userId)
-                    .subscribe((resp: any) => {
-                        if (resp.length > 0) {
-                            localStorage.setItem(
-                                'MyBooking',
-                                JSON.stringify(resp)
-                            );
-                            this._router.navigate(['screens/home/booking']);
-                        } else {
-                            this._router.navigate(['screens/policy']);
-                        }
-                    });
+                if (this.param['liff.state']) {
+                    const id = this.param['liff.state'].replace(
+                        '?template_id=',
+                        ''
+                    );
+
+                    if (id == '1') {
+                        this._service
+                            .getProfile(profile.userId)
+                            .subscribe((resp: any) => {
+                                if (resp.length > 0) {
+                                    localStorage.setItem(
+                                        'MyBooking',
+                                        JSON.stringify(resp)
+                                    );
+                                    this._router.navigate([
+                                        'screens/home/booking',
+                                    ]);
+                                } else {
+                                    this._router.navigate([
+                                        'screens/postpon/finish',
+                                    ]);
+                                }
+                            });
+                    } else {
+                        this._service
+                            .getProfile(profile.userId)
+                            .subscribe((resp: any) => {
+                                if (resp.length > 0) {
+                                    localStorage.setItem(
+                                        'MyBooking',
+                                        JSON.stringify(resp)
+                                    );
+                                    this._router.navigate([
+                                        'screens/home/booking',
+                                    ]);
+                                } else {
+                                    this._router.navigate(['screens/policy']);
+                                }
+                            });
+                    }
+                } else {
+                    this._service
+                        .getProfile(profile.userId)
+                        .subscribe((resp: any) => {
+                            if (resp.length > 0) {
+                                localStorage.setItem(
+                                    'MyBooking',
+                                    JSON.stringify(resp)
+                                );
+                                this._router.navigate(['screens/home/booking']);
+                            } else {
+                                this._router.navigate(['screens/policy']);
+                            }
+                        });
+                }
             })
             .catch((err) => console.error(err));
     }
