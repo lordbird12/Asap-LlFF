@@ -138,17 +138,8 @@ export class PageComponent implements OnInit, OnDestroy {
         liff.getProfile()
             .then((profile) => {
                 localStorage.setItem('profile', JSON.stringify(profile));
-
-                console.log(this.param);
                 if (this.param) {
-                    console.log(this.param);
-                    return;
-                    const id = this.param['liff.state'].replace(
-                        '?template_id=',
-                        ''
-                    );
-
-                    if (id) {
+                    if (this.param.template_id) {
                         this._service
                             .getProfile(profile.userId)
                             .subscribe((resp: any) => {
@@ -158,7 +149,7 @@ export class PageComponent implements OnInit, OnDestroy {
                                         JSON.stringify(resp)
                                     );
                                     this._router.navigate([
-                                        'screens/postpon/eva/' + id,
+                                        'screens/postpon/eva/' + this.param.template_id,
                                     ]);
                                 } else {
                                     this._router.navigate(['screens/policy']);
@@ -182,7 +173,6 @@ export class PageComponent implements OnInit, OnDestroy {
                             });
                     }
                 } else {
-                    return;
                     this._service
                         .getProfile(profile.userId)
                         .subscribe((resp: any) => {
