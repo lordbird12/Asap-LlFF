@@ -144,7 +144,7 @@ export class PageComponent implements OnInit, OnDestroy {
                         ''
                     );
 
-                    if (id == '1') {
+                    if (id != '') {
                         this._service
                             .getProfile(profile.userId)
                             .subscribe((resp: any) => {
@@ -154,12 +154,10 @@ export class PageComponent implements OnInit, OnDestroy {
                                         JSON.stringify(resp)
                                     );
                                     this._router.navigate([
-                                        'screens/home/booking',
-                                    ]);
-                                } else {
-                                    this._router.navigate([
                                         'screens/postpon/finish',
                                     ]);
+                                } else {
+                                    this._router.navigate(['screens/policy']);
                                 }
                             });
                     } else {
