@@ -123,11 +123,11 @@
                                         <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'asha:edit'"></mat-icon>
                                         <span class="font-semibold m-1">จัดการจอง</span>
                                     </div> -->
-                                    <button *ngIf="item.evaluate == 'Y'" class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer fuse-mat-button" (click)="viewDetail(booking)" mat-flat-button [color]="'primary' ">
+                                    <button *ngIf="item?.evaluate == 'Y'" class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer fuse-mat-button" (click)="viewDetail(booking)" mat-flat-button [color]="'primary' ">
                                         รายละเอียด
                                     </button>
 
-                                    <button *ngIf="item.evaluate == 'W'" class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer fuse-mat-button" (click)="viewDetail(booking)" mat-flat-button [color]="'primary' ">
+                                    <button *ngIf="item?.evaluate == 'W'" class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer fuse-mat-button" (click)="viewDetail(booking)" mat-flat-button [color]="'primary' ">
                                         ให้คะแนน
                                     </button>
 

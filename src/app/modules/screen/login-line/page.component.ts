@@ -138,7 +138,11 @@ export class PageComponent implements OnInit, OnDestroy {
         liff.getProfile()
             .then((profile) => {
                 localStorage.setItem('profile', JSON.stringify(profile));
-                if (this.param['liff.state']) {
+
+                console.log(this.param);
+                if (this.param) {
+                    console.log(this.param);
+                    return;
                     const id = this.param['liff.state'].replace(
                         '?template_id=',
                         ''
@@ -178,6 +182,7 @@ export class PageComponent implements OnInit, OnDestroy {
                             });
                     }
                 } else {
+                    return;
                     this._service
                         .getProfile(profile.userId)
                         .subscribe((resp: any) => {
