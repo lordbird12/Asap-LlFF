@@ -23,7 +23,7 @@
                 <ng-container *ngIf="yearlyBilling == true">
                     <ng-container *ngIf="bookings?.length > 0">
                         <ng-container *ngFor="let booking of bookings; let i = index">
-                            <fuse-card class="flex flex-col px-5 w-full p-2 m-2 filter-article" *ngIf="booking?.status == 'กำลังดำเนินการ'">
+                            <fuse-card class="flex flex-col px-5 w-full p-2 m-2 filter-article" *ngIf="booking?.status != 'รายการจองสิ้นสุดแล้ว' && booking?.status != 'รายการจองถูกยกเลิก'">
                                 <div class="flex items-center sm:mx-8">
                                     <div class="flex flex-col">
                                         <span class="font-semibold leading-none">{{booking?.date}}</span>
