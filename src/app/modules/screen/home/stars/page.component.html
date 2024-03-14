@@ -11,15 +11,15 @@
 <div class="grid grid-cols-3  bg-slate-50 justify-center rounded max-w-[100vh] overflow-hidden relative">
     <div class="flex p-2 col-span-2">
         <div>
-            <span class="text-xl font-bold">6กก-6789</span>
+            <span class="text-xl font-bold">{{item?.car?.license ?? "-"}}</span>
             <br>
-            <span class="text-sm text-slate-400"> Toyota Accord - Silver</span>
+            <span class="text-sm text-slate-400">  {{item?.car?.brand_model?.name ?? "-"}} • {{item?.car?.color ?? "-"}}</span>
             <br>
             <span class="text-sm text-slate-400"> วันที่รับบริการ </span><span class="text-sm text-black bold font-bold">22/12/2023</span>
         </div>
     </div>
-    <div class="flex p-2 justify-end -mr-5">
-        <img class="h-20 w-auto" [src]="'assets/images/car/honda-accord.png'">
+    <div class="flex p-2 justify-end mr-2">
+        <img class="h-20 w-auto" [src]="item?.car?.image">
     </div>
 </div>
 <div class="flex bg-white justify-center rounded max-w-[100vh] my-4">
@@ -28,7 +28,7 @@
             <img class="h-15 w-15" [src]="'assets/images/employee.png'">
         </div>
         <div class="flex p-2" style="align-items: center;">
-            สมหญิง บริการดี
+            {{item?.name}}
         </div>
     </div>
 </div>

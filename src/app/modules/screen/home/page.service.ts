@@ -118,6 +118,18 @@ export class PageService {
             );
     }
 
+    getBookById(id: any): Observable<any> {
+        return this._httpClient
+            .get<any>(
+                environment.baseURL + '/api/booking/' + id
+            )
+            .pipe(
+                tap((result) => {
+                    this._data.next(result);
+                })
+            );
+    }
+
     create(license: any, mlie: any): Observable<any> {
         return this._httpClient
             .post(environment.baseURL + '/api/register', {

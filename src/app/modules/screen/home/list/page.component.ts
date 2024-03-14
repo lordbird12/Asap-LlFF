@@ -130,7 +130,11 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.id = this._activatedRoute.snapshot.paramMap.get('id');
 
         if (this.id) {
-            const bottomSheetRef = this._bottomSheet.open(StarsComponent);
+            const bottomSheetRef = this._bottomSheet.open(StarsComponent,{
+                data:{
+                    id:this.id
+                }
+            });
 
             bottomSheetRef.afterDismissed().subscribe((data) => {
                 if (data) {

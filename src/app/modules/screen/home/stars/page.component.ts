@@ -31,11 +31,14 @@ import {
     Validators,
 } from '@angular/forms';
 import {
-  MAT_BOTTOM_SHEET_DATA,
+    MAT_BOTTOM_SHEET_DATA,
     MatBottomSheet,
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
+import { PageService } from '../page.service';
+import { Router } from '@angular/router';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'start',
@@ -78,6 +81,7 @@ export class StarsComponent implements OnInit, OnDestroy {
     phone: string = '085-036-0033';
     // otp: string[] = new Array(6).fill('');
     otpForm: FormGroup;
+    item: any;
     /**
      * Constructor
      */
@@ -85,7 +89,10 @@ export class StarsComponent implements OnInit, OnDestroy {
         @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
         private _bottomSheetRef: MatBottomSheetRef<StarsComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private _service: PageService,
+        private _router: Router,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {}
 
     ngAfterViewInit() {}
@@ -98,7 +105,24 @@ export class StarsComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-       console.log(this.data);
+        console.log(this.data);
+        this._service.getBookById(this.data.id).subscribe((resp: any) => {
+            try {
+                this.item = resp.data;
+                // console.log(this.item);
+                // if (resp.data) {
+                //     const obj = {
+                //         data: resp.data,
+                //     };
+
+                //     // localStorage.setItem('data', JSON.stringify(obj));
+                //     // this._router.navigate(['screens/reg-kg/list']);
+                // }
+                this._changeDetectorRef.markForCheck();
+            } catch (error) {
+                console.log(error);
+            }
+        });
     }
 
     /**
