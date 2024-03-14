@@ -46,7 +46,7 @@ import {
     MatSnackBarConfig,
     MatSnackBarHorizontalPosition,
 } from '@angular/material/snack-bar';
-import { SnackBarComponent } from '../../booking-detail/snackbar/page.component';
+import { SnackBarComponent } from '../snackbar/page.component';
 import { StarsComponent } from '../stars/page.component';
 
 @Component({
@@ -130,7 +130,19 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.id = this._activatedRoute.snapshot.paramMap.get('id');
 
         if (this.id) {
-            this._bottomSheet.open(StarsComponent);
+            const bottomSheetRef = this._bottomSheet.open(StarsComponent);
+
+            bottomSheetRef.afterDismissed().subscribe((data) => {
+                if (data) {
+                    this._snackBar.openFromComponent(SnackBarComponent, {
+                        duration: 3000,
+                        verticalPosition: 'top',
+                        data: {
+                            id: this.id,
+                        },
+                    });
+                }
+            });
         }
     }
 
@@ -163,13 +175,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                     verticalPosition: 'top',
                 });
             }
-
-            // this.openSnackBar(
-            //     'ยกเลิกการจองสำเร็จ',
-            //     'ปิด',
-            //     'custom-snackbar',
-            //     'end'
-            // );
         });
     }
 
@@ -184,7 +189,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         position: MatSnackBarHorizontalPosition
     ): void {
         const config: MatSnackBarConfig = {
-            duration: 333000, // Duration in milliseconds
+            duration: 3000, // Duration in milliseconds
             horizontalPosition: position,
             verticalPosition: 'top', // Vertical position (top or bottom)
             panelClass: [panelClass], // Array of additional CSS classes

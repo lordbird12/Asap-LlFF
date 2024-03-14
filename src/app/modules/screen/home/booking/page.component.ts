@@ -191,6 +191,16 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
     }
 
     openEva(): void {
-        this._bottomSheet.open(StarsComponent);
+        const bottomSheetRef = this._bottomSheet.open(StarsComponent);
+
+        bottomSheetRef.afterDismissed().subscribe((data) => {
+            if (data) {
+                this._snackBar.openFromComponent(SnackBarComponent, {
+                    duration: 3000,
+                    verticalPosition: 'top',
+                });
+            }
+
+        });
     }
 }

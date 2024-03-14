@@ -15,8 +15,7 @@
             <br>
             <span class="text-sm text-slate-400"> Toyota Accord - Silver</span>
             <br>
-            <span class="text-sm text-slate-400"> วันที่รับบริการ </span><span
-                class="text-sm text-black bold font-bold">22/12/2023</span>
+            <span class="text-sm text-slate-400"> วันที่รับบริการ </span><span class="text-sm text-black bold font-bold">22/12/2023</span>
         </div>
     </div>
     <div class="flex p-2 justify-end -mr-5">
@@ -36,13 +35,11 @@
 
 <div class="grid grid-cols-1 bg-white justify-center rounded max-w-[100vh] mt-4">
     <div class=" flex relative items-end justify-center w-full h-35 px-4 md:px-6 z-49 bg-white">
-        <ngx-stars [readonly]="false" [size]="2" [maxStars]="5" (ratingOutput)="onRatingSet($event)" [color]="'#fdc045'"
-            [animation]="true" [wholeStars]="true"></ngx-stars>
+        <ngx-stars [readonly]="false" [size]="2" [maxStars]="5" (ratingOutput)="onRatingSet($event)" [color]="'#fdc045'" [animation]="true" [wholeStars]="true"></ngx-stars>
     </div>
 </div>
 
-<div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white"
-*ngIf="this.ratingDisplay === 3 || this.ratingDisplay === 2 || this.ratingDisplay === 1">
+<div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white" *ngIf="this.ratingDisplay === 3 || this.ratingDisplay === 2 || this.ratingDisplay === 1">
     <span class="text-mdf text-center md:text-xl font-bold  tracking-tight  leading-7 sm:leading-10 truncate mt-3">
         คำแนะนำของคุณจะช่วยให้เราพัฒนาบริการให้ดียิ่งขึ้น
     </span>
@@ -50,8 +47,7 @@
         <textarea matInput cdkTextareaAutosize #messageInput [rows]="5"></textarea>
     </mat-form-field>
 </div>
-<div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white"
-*ngIf="this.ratingDisplay === 5 || this.ratingDisplay === 4">
+<div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white" *ngIf="this.ratingDisplay === 5 || this.ratingDisplay === 4">
     <span class="text-mdf text-center md:text-xl font-bold  tracking-tight  leading-7 sm:leading-10 truncate mt-3">
         อยากชื่นชมเราในเรื่องใด
     </span>
@@ -59,16 +55,18 @@
         <textarea matInput cdkTextareaAutosize #messageInput [rows]="5"></textarea>
     </mat-form-field>
 </div>
-<div class=" flex flex-col relative items-center justify-center w-full h-70 px-4 md:px-6 z-49 bg-white"
-*ngIf="this.ratingDisplay === 0">
+<div class=" flex flex-col relative items-center justify-center w-full h-70 px-4 md:px-6 z-49 bg-white" *ngIf="this.ratingDisplay === 0">
 
 </div>
 
 
 <div class="grid grid-cols-1 bg-white justify-center rounded max-w-[100vh]">
     <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
-        <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'">
-            ถัดไป
+        <button *ngIf="this.ratingDisplay !== 0" (click)="submit()" class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'">
+            เสร็จสิ้น
+        </button>
+        <button *ngIf="this.ratingDisplay === 0" class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'warn'">
+            เสร็จสิ้น
         </button>
     </div>
 </div>
