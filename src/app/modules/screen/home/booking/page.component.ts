@@ -186,7 +186,7 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
         this._snackBar.open(message, action, config);
     }
 
-    openCars():void{
+    openCars(): void {
         this._router.navigate(['screens/services/cars']);
     }
 
@@ -200,7 +200,15 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
                     verticalPosition: 'top',
                 });
             }
-
         });
+    }
+
+    openMap(booking: any): void {
+        window.open(
+            'https://www.google.com/maps/search/?api=1&query=' +
+                booking.service_center.lat +
+                ',' +
+                booking.service_center.lon
+        );
     }
 }
