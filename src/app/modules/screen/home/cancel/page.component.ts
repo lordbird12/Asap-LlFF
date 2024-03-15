@@ -46,6 +46,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CommonModule,
