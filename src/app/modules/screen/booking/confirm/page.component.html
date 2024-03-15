@@ -7,9 +7,9 @@
                     <div class="text-1xl tracking-tight leading-none">กรุณาตรวจสอบความถูกต้องข้อมูล</div>
                 </div>
             </div>
-            <div class="bg-card rounded-lg m-2">
-                <div class="flex flex-row -mx-3 md:flex">
-                    <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div class="bg-card rounded-lg m-2 p-2">
+                <div class="flex flex-row md:flex">
+                    <div class="flex flex-col w-full max-w-screen-xl mx-auto">
 
                         <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-12">
                             <!-- Avatar and name -->
@@ -49,6 +49,14 @@
                     <ng-container *ngIf="services.length">
                         <ng-container *ngFor="let item of services; trackBy: trackByFn">
                             <div *ngIf="item.check" class="ml-2 flex items-center justify-center px-1 py-1 m-1.5 rounded-md leading-9 text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                                <img *ngIf="item.name == 'เช็คระยะ'" class="w-5 h-5 mr-1" src="assets/images/services/flat-tire 1.png" alt="">
+                                <img *ngIf="item.name == 'เปลี่ยนแบตเตอรี่'" class="w-5 h-5 mr-1" src="assets/images/services/accumulator 1.png" alt="">
+                                <img *ngIf="item.name == 'เปลี่ยนยาง'" class="w-5 h-5 mr-1" src="assets/images/services/flat-tire 1.png" alt="">
+                                <img *ngIf="item.name == 'เช็คระบบแอร์'" class="w-5 h-5 mr-1" src="assets/images/services/Group.png" alt="">
+                                <img *ngIf="item.name == 'เช็คระบบไฟ'" class="w-5 h-5 mr-1" src="assets/images/services/car-engine 1.png" alt="">
+                                <img *ngIf="item.name == 'เช็คช่วงล่าง'" class="w-5 h-5 mr-1" src="assets/images/services/suspension (1) 1.png" alt="">
+                                <img *ngIf="item.name == 'เช็คระบบเบรค'" class="w-5 h-5 mr-1" src="assets/images/services/brake-disc 1.png" alt="">
+                                <img *ngIf="item.name == 'อื่นๆ (โปรดระบุ)'" class="w-5 h-5 mr-1" src="assets/images/services/option 1.png" alt="">
                                 <span class="text-md font-medium whitespace-nowrap">{{item.name}}</span>
                             </div>
                         </ng-container>
