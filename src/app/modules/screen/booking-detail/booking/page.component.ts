@@ -127,4 +127,13 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
 
         this._changeDetectorRef.detectChanges();
     }
+
+    openMap(booking: any): void {
+        window.open(
+            'https://www.google.com/maps/search/?api=1&query=' +
+                booking.service_center.lat +
+                ',' +
+                booking.service_center.lon
+        );
+    }
 }

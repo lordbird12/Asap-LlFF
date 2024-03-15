@@ -172,4 +172,10 @@ export class FinishComponent implements OnInit, OnDestroy {
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
+
+    openMap(): void {
+        window.open(
+            'https://www.google.com/maps/search/?api=1&query='
+        );
+    }
 }
