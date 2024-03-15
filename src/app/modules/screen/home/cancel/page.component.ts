@@ -4,6 +4,7 @@ import {
     ChangeDetectorRef,
     Component,
     ElementRef,
+    Inject,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -25,32 +26,26 @@ import {
 import { MatInput, MatInputModule } from '@angular/material/input';
 import {
     FormBuilder,
+    FormControl,
     FormGroup,
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
 import {
+    MAT_BOTTOM_SHEET_DATA,
     MatBottomSheet,
-    MatBottomSheetModule,
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
-import { Router } from '@angular/router';
-import { AnalyticsMockApi } from 'app/mock-api/dashboards/analytics/api';
 import { PageService } from '../page.service';
-import { CancelDialogComponent } from '../cancel/page.component';
+import { Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { MatDialog } from '@angular/material/dialog';
-import { ToastService } from 'app/toast.service';
-import { SnackBarComponent } from '../snackbar/page.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'start',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CommonModule,
@@ -72,10 +67,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         MatInputModule,
         ReactiveFormsModule,
         NgxStarsModule,
-        MatBottomSheetModule,
     ],
 })
-export class StatusComponent implements OnInit, OnDestroy {
+export class CancelComponent implements OnInit, OnDestroy {
     @ViewChild(NgxStarsComponent)
     starsComponent: NgxStarsComponent;
     @ViewChild('drawer') drawer: MatDrawer;
@@ -88,23 +82,35 @@ export class StatusComponent implements OnInit, OnDestroy {
     phone: string = '085-036-0033';
     // otp: string[] = new Array(6).fill('');
     otpForm: FormGroup;
-    toasts = [];
+    item: any;
+    serviceCenterData: any[] = [];
+    activities: any[] = [];
+    dataArray: any[] = [];
+    topics: any[] = [
+        'รถเสียฉุกเฉิน',
+        'อุบัติเหตุ',
+        'ติดตามรถทดแทน',
+        'ติดตามงานบริหารรถยนต์',
+        'อื่นๆ',
+    ];
+    items: any[] = [];
+    statusData = new FormControl('');
+    checkAll = false;
+    selectedItems: any[] = [];
+    other: boolean = false;
     /**
      * Constructor
      */
     constructor(
-        private _bottomSheetRef: MatBottomSheetRef<StatusComponent>,
+        @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+        private _bottomSheetRef: MatBottomSheetRef<CancelComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
         private formBuilder: FormBuilder,
-        private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _router: Router,
         private _service: PageService,
-        private _bottomSheet: MatBottomSheet,
-        private _fuseConfirmationService: FuseConfirmationService,
-        private dialog: MatDialog,
-        private toastService: ToastService,
-        private _snackBar: MatSnackBar
+        private _router: Router,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {}
+
     ngAfterViewInit() {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -114,7 +120,26 @@ export class StatusComponent implements OnInit, OnDestroy {
     /**
      * On init
      */
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        console.log(this.data);
+        this._service.getBookById(this.data.id).subscribe((resp: any) => {
+            try {
+                this.item = resp.data;
+                // console.log(this.item);
+                // if (resp.data) {
+                //     const obj = {
+                //         data: resp.data,
+                //     };
+
+                //     // localStorage.setItem('data', JSON.stringify(obj));
+                //     // this._router.navigate(['screens/reg-kg/list']);
+                // }
+                this._changeDetectorRef.markForCheck();
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    }
 
     /**
      * On destroy
@@ -129,64 +154,16 @@ export class StatusComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    selectMap() {
+    submit(): void {
         this._bottomSheetRef.dismiss();
-        this._router.navigate(['screens/search/main']);
     }
 
-    // openCancel(): void {
-    //     this._bottomSheetRef.dismiss();
-
-    //     this._bottomSheet.open(CancelDialogComponent, {
-    //         panelClass: 'my-component-bottom-sheet',
-    //     });
-    // }
-
-    // openCancel() {
-    //     const dialogRef = this.dialog.open(CancelDialogComponent, {
-    //         width: '500px', // กำหนดความกว้างของ Dialog
-    //         data: {
-    //             data: 1,
-    //         },
-    //     });
-    //     dialogRef.afterClosed().subscribe((result) => {
-    //         if (result) {
-    //             this._bottomSheet.dismiss(result);
-    //             // if (result) {
-    //             //     this.toastService.toastsSubject.subscribe((toasts) => {
-    //             //         this.toasts = toasts;
-    //             //     });
-    //             // }
-    //         }
-    //     });
-    // }
-
-    openCancel(): void {
-        const bottomSheetRef = this._bottomSheet.open(StatusComponent);
-
-        bottomSheetRef.afterDismissed().subscribe((data) => {
-            if (data) {
-                this._snackBar.openFromComponent(SnackBarComponent, {
-                    duration: 3000,
-                    verticalPosition: 'top',
-                });
-            }
-
-            // this.openSnackBar(
-            //     'ยกเลิกการจองสำเร็จ',
-            //     'ปิด',
-            //     'custom-snackbar',
-            //     'end'
-            // );
-        });
-    }
-
-    removeToast(id: string) {
-        this.toastService.removeToast(id);
-    }
-
-    openPostpon():void{
-        this._bottomSheetRef.dismiss();
-        this._router.navigate(['screens/postpon/date']);
+    onRadioChange(event: any): void {
+        if (event.target.value != 'อื่นๆ โปรดระบุเหตุผล') {
+            this.other = false;
+        } else if (event.target.value == 'อื่นๆ โปรดระบุเหตุผล') {
+            this.other = true;
+        }
+        return;
     }
 }
