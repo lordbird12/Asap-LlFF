@@ -116,7 +116,7 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
             : [];
 
         this.bookings.forEach((element) => {
-            if (element.status == 'กำลังดำเนินการ') {
+            if (element?.status != 'รายการจองสิ้นสุดแล้ว' && element?.status != 'รายการจองถูกยกเลิก') {
                 this.activeBtn1 = false;
             }
 
