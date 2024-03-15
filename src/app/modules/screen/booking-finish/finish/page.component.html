@@ -62,6 +62,14 @@
                 <ng-container *ngIf="services.length">
                     <ng-container *ngFor="let item of services; trackBy: trackByFn">
                         <div *ngIf="item.check" class="flex items-center justify-center px-2 py-0 m-1.5 rounded-md leading-9 text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                            <img *ngIf="item.name == 'เช็คระยะ'" class="w-5 h-5 mr-1" src="assets/images/services/flat-tire 1.png" alt="">
+                            <img *ngIf="item.name == 'เปลี่ยนแบตเตอรี่'" class="w-5 h-5 mr-1" src="assets/images/services/accumulator 1.png" alt="">
+                            <img *ngIf="item.name == 'เปลี่ยนยาง'" class="w-5 h-5 mr-1" src="assets/images/services/flat-tire 1.png" alt="">
+                            <img *ngIf="item.name == 'เช็คระบบแอร์'" class="w-5 h-5 mr-1" src="assets/images/services/Group.png" alt="">
+                            <img *ngIf="item.name == 'เช็คระบบไฟ'" class="w-5 h-5 mr-1" src="assets/images/services/car-engine 1.png" alt="">
+                            <img *ngIf="item.name == 'เช็คช่วงล่าง'" class="w-5 h-5 mr-1" src="assets/images/services/suspension (1) 1.png" alt="">
+                            <img *ngIf="item.name == 'เช็คระบบเบรค'" class="w-5 h-5 mr-1" src="assets/images/services/brake-disc 1.png" alt="">
+                            <img *ngIf="item.name == 'อื่นๆ (โปรดระบุ)'" class="w-5 h-5 mr-1" src="assets/images/services/option 1.png" alt="">
                             <span class="text-md font-medium whitespace-nowrap">{{item.name}}</span>
                         </div>
                     </ng-container>
