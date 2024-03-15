@@ -1,9 +1,9 @@
 @font-face {
     font-family: 'Sukhumvit';
-    /*src: url('fonts/sukhumvit-set/SukhumvitSet-Bold.ttf');
-  src: url('fonts/sukhumvit-set/SukhumvitSet-Light.ttf');*/
-    src: url('../fonts/sukhumvit-set/SukhumvitSet-Medium.ttf') format('truetype');
-    /*src: url('fonts/sukhumvit-set/SukhumvitSet-SemiBold.ttf');
-  src: url('fonts/sukhumvit-set/SukhumvitSet-Text.ttf');
-  src: url('fonts/sukhumvit-set/SukhumvitSet-Thin.ttf');*/
+    /* src: url('fonts/sukhumvit-set/SukhumvitSet-Bold.ttf');
+    src: url('fonts/sukhumvit-set/SukhumvitSet-Light.ttf'); */
+    src: url('SukhumvitSet-Medium.ttf') format('truetype');
+    /* src: url('fonts/sukhumvit-set/SukhumvitSet-SemiBold.ttf');
+    src: url('fonts/sukhumvit-set/SukhumvitSet-Text.ttf');
+    src: url('fonts/sukhumvit-set/SukhumvitSet-Thin.ttf'); */
 }
