@@ -149,7 +149,25 @@ export class PageComponent implements OnInit, OnDestroy {
                                         JSON.stringify(resp)
                                     );
                                     this._router.navigate([
-                                        'screens/home/eva/' + this.param.template_id,
+                                        'screens/home/eva/' +
+                                            this.param.template_id,
+                                    ]);
+                                } else {
+                                    this._router.navigate(['screens/policy']);
+                                }
+                            });
+                    } else if (this.param.cancel_id) {
+                        this._service
+                            .getProfile(profile.userId)
+                            .subscribe((resp: any) => {
+                                if (resp.length > 0) {
+                                    localStorage.setItem(
+                                        'MyBooking',
+                                        JSON.stringify(resp)
+                                    );
+                                    this._router.navigate([
+                                        'screens/booking-detail/cancel/' +
+                                            this.param.cancel_id,
                                     ]);
                                 } else {
                                     this._router.navigate(['screens/policy']);
