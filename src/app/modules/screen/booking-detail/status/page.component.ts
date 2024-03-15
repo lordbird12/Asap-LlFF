@@ -44,6 +44,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastService } from 'app/toast.service';
 import { SnackBarComponent } from '../snackbar/page.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CancelComponent } from '../../home/cancel/page.component';
 
 @Component({
     selector: 'start',
@@ -162,11 +163,11 @@ export class StatusComponent implements OnInit, OnDestroy {
     // }
 
     openCancel(): void {
-        const bottomSheetRef = this._bottomSheet.open(StatusComponent);
+        const bottomSheetRef = this._bottomSheet.open(CancelComponent);
 
         bottomSheetRef.afterDismissed().subscribe((data) => {
             if (data) {
-                this._snackBar.openFromComponent(SnackBarComponent, {
+                this._snackBar.openFromComponent(CancelComponent, {
                     duration: 3000,
                     verticalPosition: 'top',
                 });
