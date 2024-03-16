@@ -30,7 +30,6 @@ import { MatTableModule } from '@angular/material/table';
 import { PageService } from '../page.service';
 import { Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
     selector: 'list',
@@ -54,7 +53,6 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
         MatDatepickerModule,
         MatPaginatorModule,
         MatTableModule,
-        NgxMaskDirective
     ],
 })
 export class ListComponent implements OnInit, AfterViewInit {
@@ -79,7 +77,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.dataForm = this._formBuilder.group({
             mile: [
                 null,
-                [Validators.required],
+                [Validators.required, Validators.pattern('[0-9 ]{11}')],
             ],
         });
 
@@ -107,9 +105,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     submit() {
-        if (this.dataForm.invalid) {
-            return;
-        }
         // const confirmation = this._fuseConfirmationService.open({
         //     title: 'เพิ่มข้อมูล',
         //     message: 'คุณต้องการเพิ่มข้อมูลใช่หรือไม่ ?',
@@ -137,7 +132,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         // confirmation.afterClosed().subscribe((result) => {
         //     // If the confirm button pressed...
         //     if (result === 'confirmed') {
-
+          
 
                 this._service.create(this.item.license, this.dataForm.value.mile).subscribe({
                     next: (resp: any) => {
