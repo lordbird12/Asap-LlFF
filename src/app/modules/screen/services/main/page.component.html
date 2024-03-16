@@ -84,7 +84,7 @@
             <div class="grid grid-cols-2 grid-flow-row ng-star-inserted">
                 <ng-container *ngFor="let item of items_check; let  i = index">
                     <div [ngClass]="{
-                        'border-4 border-rose-600':item.check === true,
+                        'border-4 border-kPrimary':item.check === true,
                       }" class="relative pointer group flex m-2 rounded-lg flex-col overflow-hidden bg-card ng-star-inserted" (click)="addService(i)">
                         <!---->
                         <!---->
@@ -92,7 +92,7 @@
                             <div class="ml-2 -mt-2 -mr-3 pr-5 pt-4">
                                 <mat-icon [ngClass]="{
                                     'invisible':item.check === false,
-                                  }" class="icon-size-5 text-red-500" [svgIcon]="'mat_solid:check_circle'"></mat-icon>
+                                  }" class="icon-size-5 text-kPrimary" [svgIcon]="'mat_solid:check_circle'"></mat-icon>
 
                             </div>
                         </div>
