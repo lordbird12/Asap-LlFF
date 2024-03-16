@@ -96,10 +96,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.disableBtn = true;
         }
 
-        event.target.value = event.target.value
-            .replace(/[^0-9]/g, '')
-            .toUpperCase();
-
+      
         const obj = {
             mile: this.dataForm.value.mile,
         };
