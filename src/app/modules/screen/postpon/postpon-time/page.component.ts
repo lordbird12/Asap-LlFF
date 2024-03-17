@@ -112,6 +112,7 @@ export class PostponTimeComponent implements OnInit {
     ngOnInit(): void {
         this.id = this._activatedRoute.snapshot.paramMap.get('id');
         this.date = this._activatedRoute.snapshot.paramMap.get('date');
+        console.log(this.date);
 
         if (this.date) {
             this.date_format = this.date.split('-');

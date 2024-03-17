@@ -25,7 +25,7 @@ export default [
         component: PageComponent,
         children: [
             {
-                path: 'time/:id/:date',
+                path: 'time/:date/:id',
                 component: PostponTimeComponent,
             },
         ],
