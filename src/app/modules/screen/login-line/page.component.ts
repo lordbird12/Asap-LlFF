@@ -173,7 +173,7 @@ export class PageComponent implements OnInit, OnDestroy {
                                     this._router.navigate(['screens/policy']);
                                 }
                             });
-                    } else if (this.param.postpon) {
+                    } else if (this.param.postpon_id) {
                         this._service
                             .getProfile(profile.userId)
                             .subscribe((resp: any) => {
@@ -184,7 +184,7 @@ export class PageComponent implements OnInit, OnDestroy {
                                     );
                                     this._router.navigate([
                                         'screens/postpon/date/' +
-                                            this.param.postpon,
+                                            this.param.postpon_id,
                                     ]);
                                 } else {
                                     this._router.navigate(['screens/policy']);
