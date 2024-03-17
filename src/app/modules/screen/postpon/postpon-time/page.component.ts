@@ -71,6 +71,7 @@ export class PostponTimeComponent implements OnInit {
     service_input: boolean;
     activeBtn: any;
     num: any;
+    id: any;
     date: any;
     time: any;
     date_format: any;
@@ -109,6 +110,7 @@ export class PostponTimeComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        this.id = this._activatedRoute.snapshot.paramMap.get('id');
         this.date = this._activatedRoute.snapshot.paramMap.get('date');
 
         if (this.date) {
@@ -206,10 +208,11 @@ export class PostponTimeComponent implements OnInit {
     addTime(time) {
         this.time = time;
         const data = {
+            id: this.id,
             date: this.date,
             time: time,
         };
-        localStorage.setItem('sevice_date_time', JSON.stringify(data));
+        localStorage.setItem('change_date_time', JSON.stringify(data));
     }
 
     editDate() {
