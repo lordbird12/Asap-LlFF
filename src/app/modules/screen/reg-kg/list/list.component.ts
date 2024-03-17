@@ -30,7 +30,7 @@ import { MatTableModule } from '@angular/material/table';
 import { PageService } from '../page.service';
 import { Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { NgxMaskDirective } from 'ngx-mask';
+// import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
     selector: 'list',
@@ -54,7 +54,7 @@ import { NgxMaskDirective } from 'ngx-mask';
         MatDatepickerModule,
         MatPaginatorModule,
         MatTableModule,
-        NgxMaskDirective
+        // NgxMaskDirective
     ],
 })
 export class ListComponent implements OnInit, AfterViewInit {
