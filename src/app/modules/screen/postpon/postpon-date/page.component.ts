@@ -1,6 +1,7 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     OnInit,
     ViewEncapsulation,
@@ -29,7 +30,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CustomCalendarHeaderComponent } from './custom-header';
 import moment from 'moment';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export const MY_FORMATS = {
     parse: {
@@ -111,13 +112,16 @@ export const MY_FORMATS = {
 export class PostponDateComponent implements OnInit {
     addForm: UntypedFormGroup;
     selected: Date | null;
+    id: any;
     customHeader = CustomCalendarHeaderComponent;
     /**
      * Constructor
      */
     constructor(
         private _formBuilder: UntypedFormBuilder,
-        private _router: Router
+        private _router: Router,
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _activatedRoute: ActivatedRoute
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -129,23 +133,11 @@ export class PostponDateComponent implements OnInit {
      */
     ngOnInit(): void {
         // Create the form
-        this.addForm = this._formBuilder.group({
-            name: ['Brian Hughes'],
-            username: ['brianh'],
-            title: ['Senior Frontend Developer'],
-            company: ['YXZ Software'],
-            about: [
-                "Hey! This is Brian; husband, father and gamer. I'm mostly passionate about bleeding edge tech and chocolate! 🍫",
-            ],
-            email: ['hughes.brian@mail.com', Validators.email],
-            phone: ['121-490-33-12'],
-            country: ['usa'],
-            language: ['english'],
-        });
+        this.id = this._activatedRoute.snapshot.paramMap.get('id');
     }
 
     onSelect(event) {
         var date = event.c.year + '-' + event.c.month + '-' + event.c.day;
-        this._router.navigate(['screens/postpon/time/'+date]);
+        this._router.navigate(['screens/postpon/time/'+date+'/'+this.id]);
     }
 }
