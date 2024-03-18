@@ -31,22 +31,20 @@ import {
     Validators,
 } from '@angular/forms';
 import {
-    MatBottomSheet,
     MatBottomSheetModule,
-    MatBottomSheetRef
+    MAT_BOTTOM_SHEET_DATA,
+    MatBottomSheet,
+    MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
 import { Router } from '@angular/router';
-import { AnalyticsMockApi } from 'app/mock-api/dashboards/analytics/api';
 import { PageService } from '../page.service';
-import { CancelDialogComponent } from '../cancel/page.component';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { MatDialog } from '@angular/material/dialog';
 import { ToastService } from 'app/toast.service';
 import { SnackBarComponent } from '../snackbar/page.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CancelComponent } from '../../home/cancel/page.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'start',
@@ -96,7 +94,7 @@ export class StatusComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: any,
+        @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
         private _bottomSheetRef: MatBottomSheetRef<StatusComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
         private formBuilder: FormBuilder,
@@ -105,7 +103,6 @@ export class StatusComponent implements OnInit, OnDestroy {
         private _service: PageService,
         private _bottomSheet: MatBottomSheet,
         private _fuseConfirmationService: FuseConfirmationService,
-        private dialog: MatDialog,
         private toastService: ToastService,
         private _snackBar: MatSnackBar
     ) {}
@@ -189,7 +186,7 @@ export class StatusComponent implements OnInit, OnDestroy {
         this.toastService.removeToast(id);
     }
 
-    openPostpon():void{
+    openPostpon(): void {
         this._bottomSheetRef.dismiss();
         this._router.navigate(['screens/postpon/date/'+this.data.id]);
     }
