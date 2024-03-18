@@ -121,8 +121,6 @@ export class PostponDateComponent implements OnInit {
     selected: Date | null;
     id: any;
 
-    disabledDates = [new Date('2024-03-15'), new Date('2024-03-20')];
-
     dateClass = (date: Date): MatCalendarCellCssClasses => {
         const today = new Date();
 
