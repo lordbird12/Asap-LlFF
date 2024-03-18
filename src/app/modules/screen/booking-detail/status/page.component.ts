@@ -4,6 +4,7 @@ import {
     ChangeDetectorRef,
     Component,
     ElementRef,
+    Inject,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -32,8 +33,9 @@ import {
 import {
     MatBottomSheet,
     MatBottomSheetModule,
-    MatBottomSheetRef,
+    MatBottomSheetRef
 } from '@angular/material/bottom-sheet';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NgxStarsComponent, NgxStarsModule } from 'ngx-stars';
 import { Router } from '@angular/router';
 import { AnalyticsMockApi } from 'app/mock-api/dashboards/analytics/api';
@@ -94,6 +96,7 @@ export class StatusComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
+        @Inject(MAT_DIALOG_DATA) public data: any,
         private _bottomSheetRef: MatBottomSheetRef<StatusComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
         private formBuilder: FormBuilder,
@@ -188,6 +191,6 @@ export class StatusComponent implements OnInit, OnDestroy {
 
     openPostpon():void{
         this._bottomSheetRef.dismiss();
-        this._router.navigate(['screens/postpon/date']);
+        this._router.navigate(['screens/postpon/date/'+this.data.id]);
     }
 }

@@ -20,3 +20,9 @@ mat-bottom-sheet-container {
 .mat-mdc-outlined-button .mdc-button__label {
     z-index: unset !important;
 }
+
+body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
