@@ -116,11 +116,17 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
             : [];
 
         this.bookings.forEach((element) => {
-            if (element?.status != 'รายการจองสิ้นสุดแล้ว' && element?.status != 'รายการจองถูกยกเลิก') {
+            if (
+                element?.status != 'รายการจองสิ้นสุดแล้ว' &&
+                element?.status != 'รายการจองถูกยกเลิก'
+            ) {
                 this.activeBtn1 = false;
             }
 
-            if (element.status == 'รายการจองสิ้นสุดแล้ว') {
+            if (
+                element.status == 'รายการจองสิ้นสุดแล้ว' ||
+                element.status == 'รายการจองถูกยกเลิก'
+            ) {
                 this.activeBtn2 = false;
             }
         });
@@ -145,11 +151,11 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
         this._router.navigate(['screens/booking-detail/' + booking.id]);
     }
 
-    openStatus(booking:any): void {
-        const bottomSheetRef = this._bottomSheet.open(StatusComponent,{
-            data:{
-                id:booking.id
-            }
+    openStatus(booking: any): void {
+        const bottomSheetRef = this._bottomSheet.open(StatusComponent, {
+            data: {
+                id: booking.id,
+            },
         });
 
         bottomSheetRef.afterDismissed().subscribe((data) => {
