@@ -87,6 +87,7 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
     service_input: boolean;
     activeBtn: any;
     bookings: any;
+    profile: any;
     activeBtn1: boolean = true;
     activeBtn2: boolean = true;
     toasts = [];
@@ -164,6 +165,22 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
                     duration: 3000,
                     verticalPosition: 'top',
                 });
+
+                this.profile = localStorage.getItem('profile')
+                    ? JSON.parse(localStorage.getItem('profile'))
+                    : [];
+
+                this._service
+                    .getProfile(this.profile.userId)
+                    .subscribe((resp: any) => {
+                        if (resp.length > 0) {
+                            localStorage.setItem(
+                                'MyBooking',
+                                JSON.stringify(resp)
+                            );
+                            this._changeDetectorRef.detectChanges();
+                        }
+                    });
             }
 
             // this.openSnackBar(
