@@ -99,6 +99,7 @@ export class CancelComponent implements OnInit, OnDestroy {
     checkAll = false;
     selectedItems: any[] = [];
     other: boolean = false;
+    dataForm: FormGroup;
     /**
      * Constructor
      */
@@ -106,7 +107,7 @@ export class CancelComponent implements OnInit, OnDestroy {
         @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
         private _bottomSheetRef: MatBottomSheetRef<CancelComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
-        private formBuilder: FormBuilder,
+        private _formBuilder: FormBuilder,
         private _service: PageService,
         private _router: Router,
         private _fuseConfirmationService: FuseConfirmationService
@@ -122,24 +123,11 @@ export class CancelComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        console.log(this.data);
-        this._service.getBookById(this.data.id).subscribe((resp: any) => {
-            try {
-                this.item = resp.data;
-                // console.log(this.item);
-                // if (resp.data) {
-                //     const obj = {
-                //         data: resp.data,
-                //     };
-
-                //     // localStorage.setItem('data', JSON.stringify(obj));
-                //     // this._router.navigate(['screens/reg-kg/list']);
-                // }
-                this._changeDetectorRef.markForCheck();
-            } catch (error) {
-                console.log(error);
-            }
+        this.dataForm = this._formBuilder.group({
+            reason: [null, [Validators.required]],
         });
+
+
     }
 
     /**
@@ -155,16 +143,60 @@ export class CancelComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    closeBottomSheet(status: any): void {
+        this._bottomSheetRef.dismiss(status);
+        event.preventDefault();
+    }
+
     submit(): void {
-        this._bottomSheetRef.dismiss();
+        const data = {
+            booking_id: this.data.id,
+            reason: this.dataForm.value.reason,
+        };
+
+        this._service.cancel_book(data).subscribe({
+            next: (resp: any) => {
+                this.closeBottomSheet(true);
+            },
+
+            error: (err: any) => {
+                this._fuseConfirmationService.open({
+                    title: 'เกิดข้อผิดพลาด',
+                    message: err.error.message,
+                    icon: {
+                        show: true,
+                        name: 'heroicons_outline:exclamation-triangle',
+                        color: 'accent',
+                    },
+                    actions: {
+                        confirm: {
+                            show: true,
+                            label: 'ปิด',
+                            color: 'primary',
+                        },
+                        cancel: {
+                            show: false,
+                            label: 'ยกเลิก',
+                        },
+                    },
+                    dismissible: true,
+                });
+                // console.log(err.error.message);
+            },
+        });
     }
 
     onRadioChange(event: any): void {
         if (event.target.value != 'อื่นๆ โปรดระบุเหตุผล') {
             this.other = false;
+            this.dataForm.patchValue({
+                reason: event.target.value,
+            });
         } else if (event.target.value == 'อื่นๆ โปรดระบุเหตุผล') {
             this.other = true;
+            this.dataForm.patchValue({
+                reason: "",
+            });
         }
-        return;
     }
 }

@@ -163,22 +163,19 @@ export class StatusComponent implements OnInit, OnDestroy {
     // }
 
     openCancel(): void {
-        const bottomSheetRef = this._bottomSheet.open(CancelComponent);
+        const bottomSheetRef = this._bottomSheet.open(CancelComponent, {
+            data: {
+                id: this.data.id,
+            },
+        });
 
         bottomSheetRef.afterDismissed().subscribe((data) => {
             if (data) {
-                this._snackBar.openFromComponent(CancelComponent, {
+                this._snackBar.openFromComponent(SnackBarComponent, {
                     duration: 3000,
                     verticalPosition: 'top',
                 });
             }
-
-            // this.openSnackBar(
-            //     'ยกเลิกการจองสำเร็จ',
-            //     'ปิด',
-            //     'custom-snackbar',
-            //     'end'
-            // );
         });
     }
 
@@ -188,6 +185,6 @@ export class StatusComponent implements OnInit, OnDestroy {
 
     openPostpon(): void {
         this._bottomSheetRef.dismiss();
-        this._router.navigate(['screens/postpon/date/'+this.data.id]);
+        this._router.navigate(['screens/postpon/date/' + this.data.id]);
     }
 }

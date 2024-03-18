@@ -120,9 +120,7 @@ export class PageService {
 
     getBookById(id: any): Observable<any> {
         return this._httpClient
-            .get<any>(
-                environment.baseURL + '/api/booking/' + id
-            )
+            .get<any>(environment.baseURL + '/api/booking/' + id)
             .pipe(
                 tap((result) => {
                     this._data.next(result);
@@ -135,6 +133,19 @@ export class PageService {
             .post(environment.baseURL + '/api/register', {
                 license: license,
                 mlie: mlie,
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
+    cancel_book(data: any): Observable<any> {
+        return this._httpClient
+            .post(environment.baseURL + '/api/cancel_book', {
+                booking_id: data.booking_id,
+                reason: data.reason,
             })
             .pipe(
                 switchMap((response: any) => {
