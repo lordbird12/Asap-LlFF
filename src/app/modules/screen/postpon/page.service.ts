@@ -88,6 +88,17 @@ export class PageService {
             );
     }
 
+    postpon_date_time(data: any): Observable<any> {
+        return this._httpClient
+            .post<any>(environment.baseURL + '/api/postpon_date_time', data)
+            .pipe(
+                tap((result) => {
+                    this._data.next(result);
+                })
+            );
+    }
+    
+
     update(data: any, id: any): Observable<any> {
         return this._httpClient
             .put<any>(environment.baseURL + '/api/permission/' + id, data)

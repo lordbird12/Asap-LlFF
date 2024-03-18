@@ -36,11 +36,14 @@ import {
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { ConfirmComponent } from '../confirm/page.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarComponent } from '../snackbar/page.component';
 
 @Component({
     selector: 'postpon-time',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -99,7 +102,8 @@ export class PostponTimeComponent implements OnInit {
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
         private _bottomSheet: MatBottomSheet,
-        private _activatedRoute: ActivatedRoute
+        private _activatedRoute: ActivatedRoute,
+        private _snackBar: MatSnackBar,
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -112,15 +116,14 @@ export class PostponTimeComponent implements OnInit {
     ngOnInit(): void {
         this.id = this._activatedRoute.snapshot.paramMap.get('id');
         this.date = this._activatedRoute.snapshot.paramMap.get('date');
-        console.log(this.date);
 
         if (this.date) {
             this.date_format = this.date.split('-');
         }
 
         this.service_input = false;
-        this.item = localStorage.getItem('data')
-            ? JSON.parse(localStorage.getItem('data')).data
+        this.item = localStorage.getItem('change_date_time')
+            ? JSON.parse(localStorage.getItem('change_date_time')).data
             : [];
 
         this._service.getServices().subscribe((resp: any) => {
@@ -154,18 +157,22 @@ export class PostponTimeComponent implements OnInit {
         // this._bottomSheet.open(MapComponent);
     }
 
-
     openConfirm(): void {
-        const bottomSheetRef = this._bottomSheet.open(ConfirmComponent);
+        const bottomSheetRef = this._bottomSheet.open(ConfirmComponent, {
+            data: {
+                id: this.id,
+                date: this.date,
+                time: this.time,
+            },
+        });
 
         bottomSheetRef.afterDismissed().subscribe((data) => {
-            // if (data) {
-            //     this._snackBar.openFromComponent(SnackBarComponent, {
-            //         duration: 3000,
-            //         verticalPosition: 'top',
-            //     });
-            // }
-
+            if (data) {
+                this._snackBar.openFromComponent(SnackBarComponent, {
+                    duration: 3000,
+                    verticalPosition: 'top',
+                });
+            }
             // this.openSnackBar(
             //     'ยกเลิกการจองสำเร็จ',
             //     'ปิด',

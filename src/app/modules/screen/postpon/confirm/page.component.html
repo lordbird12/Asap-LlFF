@@ -9,14 +9,14 @@
     <div class=" flex relative items-start justify-start w-full h-35 px-4 md:px-6 z-49 bg-white ">
         <div class="flex">
             <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'asha:calendar-blank'"></mat-icon>
-            <span class="font-semibold m-0.5">4 October 2023</span>
+            <span class="font-semibold m-0.5">{{date_format[2]}} {{months[date_format[1]]}} {{date_format[0]}}</span>
         </div>
     </div>
     <div class="my-2 border-t"></div>
     <div class=" flex relative items-start justify-start w-full h-35 px-4 md:px-6 z-49 bg-white ">
         <div class="flex">
             <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'asha:time'"></mat-icon>
-            <span class="font-semibold m-0.5">10:00</span>
+            <span class="font-semibold m-0.5">{{data.time}}</span>
         </div>
     </div>
 </div>
@@ -28,7 +28,7 @@
         </button>
     </div>
     <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
-        <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="openPostpon()">
+        <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
             ยืนยัน
         </button>
     </div>

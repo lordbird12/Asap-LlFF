@@ -13,10 +13,3 @@ mat-bottom-sheet-container {
 .mat-mdc-snack-bar-label {
     color: #0A5554 !important;
 }
-
-.mat-mdc-button .mdc-button__label,
-.mat-mdc-unelevated-button .mdc-button__label,
-.mat-mdc-raised-button .mdc-button__label,
-.mat-mdc-outlined-button .mdc-button__label {
-    z-index: unset !important;
-}

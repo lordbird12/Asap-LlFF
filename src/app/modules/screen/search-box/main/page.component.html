@@ -1,19 +1,19 @@
-<div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden">
-    <div class="px-6 pt-9 pb-2 md:p-8 md:pb-2 lg:p-12">
-        <div class="mt-3">
-            <form [formGroup]="dataForm">
-                <div class="inset-0 rounded-full py-3 flex items-center shrink-0 z-99 border-2">
-                    <mat-icon class="ml-6 sm:ml-8" [svgIcon]="'heroicons_outline:magnifying-glass'"></mat-icon>
-                    <input class="w-full h-full px-4 sm:px-18" [formControlName]="'search'" [placeholder]="'Search...'" (keyup)="onChange($event)">
+<div class="flex flex-col w-full h-full min-w-0 sm:absolute sm:inset-0 bg-card">
+    <div class="px-6 pt-9 pb-2 md:p-8 md:pb-2 lg:p-12 ">
+        <div class="mt-3 ">
+            <form [formGroup]="dataForm " class="z-50">
+                <div class="inset-0 rounded-full py-3 flex items-center shrink-0 z-99 border-2 ">
+                    <mat-icon class="ml-6 sm:ml-8 " [svgIcon]=" 'heroicons_outline:magnifying-glass' "></mat-icon>
+                    <input class="w-full h-full px-4 sm:px-18 " [formControlName]=" 'search' " [placeholder]=" 'ค้นหาที่อยู่หรือชื่อตำแหน่ง' " (keyup)="onChange($event) ">
 
-                    <button class="right-5 sm:right-7 shrink-0 z-99 bg-card" (click)="clear()" mat-icon-button>
-                        <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+                    <button class="right-5 sm:right-7 shrink-0 z-99 bg-card " (click)="clear() " mat-icon-button>
+                        <mat-icon [svgIcon]=" 'heroicons_outline:x-mark' "></mat-icon>
                     </button>
                 </div>
             </form>
-            <div class="flex-auto max-w-3xl p-2 sm:p-10 prose prose-sm">
+            <div class="flex-auto max-w-3xl p-2 sm:p-10 prose prose-sm ">
                 <ul>
-                    <li *ngFor="let item of this.items; let i = index" (click)="selectPoint(i)">
+                    <li *ngFor="let item of this.items; let i=i ndex " (click)="selectPoint(i) ">
                         <p><strong>{{item.name}}</strong></p>
                         <p>{{item.address}}</p>
                     </li>
@@ -23,5 +23,11 @@
         </div>
 
     </div>
+
+</div>
+
+<div class="bottom-0 px-6 pt-40 pb-5 md:p-8 md:pb-12  h-full lg:p-12 w-full h-100 fixed bg-cover bg-no-repeat bg-bottom " style="background-image: url( 'assets/images/search-bg.png') ">
+
+
 
 </div>
