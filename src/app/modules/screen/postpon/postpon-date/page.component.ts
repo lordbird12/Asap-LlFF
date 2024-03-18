@@ -27,7 +27,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgStepperModule } from 'angular-ng-stepper';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+    MatCalendarCellCssClasses,
+    MatDatepickerModule,
+} from '@angular/material/datepicker';
 import { CustomCalendarHeaderComponent } from './custom-header';
 import moment from 'moment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -49,6 +52,10 @@ export const MY_FORMATS = {
     templateUrl: './page.component.html',
     styles: [
         `
+            .disabled-date {
+                pointer-events: none; /* Disable click events */
+                opacity: 0.5;
+            }
             .mat-calendar-body-selected {
                 background-color: #ff595a !important;
             }
@@ -113,7 +120,29 @@ export class PostponDateComponent implements OnInit {
     addForm: UntypedFormGroup;
     selected: Date | null;
     id: any;
+
+    disabledDates = [new Date('2024-03-15'), new Date('2024-03-20')];
+
+    dateClass = (date: Date): MatCalendarCellCssClasses => {
+        const today = new Date();
+
+        const daysDifference = Math.floor((date.valueOf() - today.valueOf()) / (1000 * 60 * 60 * 24));
+
+
+        // const daysDifference = Math.floor(
+        //     (date.getTime() - today.getTime()) /
+        //         (1000 * 60 * 60 * 24)
+        // );
+
+        if(daysDifference < 0 || daysDifference >= 90){
+            return 'disabled-date';
+        }else{
+            return '';
+        }
+    };
+
     customHeader = CustomCalendarHeaderComponent;
+
     /**
      * Constructor
      */
@@ -138,6 +167,10 @@ export class PostponDateComponent implements OnInit {
 
     onSelect(event) {
         var date = event.c.year + '-' + event.c.month + '-' + event.c.day;
-        this._router.navigate(['screens/postpon/time/'+date+'/'+this.id]);
+        this._router.navigate(['screens/postpon/time/' + date + '/' + this.id]);
+    }
+
+    private getDateString(date: Date): string {
+        return date.toISOString().slice(0, 10);
     }
 }
