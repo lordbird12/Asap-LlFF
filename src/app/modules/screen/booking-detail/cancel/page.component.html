@@ -26,7 +26,7 @@
                         </div>
                         <div *ngIf="other" class="flex items-end dark:bg-transparent">
                             <mat-form-field class="fuse-mat-dense fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
-                                <textarea class="textarea" matInput [placeholder]="'ระบุสาเหตุที่ต้องการแจ้งซ่อม'" [rows]="4"></textarea>
+                                <textarea class="textarea" [formControlName]="'reason'" matInput [placeholder]="'ระบุสาเหตุที่ต้องการแจ้งซ่อม'" [rows]="4"></textarea>
                             </mat-form-field>
                         </div>
                     </div>
