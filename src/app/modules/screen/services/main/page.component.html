@@ -116,14 +116,17 @@
 
     </div>
     <div class="bottom-0 px-6 pt-9 pb-5 md:p-8 md:pb-12 lg:p-12">
-        <div *ngIf="service_input" class="flex items-end p-4 dark:bg-transparent">
-            <mat-form-field class="fuse-mat-dense fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
-                <textarea class="textarea" matInput [placeholder]="'ระบุสาเหตุที่ต้องการแจ้งซ่อม'" [rows]="4"></textarea>
-            </mat-form-field>
-        </div>
+        <form [formGroup]="dataForm">
+            <div *ngIf="service_input" class="flex items-end p-4 dark:bg-transparent">
+                <mat-form-field class="fuse-mat-dense fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
+                    <textarea [formControlName]="'remark'" class="textarea" matInput [placeholder]="'ระบุสาเหตุที่ต้องการแจ้งซ่อม'" [rows]="4"></textarea>
+                </mat-form-field>
+            </div>
+        </form>
         <div class="flex px-5" *ngIf="service_remark">
             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:exclamation-circle'"></mat-icon>
-            <div class="ml-1.5 leading-6" *ngIf="service_remark > 0">ต้องจองล่วงหน้าอย่างน้อย {{service_remark}} วัน</div>
+            <div class="ml-1.5 leading-6" *ngIf="service_remark > 0">ต้องจองล่วงหน้าอย่างน้อย {{service_remark}} วัน
+            </div>
         </div>
 
         <div *ngIf="activeBtn" class="relative items-center justify-start w-full h-14 py-5 z-49">

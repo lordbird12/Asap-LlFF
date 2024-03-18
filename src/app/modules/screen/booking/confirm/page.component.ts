@@ -194,6 +194,7 @@ export class ConfirmComponent implements OnInit, OnDestroy {
             if (element.check) {
                 service_checks.push({
                     service_id: element.id,
+                    remark: element.remark,
                 });
             }
         });

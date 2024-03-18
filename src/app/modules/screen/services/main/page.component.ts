@@ -71,7 +71,7 @@ export class ServicesMainComponent implements OnInit {
     service_input: boolean;
     activeBtn: any;
     num: any;
-
+    dataForm: FormGroup;
     /**
      * Constructor
      */
@@ -91,6 +91,10 @@ export class ServicesMainComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        this.dataForm = this._formBuilder.group({
+            remark: ['', [Validators.required]],
+        });
+
         this.service_input = false;
         this.item = localStorage.getItem('data')
             ? JSON.parse(localStorage.getItem('data')).data
@@ -123,6 +127,14 @@ export class ServicesMainComponent implements OnInit {
     }
 
     submit() {
+        var n = 0;
+        this.items_check.forEach((element) => {
+            if (element.type == 'Input') {
+                this.items_check[n].remark = this.dataForm.value.remark;
+            }
+            n++;
+        });
+
         localStorage.setItem('services', JSON.stringify(this.items_check));
         this._bottomSheet.open(MapComponent);
     }
@@ -161,7 +173,6 @@ export class ServicesMainComponent implements OnInit {
                         this.service_remark + Number(element.remark);
                 }
             }
-  
 
             if (this.num <= 0) {
                 this.activeBtn = false;
