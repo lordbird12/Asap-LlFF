@@ -82,6 +82,8 @@ export class StarsComponent implements OnInit, OnDestroy {
     // otp: string[] = new Array(6).fill('');
     otpForm: FormGroup;
     item: any;
+    rating: any;
+    dataForm: FormGroup;
     /**
      * Constructor
      */
@@ -89,7 +91,7 @@ export class StarsComponent implements OnInit, OnDestroy {
         @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
         private _bottomSheetRef: MatBottomSheetRef<StarsComponent>,
         private _changeDetectorRef: ChangeDetectorRef,
-        private formBuilder: FormBuilder,
+        private _formBuilder: FormBuilder,
         private _service: PageService,
         private _router: Router,
         private _fuseConfirmationService: FuseConfirmationService
@@ -105,19 +107,14 @@ export class StarsComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        console.log(this.data);
+        this.dataForm = this._formBuilder.group({
+            comment: [null, [Validators.required]],
+        });
+
         this._service.getBookById(this.data.id).subscribe((resp: any) => {
             try {
                 this.item = resp.data;
-                // console.log(this.item);
-                // if (resp.data) {
-                //     const obj = {
-                //         data: resp.data,
-                //     };
 
-                //     // localStorage.setItem('data', JSON.stringify(obj));
-                //     // this._router.navigate(['screens/reg-kg/list']);
-                // }
                 this._changeDetectorRef.markForCheck();
             } catch (error) {
                 console.log(error);
@@ -141,15 +138,57 @@ export class StarsComponent implements OnInit, OnDestroy {
     ratingDisplay: number = 0;
 
     onRatingSet(rating: number): void {
-        console.log(rating);
+        this.rating = rating;
 
         this.ratingDisplay = rating;
     }
 
-    closeBottomSheet(): void {
-        this._bottomSheetRef.dismiss();
+    closeBottomSheet(status: any): void {
+        this._bottomSheetRef.dismiss(status);
+        event.preventDefault();
     }
+
+
+
     submit(): void {
-        this._bottomSheetRef.dismiss(true);
+        const data = {
+            booking_id: this.item.id,
+            user_id: this.item?.activitys[this.item?.activitys.length-1]?.user?.id,
+            comment: this.dataForm.value.comment,
+            rating:  this.rating,
+        };
+
+        console.log(data);
+
+        this._service.eva_book(data).subscribe({
+            next: (resp: any) => {
+                this.closeBottomSheet(true);
+            },
+
+            error: (err: any) => {
+                this._fuseConfirmationService.open({
+                    title: 'เกิดข้อผิดพลาด',
+                    message: err.error.message,
+                    icon: {
+                        show: true,
+                        name: 'heroicons_outline:exclamation-triangle',
+                        color: 'accent',
+                    },
+                    actions: {
+                        confirm: {
+                            show: true,
+                            label: 'ปิด',
+                            color: 'primary',
+                        },
+                        cancel: {
+                            show: false,
+                            label: 'ยกเลิก',
+                        },
+                    },
+                    dismissible: true,
+                });
+                // console.log(err.error.message);
+            },
+        });
     }
 }

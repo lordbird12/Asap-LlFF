@@ -154,6 +154,21 @@ export class PageService {
             );
     }
 
+    eva_book(data: any): Observable<any> {
+        return this._httpClient
+            .post(environment.baseURL + '/api/eva_book', {
+                booking_id: data.booking_id,
+                user_id: data.user_id,
+                comment: data.comment,
+                star: data.rating,
+            })
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
     getProfile(userId: any): Observable<any> {
         return this._httpClient
             .post(environment.baseURL + '/api/get_profile', {

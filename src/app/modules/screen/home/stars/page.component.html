@@ -3,7 +3,7 @@
         <span class="text-xl text-center md:text-xl font-bold  tracking-tight  leading-7 sm:leading-10 truncate mt-3">
             ให้คะแนนแอดมินสำหรับการจองครั้งนี้
         </span>
-        <span class="text-[16px] text-center md:text-xl   tracking-tight   leading-7 sm:leading-10 truncate mt-2" (click)="closeBottomSheet()">
+        <span class="text-[16px] text-center md:text-xl   tracking-tight   leading-7 sm:leading-10 truncate mt-2" (click)="closeBottomSheet(true)">
             <mat-icon svgIcon="heroicons_mini:x-mark" class="icon-size-8"></mat-icon>
         </span>
     </div>
@@ -13,7 +13,8 @@
         <div>
             <span class="text-xl font-bold">{{item?.car?.license ?? "-"}}</span>
             <br>
-            <span class="text-sm text-slate-400">  {{item?.car?.brand_model?.name ?? "-"}} • {{item?.car?.color ?? "-"}}</span>
+            <span class="text-sm text-slate-400"> {{item?.car?.brand_model?.name ?? "-"}} • {{item?.car?.color ??
+                "-"}}</span>
             <br>
             <span class="text-sm text-slate-400"> วันที่รับบริการ </span><span class="text-sm text-black bold font-bold">22/12/2023</span>
         </div>
@@ -43,23 +44,23 @@
     <span class="text-mdf text-center md:text-xl font-bold  tracking-tight  leading-7 sm:leading-10 truncate mt-3">
         คำแนะนำของคุณจะช่วยให้เราพัฒนาบริการให้ดียิ่งขึ้น
     </span>
-    <mat-form-field class="fuse-mat-dense fuse-mat-rounded fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
-        <textarea matInput cdkTextareaAutosize #messageInput [rows]="5"></textarea>
-    </mat-form-field>
+
 </div>
 <div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white" *ngIf="this.ratingDisplay === 5 || this.ratingDisplay === 4">
     <span class="text-mdf text-center md:text-xl font-bold  tracking-tight  leading-7 sm:leading-10 truncate mt-3">
         อยากชื่นชมเราในเรื่องใด
     </span>
-    <mat-form-field class="fuse-mat-dense fuse-mat-rounded fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
-        <textarea matInput cdkTextareaAutosize #messageInput [rows]="5"></textarea>
-    </mat-form-field>
 </div>
 <div class=" flex flex-col relative items-center justify-center w-full h-70 px-4 md:px-6 z-49 bg-white" *ngIf="this.ratingDisplay === 0">
 
 </div>
-
-
+<form [formGroup]="dataForm" *ngIf="this.ratingDisplay !== 0">
+    <div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white">
+        <mat-form-field class="fuse-mat-dense fuse-mat-rounded fuse-mat-bold w-full" [subscriptSizing]="'dynamic'">
+            <textarea matInput [formControlName]="'comment'" cdkTextareaAutosize #messageInput [rows]="5"></textarea>
+        </mat-form-field>
+    </div>
+</form>
 <div class="grid grid-cols-1 bg-white justify-center rounded max-w-[100vh]">
     <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
         <button *ngIf="this.ratingDisplay !== 0" (click)="submit()" class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'">

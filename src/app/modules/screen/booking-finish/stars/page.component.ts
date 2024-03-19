@@ -89,40 +89,7 @@ export class StarsComponent implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit(): void {
-    // Setup available panels
-    this.panels = [
-      {
-        id: 'home-main',
-        icon: 'heroicons_outline:user-circle',
-        title: 'Account',
-        description:
-          'Manage your public profile and private information',
-      },
-      {
-        id: 'home-list',
-        icon: 'heroicons_outline:lock-closed',
-        title: 'Security',
-        description:
-          'Manage your password and 2-step verification preferences',
-      }
-    ];
-
-    // Subscribe to media changes
-    this._fuseMediaWatcherService.onMediaChange$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(({ matchingAliases }) => {
-        // Set the drawerMode and drawerOpened
-        if (matchingAliases.includes('lg')) {
-          this.drawerMode = 'side';
-          this.drawerOpened = true;
-        } else {
-          this.drawerMode = 'over';
-          this.drawerOpened = false;
-        }
-
-        // Mark for check
-        this._changeDetectorRef.markForCheck();
-      });
+   
   }
 
 
