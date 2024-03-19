@@ -46,6 +46,7 @@ import { CommonModule } from '@angular/common';
     selector: 'step-two-map-recommend',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -171,5 +172,14 @@ export class StepTwoMapRecommendComponent implements OnInit {
 
     goToServicesCenter() {
         this._router.navigate(['screens/services/step-two-service-centers']);
+    }
+
+    openMap(item: any): void {
+        window.open(
+            'https://www.google.com/maps/search/?api=1&query=' +
+                item.lat +
+                ',' +
+                item.lon
+        );
     }
 }

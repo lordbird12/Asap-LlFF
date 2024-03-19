@@ -58,9 +58,9 @@ export class PageService {
             );
     }
 
-    otp(data: FormData): Observable<any> {
+    otp(data: any): Observable<any> {
         return this._httpClient
-            .post<any>(environment.baseURL + '/api/confirm_otp', { tel: data })
+            .post<any>(environment.baseURL + '/api/confirm_otp', data)
             .pipe(
                 tap((result) => {
                     this._data.next(result);
@@ -256,7 +256,10 @@ export class PageService {
 
     reg_license(data: any): Observable<any> {
         return this._httpClient
-            .post<any>(environment.baseURL + '/api/get_car_by_license_plate', data)
+            .post<any>(
+                environment.baseURL + '/api/get_car_by_license_plate',
+                data
+            )
             .pipe(
                 tap((result) => {
                     this._data.next(result);

@@ -61,6 +61,7 @@ import { Router } from '@angular/router';
 export class StepFourComponent implements OnInit {
     dataForm: FormGroup;
     disableError: boolean = false;
+    profile: any;
     /**
      * Constructor
      */
@@ -86,14 +87,6 @@ export class StepFourComponent implements OnInit {
             phone: [null, [Validators.required]],
         });
     }
-
-    // submit(): void {
-    //     localStorage.setItem(
-    //         'contact',
-    //         JSON.stringify(this.dataForm.value)
-    //     );
-    //     this._bottomSheet.open(StepFourOtpComponent);
-    // }
 
     submit() {
         const confirmation = this._fuseConfirmationService.open({
@@ -127,7 +120,16 @@ export class StepFourComponent implements OnInit {
                     JSON.stringify(this.dataForm.value)
                 );
 
-                this._service.otp(this.dataForm.value.phone).subscribe({
+                this.profile = localStorage.getItem('profile')
+                    ? JSON.parse(localStorage.getItem('profile'))
+                    : [];
+
+                const data = {
+                    phone: this.dataForm.value.phone,
+                    user_id: this.profile.user_id,
+                };
+
+                this._service.otp(data).subscribe({
                     next: (resp: any) => {
                         localStorage.setItem('otp', JSON.stringify(resp));
                         this._bottomSheet.open(StepFourOtpComponent);
