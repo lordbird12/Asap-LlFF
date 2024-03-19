@@ -123,12 +123,7 @@ export class MapComponent implements OnInit, OnDestroy {
             navigator.geolocation.getCurrentPosition(
                 (position: any) => {
                     if (position) {
-                        console.log(
-                            'Latitude: ' +
-                                position.coords.latitude +
-                                'Longitude: ' +
-                                position.coords.longitude
-                        );
+                   
                         this.lat = position.coords.latitude;
                         this.lng = position.coords.longitude;
 
@@ -136,7 +131,10 @@ export class MapComponent implements OnInit, OnDestroy {
                             lat: this.lat,
                             lon: this.lng,
                         };
-
+                        localStorage.setItem(
+                            'Location',
+                            JSON.stringify(data)
+                        );
                         this._service
                             .get_loations(data)
                             .subscribe((resp: any) => {
@@ -149,7 +147,7 @@ export class MapComponent implements OnInit, OnDestroy {
                                         this._bottomSheetRef.dismiss()
 
                                         this._router.navigate([
-                                            'screens/services/step-two-map-recommend',
+                                            'screens/services/step-two-map-my-location',
                                         ]);
                                     }
                                 } catch (error) {

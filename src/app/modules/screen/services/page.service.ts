@@ -226,6 +226,22 @@ export class PageService {
             );
     }
 
+    get_my_loations(data: any): Observable<any> {
+        return this._httpClient
+            .get<any>(
+                'https://api.longdo.com/map/services/address?lon=' +
+                    data.lon +
+                    '&lat=' +
+                    data.lat +
+                    '&noelevation=1&key=ca1a48a17e613c75c68d82fe7f71893b'
+            )
+            .pipe(
+                tap((result) => {
+                    this._data.next(result);
+                })
+            );
+    }
+
     get_my_cars(userId: any): Observable<any> {
         return this._httpClient
             .post(environment.baseURL + '/api/get_my_cars', {
