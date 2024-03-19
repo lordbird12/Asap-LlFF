@@ -46,6 +46,7 @@ import { CommonModule, NgClass } from '@angular/common';
     selector: 'step-two-map',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -65,7 +66,7 @@ import { CommonModule, NgClass } from '@angular/common';
         MatBottomSheetModule,
         FuseCardComponent,
         NgClass,
-        CommonModule
+        CommonModule,
     ],
 })
 export class ServiceCenterComponent implements OnInit {
@@ -83,7 +84,7 @@ export class ServiceCenterComponent implements OnInit {
         private _bottomSheet: MatBottomSheet,
         private _service: PageService,
         private _router: Router,
-        private _changeDetectorRef: ChangeDetectorRef,
+        private _changeDetectorRef: ChangeDetectorRef
     ) {}
 
     openBottomSheet(): void {
@@ -117,8 +118,8 @@ export class ServiceCenterComponent implements OnInit {
                     //         data: resp.data,
                     //     };
 
-                        // localStorage.setItem('data', JSON.stringify(obj));
-                        // this._router.navigate(['screens/reg-kg/list']);
+                    // localStorage.setItem('data', JSON.stringify(obj));
+                    // this._router.navigate(['screens/reg-kg/list']);
                     // } else {
                     //     // this.disableError = true;
                     // }
@@ -131,9 +132,18 @@ export class ServiceCenterComponent implements OnInit {
         }
     }
 
-    selectServiceCenter(item){
+    selectServiceCenter(item) {
         localStorage.setItem('myServiceCenter', JSON.stringify(item));
 
         this._router.navigate(['screens/services/step-three']);
+    }
+
+    openMap(item: any): void {
+        window.open(
+            'https://www.google.com/maps/search/?api=1&query=' +
+                item.lat +
+                ',' +
+                item.lon
+        );
     }
 }
