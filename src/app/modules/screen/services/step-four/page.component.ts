@@ -125,7 +125,7 @@ export class StepFourComponent implements OnInit {
                     : [];
 
                 const data = {
-                    phone: this.dataForm.value.phone,
+                    tel: this.dataForm.value.phone,
                     user_id: this.profile.user_id,
                 };
 
