@@ -264,7 +264,17 @@
                 stroke="#858585" stroke-width="1.5" stroke-miterlimit="10" />
         </svg>
 
-        
+        <svg id="edit-color" width="20" height="20" viewBox="0 0 20 20" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.417 16.5818H16.7312" stroke="#FF595A" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M10.7126 4.12975C11.3268 3.34725 12.3193 3.38809 13.1026 4.00225L14.2609 4.91059C15.0443 5.52475 15.3218 6.47725 14.7076 7.26142L7.80009 16.0739C7.56925 16.3689 7.21676 16.5431 6.84176 16.5473L4.17759 16.5814L3.57426 13.9856C3.48926 13.6214 3.57426 13.2381 3.80509 12.9423L10.7126 4.12975Z"
+                stroke="#FF595A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.41895 5.78009L13.4139 8.91176" stroke="#FF595A" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
 
     </defs>
 </svg>

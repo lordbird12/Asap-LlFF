@@ -162,8 +162,11 @@ export class ConfirmComponent implements OnInit, OnDestroy {
     closeBottomSheet(status: any): void {
         this._bottomSheetRef.dismiss(status);
         event.preventDefault();
-      }
-    
+    }
+
+    close(): void {
+        this._bottomSheetRef.dismiss(false);
+    }
 
     submit(): void {
         const data = {

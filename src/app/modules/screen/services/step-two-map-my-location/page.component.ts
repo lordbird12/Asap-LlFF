@@ -49,6 +49,7 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'step-two-map-recommend',
     templateUrl: './page.component.html',
+    styleUrls: ['./page.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [
@@ -165,5 +166,8 @@ export class StepTwoMapMyLocationComponent implements OnInit {
         this._router.navigate(['screens/services/step-two-map-recommend']);
     }
 
+    editDate():void{
+        this._router.navigate(['screens/search/main']);
+    }
    
 }
