@@ -144,7 +144,7 @@ export class StepFourComponent implements OnInit {
                     error: (err: any) => {
                         this.disableError = true;
                         this._changeDetectorRef.markForCheck();
-                        alert(1);
+
                         // this._fuseConfirmationService.open({
                         //     title: 'เกิดข้อผิดพลาด',
                         //     message: err.error.message,
