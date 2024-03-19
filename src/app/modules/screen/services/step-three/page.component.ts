@@ -51,6 +51,10 @@ export const MY_FORMATS = {
     templateUrl: './page.component.html',
     styles: [
         `
+            .disabled-date {
+                pointer-events: none; /* Disable click events */
+                opacity: 0.5;
+            }
             .mat-calendar-body-selected {
                 background-color: #ff595a !important;
             }
@@ -114,25 +118,28 @@ export const MY_FORMATS = {
 export class StepThreeComponent implements OnInit {
     addForm: UntypedFormGroup;
     selected: Date | null;
-    customHeader = CustomCalendarHeaderComponent;
 
     dateClass = (date: Date): MatCalendarCellCssClasses => {
         const today = new Date();
 
-        const daysDifference = Math.floor((date.valueOf() - today.valueOf()) / (1000 * 60 * 60 * 24));
-
+        const daysDifference = Math.floor(
+            (date.valueOf() - today.valueOf()) / (1000 * 60 * 60 * 24)
+        );
 
         // const daysDifference = Math.floor(
         //     (date.getTime() - today.getTime()) /
         //         (1000 * 60 * 60 * 24)
         // );
 
-        if(daysDifference < 0 || daysDifference >= 90){
+        if (daysDifference < 0 || daysDifference >= 90) {
             return 'disabled-date';
-        }else{
+        } else {
             return '';
         }
     };
+
+    customHeader = CustomCalendarHeaderComponent;
+
     /**
      * Constructor
      */
@@ -167,6 +174,6 @@ export class StepThreeComponent implements OnInit {
 
     onSelect(event) {
         var date = event.c.year + '-' + event.c.month + '-' + event.c.day;
-        this._router.navigate(['screens/services/step-three-time/'+date]);
+        this._router.navigate(['screens/services/step-three-time/' + date]);
     }
 }

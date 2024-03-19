@@ -1,6 +1,7 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     OnInit,
     ViewEncapsulation,
@@ -70,7 +71,8 @@ export class StepFourComponent implements OnInit {
         private _bottomSheet: MatBottomSheet,
         private _fuseConfirmationService: FuseConfirmationService,
         private _service: PageService,
-        private _router: Router
+        private _router: Router,
+        private _changeDetectorRef: ChangeDetectorRef,
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -137,6 +139,7 @@ export class StepFourComponent implements OnInit {
 
                     error: (err: any) => {
                         this.disableError = true;
+                        this._changeDetectorRef.markForCheck();
                         // this._fuseConfirmationService.open({
                         //     title: 'เกิดข้อผิดพลาด',
                         //     message: err.error.message,
