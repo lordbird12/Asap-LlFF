@@ -38,6 +38,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'step-four',
     templateUrl: './page.component.html',
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -59,7 +60,7 @@ import { Router } from '@angular/router';
 })
 export class StepFourComponent implements OnInit {
     dataForm: FormGroup;
-
+    disableError: boolean = false;
     /**
      * Constructor
      */
