@@ -45,7 +45,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-
 @Component({
     selector: 'step-two-map-recommend',
     templateUrl: './page.component.html',
@@ -80,6 +79,9 @@ export class StepTwoMapMyLocationComponent implements OnInit {
     data: any;
     private apiKey = 'ca1a48a17e613c75c68d82fe7f71893b'; // Replace with your Google Maps API key
     private baseUrl = 'https://api.longdo.com/map/services/address';
+
+    marker: any; // Holds the marker instance
+
     /**
      * Constructor
      */
@@ -119,20 +121,28 @@ export class StepTwoMapMyLocationComponent implements OnInit {
                     this.item = resp;
                     this._changeDetectorRef.markForCheck();
                     console.log(this.item);
-         
+
                     if (this.item) {
+                        const resolution = 156543.03392;
+                        const distance = 1000;
+                        const zoomLevel = Math.round(Math.log2(40075016.686 * Math.cos(this.data.lat * Math.PI / 180) / (resolution * distance)));
+
                         // Initialize the map
                         this.map = new longdo.Map({
                             placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
-                            zoom: 14,
+                            zoom: zoomLevel,
+                            animate:true
                             // other map options
                         });
-            
- 
-                        var marker = new longdo.Marker(
+
+                        this.marker = new longdo.Marker(
                             {
-                                lon: this.data.lon ? this.data.lon : this.data.lon,
-                                lat: this.data.lat ? this.data.lat : this.data.lat,
+                                lon: this.data.lon
+                                    ? this.data.lon
+                                    : this.data.lon,
+                                lat: this.data.lat
+                                    ? this.data.lat
+                                    : this.data.lat,
                             },
                             {
                                 title: 'Marker',
@@ -141,19 +151,21 @@ export class StepTwoMapMyLocationComponent implements OnInit {
                                 },
                             }
                         );
-            
-                        this.map.Overlays.add(marker);
-                        this._changeDetectorRef.markForCheck();
 
+                        this.map.Overlays.add(this.marker);
+                        this.focusOnMarker();
+                        this._changeDetectorRef.markForCheck();
                     }
-   
                 } catch (error) {
                     // this.disableError = true;
                     console.log(error);
                 }
             });
-
         }
+    }
+
+    focusOnMarker(): void {
+        this.map.location(this.marker.location(), true);
     }
 
     // selectServiceCenter(item){
@@ -166,8 +178,7 @@ export class StepTwoMapMyLocationComponent implements OnInit {
         this._router.navigate(['screens/services/step-two-map-recommend']);
     }
 
-    editDate():void{
+    editDate(): void {
         this._router.navigate(['screens/search/main']);
     }
-   
 }

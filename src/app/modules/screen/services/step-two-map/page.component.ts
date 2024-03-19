@@ -37,6 +37,7 @@ declare const longdo: any; // Assuming longdo is a global variable or imported s
 @Component({
     selector: 'step-two-map',
     templateUrl: './page.component.html',
+    styleUrls: ['./page.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
@@ -62,13 +63,14 @@ export class StepTwoMapComponent implements OnInit {
     dataForm: FormGroup;
     map: any; // Assuming you have a reference to the map object
     item: any;
+    marker: any; // Holds the marker instance
     /**
      * Constructor
      */
     constructor(
         private _formBuilder: UntypedFormBuilder,
         private _bottomSheet: MatBottomSheet,
-        private _router: Router,
+        private _router: Router
     ) {}
 
     openBottomSheet(): void {
@@ -89,9 +91,20 @@ export class StepTwoMapComponent implements OnInit {
 
         if (this.item) {
             // Initialize the map
+            const resolution = 156543.03392;
+            const distance = 1000;
+            const zoomLevel = Math.round(
+                Math.log2(
+                    (40075016.686 * Math.cos((this.item.lat * Math.PI) / 180)) /
+                        (resolution * distance)
+                )
+            );
+
+            // Initialize the map
             this.map = new longdo.Map({
                 placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
-                zoom: 14,
+                zoom: zoomLevel,
+                animate: true,
                 // other map options
             });
 
@@ -101,7 +114,7 @@ export class StepTwoMapComponent implements OnInit {
             //     lat: this.item.lon,
             // });
 
-            var marker = new longdo.Marker(
+            this.marker = new longdo.Marker(
                 {
                     lon: this.item.lon ? this.item.lon : this.item.road_lon,
                     lat: this.item.lat ? this.item.lat : this.item.road_lat,
@@ -114,11 +127,16 @@ export class StepTwoMapComponent implements OnInit {
                 }
             );
 
-            this.map.Overlays.add(marker);
+            this.map.Overlays.add(this.marker);
+            this.focusOnMarker();
         }
     }
 
     goToServicesCenter() {
         this._router.navigate(['screens/services/step-two-service-centers']);
+    }
+
+    focusOnMarker(): void {
+        this.map.location(this.marker.location(), true);
     }
 }

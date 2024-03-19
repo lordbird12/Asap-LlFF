@@ -74,6 +74,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
     items: any;
     item: any;
     item2: any;
+    marker: any; // Holds the marker instance
     /**
      * Constructor
      */
@@ -112,9 +113,15 @@ export class StepTwoMapRecommendComponent implements OnInit {
                     this.item = this.items[0];
                     if (this.item) {
                         // Initialize the map
+                        const resolution = 156543.03392;
+                        const distance = 1000;
+                        const zoomLevel = Math.round(Math.log2(40075016.686 * Math.cos(this.item.lat * Math.PI / 180) / (resolution * distance)));
+
+                        // Initialize the map
                         this.map = new longdo.Map({
                             placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
-                            zoom: 14,
+                            zoom: zoomLevel,
+                            animate:true
                             // other map options
                         });
             
@@ -124,7 +131,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
                         //     lat: this.item.lon,
                         // });
             
-                        var marker = new longdo.Marker(
+                        this.marker = new longdo.Marker(
                             {
                                 lon: this.item.lon ? this.item.lon : this.item.lon,
                                 lat: this.item.lat ? this.item.lat : this.item.lat,
@@ -137,7 +144,8 @@ export class StepTwoMapRecommendComponent implements OnInit {
                             }
                         );
             
-                        this.map.Overlays.add(marker);
+                        this.map.Overlays.add(this.marker);
+                        this.focusOnMarker();
                         this._changeDetectorRef.markForCheck();
 
                     }
@@ -162,6 +170,10 @@ export class StepTwoMapRecommendComponent implements OnInit {
     
 
        
+    }
+
+    focusOnMarker(): void {
+        this.map.location(this.marker.location(), true);
     }
 
     selectServiceCenter(item){
