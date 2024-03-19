@@ -31,7 +31,7 @@
                         <div class="sm:col-span-4">
                             <mat-form-field class="w-full" style="border-radius:18px !important;">
                                 <mat-label>เบอร์โทรศัพท์</mat-label>
-                                <input class="w-full" [formControlName]="'phone'" style="border-radius:18px !important;" matInput placeholder="Enter your phone number">
+                                <input class="w-full" [formControlName]="'phone'" (keyup)="onChange($event)" style="border-radius:18px !important;" matInput placeholder="Enter your phone number">
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'asha:phone_contact'"></mat-icon>
                             </mat-form-field>
                             <div class="flex" *ngIf="disableError">

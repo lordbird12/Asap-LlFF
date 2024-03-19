@@ -136,31 +136,38 @@ export class StepFourComponent implements OnInit {
                     },
 
                     error: (err: any) => {
-                        this._fuseConfirmationService.open({
-                            title: 'เกิดข้อผิดพลาด',
-                            message: err.error.message,
-                            icon: {
-                                show: true,
-                                name: 'heroicons_outline:exclamation-triangle',
-                                color: 'accent',
-                            },
-                            actions: {
-                                confirm: {
-                                    show: true,
-                                    label: 'ปิด',
-                                    color: 'primary',
-                                },
-                                cancel: {
-                                    show: false,
-                                    label: 'ยกเลิก',
-                                },
-                            },
-                            dismissible: true,
-                        });
-                        console.log(err.error.message);
+                        this.disableError = true;
+                        // this._fuseConfirmationService.open({
+                        //     title: 'เกิดข้อผิดพลาด',
+                        //     message: err.error.message,
+                        //     icon: {
+                        //         show: true,
+                        //         name: 'heroicons_outline:exclamation-triangle',
+                        //         color: 'accent',
+                        //     },
+                        //     actions: {
+                        //         confirm: {
+                        //             show: true,
+                        //             label: 'ปิด',
+                        //             color: 'primary',
+                        //         },
+                        //         cancel: {
+                        //             show: false,
+                        //             label: 'ยกเลิก',
+                        //         },
+                        //     },
+                        //     dismissible: true,
+                        // });
+                        // console.log(err.error.message);
                     },
                 });
             }
         });
+    }
+
+    onChange(event: any) {
+        if (event.target.value) {
+            this.disableError = false;
+        }
     }
 }

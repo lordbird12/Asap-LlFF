@@ -26,7 +26,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgStepperModule } from 'angular-ng-stepper';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+    MatCalendarCellCssClasses,
+    MatDatepickerModule,
+} from '@angular/material/datepicker';
 import { CustomCalendarHeaderComponent } from './custom-header';
 import moment from 'moment';
 import { Router } from '@angular/router';
@@ -112,6 +115,24 @@ export class StepThreeComponent implements OnInit {
     addForm: UntypedFormGroup;
     selected: Date | null;
     customHeader = CustomCalendarHeaderComponent;
+
+    dateClass = (date: Date): MatCalendarCellCssClasses => {
+        const today = new Date();
+
+        const daysDifference = Math.floor((date.valueOf() - today.valueOf()) / (1000 * 60 * 60 * 24));
+
+
+        // const daysDifference = Math.floor(
+        //     (date.getTime() - today.getTime()) /
+        //         (1000 * 60 * 60 * 24)
+        // );
+
+        if(daysDifference < 0 || daysDifference >= 90){
+            return 'disabled-date';
+        }else{
+            return '';
+        }
+    };
     /**
      * Constructor
      */
