@@ -102,15 +102,21 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
             ? JSON.parse(localStorage.getItem('MyBooking'))
             : [];
 
-        this.bookings.forEach((element) => {
-            if (element.status != 'กำลังดำเนินการ' && element.status != 'รายการจองถูกยกเลิก') {
-                this.activeBtn1 = true;
-            }
-
-            if (element.status == 'รายการจองสิ้นสุดแล้ว' || element.status == 'รายการจองถูกยกเลิก') {
-                this.activeBtn2 = true;
-            }
-        });
+            this.bookings.forEach((element) => {
+                if (
+                    element?.status != 'รายการจองสิ้นสุดแล้ว' &&
+                    element?.status != 'รายการจองถูกยกเลิก'
+                ) {
+                    this.activeBtn1 = false;
+                }
+    
+                if (
+                    element.status == 'รายการจองสิ้นสุดแล้ว' ||
+                    element.status == 'รายการจองถูกยกเลิก'
+                ) {
+                    this.activeBtn2 = false;
+                }
+            });
     }
 
     ngAfterViewInit(): void {
