@@ -32,6 +32,7 @@ import { StatusComponent } from '../status/page.component';
     selector: 'services',
     templateUrl: './page.component.html',
     encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [

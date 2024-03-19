@@ -1,28 +1,34 @@
-mat-bottom-sheet-container {
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-}
-
-.mdc-snackbar__surface {
-    background-color: #D8FBDE !important;
-    /* Set your desired background color */
-    color: #0A5554 !important;
-    /* Set your desired text color */
-}
-
-.mat-mdc-snack-bar-label {
-    color: #0A5554 !important;
-}
-
-.mat-mdc-button .mdc-button__label,
-.mat-mdc-unelevated-button .mdc-button__label,
-.mat-mdc-raised-button .mdc-button__label,
-.mat-mdc-outlined-button .mdc-button__label {
-    z-index: unset !important;
-}
-
-body {
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-}
+    mat-bottom-sheet-container {
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+    }
+    
+    .mdc-snackbar__surface {
+        background-color: #D8FBDE !important;
+        /* Set your desired background color */
+        color: #0A5554 !important;
+        /* Set your desired text color */
+    }
+    
+    .mat-mdc-snack-bar-label {
+        color: #0A5554 !important;
+    }
+    
+    .mat-mdc-button .mdc-button__label,
+    .mat-mdc-unelevated-button .mdc-button__label,
+    .mat-mdc-raised-button .mdc-button__label,
+    .mat-mdc-outlined-button .mdc-button__label {
+        z-index: unset !important;
+    }
+    
+    body {
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+    }
+    
+     ::ng-deep body,
+    .dark,
+    .light {
+        background: #ffffff !important;
+    }
