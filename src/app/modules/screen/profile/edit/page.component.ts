@@ -6,6 +6,8 @@ import {
     ChangeDetectorRef,
     Component,
     OnInit,
+    ViewChild,
+    ElementRef,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -59,13 +61,16 @@ import { Router } from '@angular/router';
         MatProgressBarModule,
         MatBottomSheetModule,
         CommonModule,
-        NgClass
+        NgClass,
     ],
 })
 export class EditComponent implements OnInit {
     dataForm: FormGroup;
     disableError: boolean = false;
     profile: any;
+    imageUrl: string = ''; // Initial image URL
+    @ViewChild('fileInput') fileInput!: ElementRef;
+
     /**
      * Constructor
      */
@@ -75,7 +80,7 @@ export class EditComponent implements OnInit {
         private _fuseConfirmationService: FuseConfirmationService,
         private _service: PageService,
         private _router: Router,
-        private _changeDetectorRef: ChangeDetectorRef,
+        private _changeDetectorRef: ChangeDetectorRef
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -86,6 +91,14 @@ export class EditComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        this.profile = localStorage.getItem('profile')
+            ? JSON.parse(localStorage.getItem('profile'))
+            : [];
+
+        if (this.profile) {
+            this.imageUrl = this.profile.pictureUrl;
+        }
+
         // Create the form
         this.dataForm = this._formBuilder.group({
             name: [null, [Validators.required]],
@@ -137,7 +150,6 @@ export class EditComponent implements OnInit {
                 this._service.otp(data).subscribe({
                     next: (resp: any) => {
                         localStorage.setItem('otp', JSON.stringify(resp));
-                       
                     },
 
                     error: (err: any) => {
@@ -176,5 +188,26 @@ export class EditComponent implements OnInit {
         if (event.target.value) {
             this.disableError = false;
         }
+    }
+
+    uploadImage() {
+        // Trigger click event on file input when Upload Image button is clicked
+        if (this.fileInput) {
+            this.fileInput.nativeElement.click();
+        }
+    }
+
+    onFileSelected(event: any) {
+        const file: File = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            // Update the image source when a new image is selected
+            this.imageUrl = reader.result as string;
+            console.log(this.imageUrl);
+            this._changeDetectorRef.markForCheck();
+        };
+
+        reader.readAsDataURL(file);
     }
 }

@@ -97,82 +97,8 @@ export class MainComponent implements OnInit {
         });
     }
 
-    submit() {
-        const confirmation = this._fuseConfirmationService.open({
-            title: 'ยืนยันข้อมูลติดต่อ',
-            message: 'คุณต้องการยืนยันข้อมูลติดต่อใช่หรือไม่ ?',
-            icon: {
-                show: false,
-                name: 'heroicons_outline:exclamation-triangle',
-                color: 'accent',
-            },
-            actions: {
-                confirm: {
-                    show: true,
-                    label: 'ตกลง',
-                    color: 'primary',
-                },
-                cancel: {
-                    show: false,
-                    label: 'ยกเลิก',
-                },
-            },
-            dismissible: true,
-        });
-
-        // Subscribe to the confirmation dialog closed action
-        confirmation.afterClosed().subscribe((result) => {
-            // If the confirm button pressed...
-            if (result === 'confirmed') {
-                localStorage.setItem(
-                    'contact',
-                    JSON.stringify(this.dataForm.value)
-                );
-
-                this.profile = localStorage.getItem('profile')
-                    ? JSON.parse(localStorage.getItem('profile'))
-                    : [];
-
-                const data = {
-                    tel: this.dataForm.value.phone,
-                    user_id: this.profile.user_id,
-                };
-
-                this._service.otp(data).subscribe({
-                    next: (resp: any) => {
-                        localStorage.setItem('otp', JSON.stringify(resp));
-                    },
-
-                    error: (err: any) => {
-                        this.disableError = true;
-                        this._changeDetectorRef.markForCheck();
-
-                        // this._fuseConfirmationService.open({
-                        //     title: 'เกิดข้อผิดพลาด',
-                        //     message: err.error.message,
-                        //     icon: {
-                        //         show: true,
-                        //         name: 'heroicons_outline:exclamation-triangle',
-                        //         color: 'accent',
-                        //     },
-                        //     actions: {
-                        //         confirm: {
-                        //             show: true,
-                        //             label: 'ปิด',
-                        //             color: 'primary',
-                        //         },
-                        //         cancel: {
-                        //             show: false,
-                        //             label: 'ยกเลิก',
-                        //         },
-                        //     },
-                        //     dismissible: true,
-                        // });
-                        // console.log(err.error.message);
-                    },
-                });
-            }
-        });
+    goToEdit() {
+        this._router.navigate(['screens/profile/edit']);
     }
 
     onChange(event: any) {
