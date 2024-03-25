@@ -10,6 +10,7 @@ import { LayoutCalendarComponent } from './layout-calendar/layout-calendar.compo
 import { LayoutSearchComponent } from './layout-search/layout.component';
 import { LayoutFinishComponent } from './layout-finish/layout.component';
 import { LayoutPostponComponent } from './layout-postpon/layout-postpon.component';
+import { LayoutProfileComponent } from './layout-profile/layout.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -184,6 +185,24 @@ export const appRoutes: Route[] = [
                 path: 'search',
                 loadChildren: () =>
                     import('app/modules/screen/search-box/page.routes'),
+            },
+        ],
+    },
+
+
+    {
+        path: 'screens',
+        // canActivate: [AuthGuard],
+        // canActivateChild: [AuthGuard],
+        component: LayoutProfileComponent,
+        resolve: {
+            initialData: initialDataResolver,
+        },
+        children: [
+            {
+                path: 'profile',
+                loadChildren: () =>
+                    import('app/modules/screen/profile/page.routes'),
             },
         ],
     },
