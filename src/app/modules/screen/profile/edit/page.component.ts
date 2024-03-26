@@ -38,6 +38,8 @@ import {
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { PageService } from '../page.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarComponent } from '../snackbar/page.component';
 
 @Component({
     selector: 'edit-profile',
@@ -69,6 +71,7 @@ export class EditComponent implements OnInit {
     disableError: boolean = false;
     profile: any;
     imageUrl: string = ''; // Initial image URL
+    imageUrlBase: string = ''; // Initial image URL
     @ViewChild('fileInput') fileInput!: ElementRef;
 
     /**
@@ -80,7 +83,8 @@ export class EditComponent implements OnInit {
         private _fuseConfirmationService: FuseConfirmationService,
         private _service: PageService,
         private _router: Router,
-        private _changeDetectorRef: ChangeDetectorRef
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _snackBar: MatSnackBar
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -91,19 +95,32 @@ export class EditComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.profile = localStorage.getItem('profile')
-            ? JSON.parse(localStorage.getItem('profile'))
-            : [];
-
-        if (this.profile) {
-            this.imageUrl = this.profile.pictureUrl;
-        }
-
         // Create the form
         this.dataForm = this._formBuilder.group({
             name: [null, [Validators.required]],
             phone: [null, [Validators.required]],
         });
+
+        this.profile = localStorage.getItem('profile')
+            ? JSON.parse(localStorage.getItem('profile'))
+            : [];
+
+        if (this.profile) {
+            // this.imageUrl = this.profile.pictureUrl;
+
+            this._service
+                .getById(this.profile.userId)
+                .subscribe((resp: any) => {
+                    const item = resp;
+                    this.dataForm.patchValue({
+                        name: item.name,
+                        phone: item.phone,
+                    });
+                    this.imageUrl = item.picture
+                        ? item.picture
+                        : item.pictureUrl;
+                });
+        }
     }
 
     submit() {
@@ -133,61 +150,65 @@ export class EditComponent implements OnInit {
         confirmation.afterClosed().subscribe((result) => {
             // If the confirm button pressed...
             if (result === 'confirmed') {
-                localStorage.setItem(
-                    'contact',
-                    JSON.stringify(this.dataForm.value)
-                );
-
-                this.profile = localStorage.getItem('profile')
-                    ? JSON.parse(localStorage.getItem('profile'))
-                    : [];
-
                 const data = {
-                    tel: this.dataForm.value.phone,
-                    user_id: this.profile.user_id,
+                    phone: this.dataForm.value.phone,
+                    name: this.dataForm.value.name,
+                    user_id: this.profile.userId,
+                    image: this.imageUrlBase,
                 };
 
-                this._service.otp(data).subscribe({
+                this._service.create(data).subscribe({
                     next: (resp: any) => {
-                        localStorage.setItem('otp', JSON.stringify(resp));
+                        this._snackBar.openFromComponent(SnackBarComponent, {
+                            duration: 3000,
+                            verticalPosition: 'top',
+                        });
+
+                        this._service
+                            .getById(this.profile.userId)
+                            .subscribe((resp: any) => {
+                                console.log(resp);
+                                const item = resp;
+                                this.dataForm.patchValue({
+                                    name: item.name,
+                                    phone: item.phone,
+                                });
+                                this.imageUrl = item.picture
+                                    ? item.picture
+                                    : item.pictureUrl;
+                            });
                     },
 
                     error: (err: any) => {
                         this.disableError = true;
                         this._changeDetectorRef.markForCheck();
 
-                        // this._fuseConfirmationService.open({
-                        //     title: 'เกิดข้อผิดพลาด',
-                        //     message: err.error.message,
-                        //     icon: {
-                        //         show: true,
-                        //         name: 'heroicons_outline:exclamation-triangle',
-                        //         color: 'accent',
-                        //     },
-                        //     actions: {
-                        //         confirm: {
-                        //             show: true,
-                        //             label: 'ปิด',
-                        //             color: 'primary',
-                        //         },
-                        //         cancel: {
-                        //             show: false,
-                        //             label: 'ยกเลิก',
-                        //         },
-                        //     },
-                        //     dismissible: true,
-                        // });
+                        this._fuseConfirmationService.open({
+                            title: 'เกิดข้อผิดพลาด',
+                            message: err.error.message,
+                            icon: {
+                                show: true,
+                                name: 'heroicons_outline:exclamation-triangle',
+                                color: 'accent',
+                            },
+                            actions: {
+                                confirm: {
+                                    show: true,
+                                    label: 'ปิด',
+                                    color: 'primary',
+                                },
+                                cancel: {
+                                    show: false,
+                                    label: 'ยกเลิก',
+                                },
+                            },
+                            dismissible: true,
+                        });
                         // console.log(err.error.message);
                     },
                 });
             }
         });
-    }
-
-    onChange(event: any) {
-        if (event.target.value) {
-            this.disableError = false;
-        }
     }
 
     uploadImage() {
@@ -204,7 +225,7 @@ export class EditComponent implements OnInit {
         reader.onload = () => {
             // Update the image source when a new image is selected
             this.imageUrl = reader.result as string;
-            console.log(this.imageUrl);
+            this.imageUrlBase = reader.result as string;
             this._changeDetectorRef.markForCheck();
         };
 

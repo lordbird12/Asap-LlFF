@@ -48,9 +48,9 @@ export class PageService {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    create(data: FormData): Observable<any> {
+    create(data: any): Observable<any> {
         return this._httpClient
-            .post<any>(environment.baseURL + '/api/permission', data)
+            .post<any>(environment.baseURL + '/api/profile', data)
             .pipe(
                 tap((result) => {
                     this._data.next(result);
@@ -159,14 +159,13 @@ export class PageService {
             );
     }
 
-    getById(id: any): Observable<any> {
+    getById(Id: any): Observable<any> {
         return this._httpClient
-            .get<any>(
-                environment.baseURL + '/api/get_car_by_license_plate/' + id
-            )
+            .get(environment.baseURL + `/api/profile/${Id}`)
             .pipe(
-                tap((result) => {
-                    this._data.next(result);
+                switchMap((response: any) => {
+                
+                    return of(response.data);
                 })
             );
     }

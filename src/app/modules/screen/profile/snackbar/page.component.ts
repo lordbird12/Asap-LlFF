@@ -1,10 +1,8 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { CommonModule, NgClass } from '@angular/common';
-
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
+    Inject,
     OnInit,
     ViewEncapsulation,
 } from '@angular/core';
@@ -27,22 +25,19 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgStepperModule } from 'angular-ng-stepper';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {
-    MatBottomSheet,
-    MatBottomSheetModule,
-    MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { PageService } from '../page.service';
-import { Router } from '@angular/router';
+import { FuseCardComponent } from '@fuse/components/card';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
-    selector: 'main-profile',
+    selector: 'home-main',
     templateUrl: './page.component.html',
-    styleUrls: ['./page.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
+        NgClass,
+        NgIf,
+        FuseCardComponent,
         CdkStepperModule,
         NgStepperModule,
         MatStepperModule,
@@ -54,28 +49,18 @@ import { Router } from '@angular/router';
         MatInputModule,
         TextFieldModule,
         MatSelectModule,
-        MatOptionModule,
         MatButtonModule,
-        MatProgressBarModule,
-        MatBottomSheetModule,
-        CommonModule,
-        NgClass,
     ],
 })
-export class MainComponent implements OnInit {
-    dataForm: FormGroup;
-    disableError: boolean = false;
-    profile: any;
+export class SnackBarComponent implements OnInit {
+    addForm: UntypedFormGroup;
+    yearlyBilling: boolean = true;
+
     /**
      * Constructor
      */
     constructor(
-        private _formBuilder: UntypedFormBuilder,
-        private _bottomSheet: MatBottomSheet,
-        private _fuseConfirmationService: FuseConfirmationService,
-        private _service: PageService,
-        private _router: Router,
-        private _changeDetectorRef: ChangeDetectorRef
+        private _formBuilder: UntypedFormBuilder
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -86,28 +71,19 @@ export class MainComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.profile = localStorage.getItem('profile')
-            ? JSON.parse(localStorage.getItem('profile'))
-            : [];
-
         // Create the form
-        this.dataForm = this._formBuilder.group({
-            name: [null, [Validators.required]],
-            phone: [null, [Validators.required]],
+        this.addForm = this._formBuilder.group({
+            name: ['Brian Hughes'],
+            username: ['brianh'],
+            title: ['Senior Frontend Developer'],
+            company: ['YXZ Software'],
+            about: [
+                "Hey! This is Brian; husband, father and gamer. I'm mostly passionate about bleeding edge tech and chocolate! 🍫",
+            ],
+            email: ['hughes.brian@mail.com', Validators.email],
+            phone: ['121-490-33-12'],
+            country: ['usa'],
+            language: ['english'],
         });
-    }
-
-    goToEdit() {
-        this._router.navigate(['screens/profile/edit']);
-    }
-
-    goToCars() {
-        this._router.navigate(['screens/services/cars']);
-    }
-
-    onChange(event: any) {
-        if (event.target.value) {
-            this.disableError = false;
-        }
     }
 }
