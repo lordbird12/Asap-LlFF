@@ -26,7 +26,7 @@
 <div class="flex bg-white justify-center rounded max-w-[100vh] my-4">
     <div class="flex flex-row justify-center w-[190px] bg-white shadow rounded-full mt-5 justify-items-end">
         <div class="flex p-2 rounded-full justify-center">
-            <img class="h-auto w-15" [src]="item?.activitys[item?.activitys.length-1]?.user?.image">
+            <img class="h-auto w-15 rounded-full" [src]="item?.activitys[item?.activitys.length-1]?.user?.image">
         </div>
         <div class="flex p-2" style="align-items: center;">
             {{item?.activitys[item?.activitys.length-1]?.user?.fname}} {{item?.activitys[item?.activitys.length-1]?.user?.lname}}

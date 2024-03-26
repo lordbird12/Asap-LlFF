@@ -173,6 +173,23 @@ export class PageComponent implements OnInit, OnDestroy {
                                     this._router.navigate(['screens/policy']);
                                 }
                             });
+                    } else if (this.param.booking_id) {
+                        this._service
+                            .getProfile(profile.userId)
+                            .subscribe((resp: any) => {
+                                if (resp.length > 0) {
+                                    localStorage.setItem(
+                                        'MyBooking',
+                                        JSON.stringify(resp)
+                                    );
+                                    this._router.navigate([
+                                        'screens/booking-detail/' +
+                                            this.param.booking_id,
+                                    ]);
+                                } else {
+                                    this._router.navigate(['screens/policy']);
+                                }
+                            });
                     } else if (this.param.postpon_id) {
                         this._service
                             .getProfile(profile.userId)
