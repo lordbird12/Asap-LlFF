@@ -66,6 +66,7 @@ export class MainComponent implements OnInit {
     dataForm: FormGroup;
     disableError: boolean = false;
     profile: any;
+    myBooking: any;
     /**
      * Constructor
      */
@@ -88,6 +89,10 @@ export class MainComponent implements OnInit {
     ngOnInit(): void {
         this.profile = localStorage.getItem('profile')
             ? JSON.parse(localStorage.getItem('profile'))
+            : [];
+
+        this.myBooking = localStorage.getItem('MyBooking')
+            ? JSON.parse(localStorage.getItem('MyBooking'))
             : [];
 
         // Create the form
