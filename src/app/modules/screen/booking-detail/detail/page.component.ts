@@ -144,4 +144,8 @@ export class DetailComponent implements OnInit, OnDestroy {
     openStatus(): void {
         this._bottomSheet.open(StatusComponent);
     }
+
+    back():void{
+        this._router.navigate(['screens/home/booking']);
+    }
 }

@@ -29,7 +29,8 @@
                 </div>
                 <div class="flex ml-5">
                     <div>
-                        <span class="text-md font-extrabold">{{date_format[2]}} {{months[+date_format[1]]}} {{date_format[0]}}</span>
+                        <span class="text-md font-extrabold">{{date_format[2]}} {{months[+date_format[1]]}}
+                            {{date_format[0]}}</span>
                         <br> {{item?.time}}
                     </div>
                 </div>
@@ -104,14 +105,24 @@
     </div>
 
     <div class="bottom-10 px-6 pt-2 pb-5 md:p-8 md:pb-12 lg:p-12 bg-card">
-        <div class="flex justify-center mt-6">
-            แก้ไขการจองได้จนถึง {{item?.date_change}}
-        </div>
-        <div class="relative items-center justify-start w-full h-14 py-5 z-49">
-            <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="openStatus()">
-                จัดการจอง
-            </button>
-        </div>
+        <ng-container *ngIf="item?.diff_date >= 24">
+            <div class="flex justify-center mt-6">
+                แก้ไขการจองได้จนถึง {{item?.date_change}}
+            </div>
+            <div class="relative items-center justify-start w-full h-14 py-5 z-49">
+                <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="openStatus()">
+                    จัดการจอง
+                </button>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="item?.diff_date < 24">
+            <div class="relative items-center justify-start w-full h-14 py-5 z-49">
+                <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="back()">
+                    กลับหน้าหลัก
+                </button>
+            </div>
+        </ng-container>
+
 
     </div>
 </div>
