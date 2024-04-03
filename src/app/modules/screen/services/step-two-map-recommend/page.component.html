@@ -57,43 +57,61 @@
                     </div>
 
                 </div>
-                <ng-container *ngIf="items?.length > 0">
+                <!-- <ng-container *ngIf="items?.length > 0">
                     <div class="flex flex-col items-center p-2 lg:px-10 lg:py-12 lg:min-w-80">
                         <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="selectServiceCenter(item)">
                             เลือก
                         </button>
                     </div>
-                </ng-container>
+                </ng-container> -->
             </div>
 
 
         </div>
     </div>
     <div class="bottom-0 px-6 pt-1 pb-3 md:p-8 md:pb-12 lg:p-12 bg-card">
-        <!-- <div class="flex px-5">
-            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
-            <div class="ml-1.5 leading-6 text-xl">{{item.name}}</div>
+
+        <div class="grid grid-cols-2 mt-2 bg-white justify-center rounded max-w-[100vh]">
+
+            <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
+                <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="goToServicesCenter()">
+                    เลือก
+                </button>
+            </div>
+            <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
+                <ng-container *ngIf="items?.length > 0">
+                    <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'default'" (click)="goToServicesCenter()">
+                        แสดงศูนย์บริการอื่น
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="items?.length == 0">
+                    <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'default'" (click)="goToServicesCenter()">
+                        ลองค้นหาที่อยู่อื่น
+                    </button>
+                </ng-container>
+
+            </div>
+
         </div>
-        <div class="flex px-5">
-            <div class="text-secondary">{{item.address}}</div>
-        </div> -->
-        <div class="flex flex-col divide-y">
+        <!-- <div class="flex flex-col divide-y">
 
             <ng-container *ngIf="items?.length > 0">
                 <div class="relative items-center justify-start w-full h-14 py-5 z-49">
-                    <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md " mat-flat-button [color]="'default'" (click)="goToServicesCenter()">
+                    <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md " mat-flat-button
+                        [color]="'default'" (click)="goToServicesCenter()">
                         แสดงศูนย์บริการอื่น
                     </button>
                 </div>
             </ng-container>
             <ng-container *ngIf="items?.length == 0">
                 <div class="relative items-center justify-start w-full h-14 py-5 z-49">
-                    <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md " mat-flat-button [color]="'default'" (click)="goToServicesCenter()">
+                    <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md " mat-flat-button
+                        [color]="'default'" (click)="goToServicesCenter()">
                         ลองค้นหาที่อยู่อื่น
                     </button>
                 </div>
             </ng-container>
 
-        </div>
+        </div> -->
     </div>
 </div>
