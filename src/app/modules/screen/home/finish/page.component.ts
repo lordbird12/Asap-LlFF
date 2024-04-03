@@ -66,6 +66,22 @@ export class FinishComponent implements OnInit, OnDestroy {
     services: any[] = [];
     sevice_date_time: any;
     contact: any;
+    date_format: any;
+    months: any = [
+        '',
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
     /**
      * Constructor
      */
@@ -77,7 +93,6 @@ export class FinishComponent implements OnInit, OnDestroy {
         private _router: Router,
         private _fuseConfirmationService: FuseConfirmationService
     ) {}
-
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -106,6 +121,10 @@ export class FinishComponent implements OnInit, OnDestroy {
         this.services = localStorage.getItem('services')
             ? JSON.parse(localStorage.getItem('services'))
             : [];
+
+        if (this.sevice_date_time.date) {
+            this.date_format = this.sevice_date_time.date.split('-');
+        }
     }
 
     /**

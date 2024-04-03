@@ -64,7 +64,22 @@ export class DetailComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     formFieldHelpers: string[] = ['fuse-mat-dense'];
     item: any;
-
+    date_format: any;
+    months: any = [
+        '',
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
     /**
      * Constructor
      */
@@ -90,6 +105,9 @@ export class DetailComponent implements OnInit, OnDestroy {
             const id = params.id;
             this._service.getById(id).subscribe((resp: any) => {
                 this.item = resp.data;
+                if (this.item.date) {
+                    this.date_format = this.item.date.split('-');
+                }
                 this._changeDetectorRef.markForCheck();
             });
         });
