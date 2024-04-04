@@ -24,9 +24,15 @@ import {
     MatBottomSheetModule,
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
+import {
+    MatSnackBar,
+    MatSnackBarConfig,
+    MatSnackBarHorizontalPosition,
+} from '@angular/material/snack-bar';
 import { PageService } from '../page.service';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { StatusComponent } from '../status/page.component';
+import { SnackBarComponent } from '../snackbar/page.component';
 
 @Component({
     selector: 'services',
@@ -64,6 +70,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     formFieldHelpers: string[] = ['fuse-mat-dense'];
     item: any;
+    id: any;
     date_format: any;
     months: any = [
         '',
@@ -90,7 +97,8 @@ export class DetailComponent implements OnInit, OnDestroy {
         private _service: PageService,
         private _router: Router,
         private _fuseConfirmationService: FuseConfirmationService,
-        public activatedRoute: ActivatedRoute
+        public activatedRoute: ActivatedRoute,
+        private _snackBar: MatSnackBar
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -102,8 +110,8 @@ export class DetailComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.activatedRoute.params.subscribe((params) => {
-            const id = params.id;
-            this._service.getById(id).subscribe((resp: any) => {
+            this.id = params.id;
+            this._service.getById(this.id).subscribe((resp: any) => {
                 this.item = resp.data;
                 if (this.item.date) {
                     this.date_format = this.item.date.split('-');
@@ -143,9 +151,31 @@ export class DetailComponent implements OnInit, OnDestroy {
 
     openStatus(): void {
         this._bottomSheet.open(StatusComponent);
+        const bottomSheetRef = this._bottomSheet.open(StatusComponent, {
+            data: {
+                id: this.id,
+            },
+        });
+
+        bottomSheetRef.afterDismissed().subscribe((data) => {
+            if (data) {
+                this._snackBar.openFromComponent(SnackBarComponent, {
+                    duration: 3000,
+                    verticalPosition: 'top',
+                });
+
+                this._service.getById(this.id).subscribe((resp: any) => {
+                    this.item = resp.data;
+                    if (this.item.date) {
+                        this.date_format = this.item.date.split('-');
+                    }
+                    this._changeDetectorRef.markForCheck();
+                });
+            }
+        });
     }
 
-    back():void{
+    back(): void {
         this._router.navigate(['screens/home/booking']);
     }
 }
