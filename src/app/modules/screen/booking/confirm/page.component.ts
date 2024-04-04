@@ -114,26 +114,40 @@ export class ConfirmComponent implements OnInit, OnDestroy {
             ? JSON.parse(localStorage.getItem('services'))
             : [];
 
-        if (this.sevice_date_time) {
-            // Create a Date object from the datetime string
-            const datetime: Date = new Date(
-                '2024-4-11 09:00'
-            );
+      
+    }
 
-            alert(datetime);
 
-            // Format the datetime according to the desired format
-            const options: Intl.DateTimeFormatOptions = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-            };
-            this.formattedDatetime = datetime.toLocaleDateString(
-                'en-US',
-                options
-            );
+    convertDateFormat(inputDateString: string): string {
+        // Parse the input date string
+        const [year, month, day] = inputDateString.split('-').map(Number);
+    
+        // Check if the date is valid
+        if (isNaN(year)) {
+            return "Invalid year";
         }
+
+        if (isNaN(month)) {
+            return "Invalid month";
+        }
+
+        if (isNaN(day)) {
+            return "Invalid day";
+        }
+    
+        // Create a new Date object with the provided year, month (subtracting 1 as months are 0-indexed), and day
+        const dateObject: Date = new Date(year, month - 1, day);
+    
+        // Check if the Date object is valid
+        if (isNaN(dateObject.getTime())) {
+            return "Invalid date";
+        }
+    
+        // Format the date to 'dddd, dd MMMM yyyy' (e.g., 'Thursday, 11 June 2023')
+        const options: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate: string = dateObject.toLocaleDateString('en-US', options);
+    
+        return formattedDate;
     }
 
     /**
