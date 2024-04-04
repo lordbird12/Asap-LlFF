@@ -11,6 +11,7 @@ import { LayoutSearchComponent } from './layout-search/layout.component';
 import { LayoutFinishComponent } from './layout-finish/layout.component';
 import { LayoutPostponComponent } from './layout-postpon/layout-postpon.component';
 import { LayoutProfileComponent } from './layout-profile/layout.component';
+import { LayoutManageComponent } from './layout-manage/layout.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -151,6 +152,23 @@ export const appRoutes: Route[] = [
                 path: 'home',
                 loadChildren: () =>
                     import('app/modules/screen/home/page.routes'),
+            },
+        ],
+    },
+
+    {
+        path: 'screens',
+        // canActivate: [AuthGuard],
+        // canActivateChild: [AuthGuard],
+        component: LayoutManageComponent,
+        resolve: {
+            initialData: initialDataResolver,
+        },
+        children: [
+            {
+                path: 'manage',
+                loadChildren: () =>
+                    import('app/modules/screen/manage/page.routes'),
             },
         ],
     },

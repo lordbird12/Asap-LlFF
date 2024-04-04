@@ -69,6 +69,7 @@ export class FinishComponent implements OnInit, OnDestroy {
     sevice_date_time: any;
     contact: any;
     date_format: any;
+    formattedDatetime:string;
     months: any = [
         '',
         'January',
@@ -131,6 +132,24 @@ export class FinishComponent implements OnInit, OnDestroy {
 
         if (this.sevice_date_time.date) {
             this.date_format = this.sevice_date_time.date.split('-');
+
+            // Assuming you have a datetime string in the format 'yyyy-mm-dd hh:mm:ss'
+            const datetimeString: string = this.sevice_date_time.date+" "+this.sevice_date_time.time;
+
+            // Split the datetime string into date and time parts
+            const [datePart, timePart] = datetimeString.split(' ');
+
+            // Split the date part into year, month, and day
+            const [year, month, day] = datePart.split('-');
+
+            // Rearrange the date parts to the desired format 'dd/mm/yyyy'
+            const formattedDate: string = `${day}/${month}/${year}`;
+
+            // Rearrange the time part to the desired format 'hh:mm'
+            const formattedTime: string = timePart.substring(0, 5); // Extract the first 5 characters (hh:mm)
+
+            // Concatenate the formatted date and time parts
+            this.formattedDatetime = `${formattedDate} ${formattedTime}`;
         }
     }
 

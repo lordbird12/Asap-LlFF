@@ -107,7 +107,7 @@ export class MainComponent implements OnInit {
     }
 
     goToCars() {
-        this._router.navigate(['screens/manage/cars']);
+        this._router.navigate(['screens/profile/cars']);
     }
 
     onChange(event: any) {

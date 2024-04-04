@@ -1,11 +1,13 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { CommonModule, NgClass } from '@angular/common';
-
 import {
-    ChangeDetectionStrategy,
+    AfterViewInit,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     OnInit,
+    QueryList,
+    ViewChild,
+    ViewChildren,
     ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -33,14 +35,15 @@ import {
     MatBottomSheetModule,
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { PageService } from '../page.service';
+import { FuseCardComponent } from '@fuse/components/card';
 import { Router } from '@angular/router';
+import { PageService } from '../page.service';
+import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
-    selector: 'main-profile',
+    selector: 'cars',
     templateUrl: './page.component.html',
-    styleUrls: ['./page.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -58,26 +61,32 @@ import { Router } from '@angular/router';
         MatButtonModule,
         MatProgressBarModule,
         MatBottomSheetModule,
-        CommonModule,
+        FuseCardComponent,
         NgClass,
+        CommonModule,
     ],
 })
-export class MainComponent implements OnInit {
+export class CarsComponent implements OnInit {
+    @ViewChildren(FuseCardComponent, { read: ElementRef })
+    private _fuseCards: QueryList<ElementRef>;
     dataForm: FormGroup;
-    disableError: boolean = false;
+    map: any; // Assuming you have a reference to the map object
+    items: any;
     profile: any;
-    myBooking: any;
     /**
      * Constructor
      */
     constructor(
         private _formBuilder: UntypedFormBuilder,
         private _bottomSheet: MatBottomSheet,
-        private _fuseConfirmationService: FuseConfirmationService,
         private _service: PageService,
         private _router: Router,
         private _changeDetectorRef: ChangeDetectorRef
     ) {}
+
+    openBottomSheet(): void {
+        // this._bottomSheet.open(MapComponent);
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -91,28 +100,42 @@ export class MainComponent implements OnInit {
             ? JSON.parse(localStorage.getItem('profile'))
             : [];
 
-        this.myBooking = localStorage.getItem('MyBooking')
-            ? JSON.parse(localStorage.getItem('MyBooking'))
-            : [];
+        this._service
+            .get_my_cars(this.profile.userId)
+            .subscribe((resp: any) => {
+                this.items = resp;
+                this._changeDetectorRef.markForCheck();
+            });
+    }
 
-        // Create the form
-        this.dataForm = this._formBuilder.group({
-            name: [null, [Validators.required]],
-            phone: [null, [Validators.required]],
+    booking(item:any): void {
+        const data = {
+            license: item.license,
+            id_token: this.profile.idToken,
+            display_name: this.profile.displayName,
+            picture_url: this.profile.pictureUrl,
+            user_id: this.profile.userId,
+        };
+
+        this._service.reg_license(data).subscribe((resp: any) => {
+            try {
+                // this.item = resp.data;
+                if (resp.data) {
+                    const obj = {
+                        data: resp.data,
+                    };
+
+                    localStorage.setItem('data', JSON.stringify(obj));
+                    this._router.navigate(['screens/reg-kg/list']);
+                }
+                this._changeDetectorRef.markForCheck();
+            } catch (error) {
+                console.log(error);
+            }
         });
     }
 
-    goToEdit() {
-        this._router.navigate(['screens/profile/edit']);
-    }
-
-    goToCars() {
-        this._router.navigate(['screens/manage/cars']);
-    }
-
-    onChange(event: any) {
-        if (event.target.value) {
-            this.disableError = false;
-        }
+    submit():void{
+        this._router.navigate(['screens/reg-license-plate/list']);
     }
 }

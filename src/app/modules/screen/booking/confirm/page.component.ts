@@ -69,6 +69,7 @@ export class ConfirmComponent implements OnInit, OnDestroy {
     services: any[] = [];
     sevice_date_time: any;
     contact: any;
+    formattedDatetime: string;
     /**
      * Constructor
      */
@@ -112,6 +113,25 @@ export class ConfirmComponent implements OnInit, OnDestroy {
         this.services = localStorage.getItem('services')
             ? JSON.parse(localStorage.getItem('services'))
             : [];
+
+        if (this.sevice_date_time) {
+            // Create a Date object from the datetime string
+            const datetime: Date = new Date(
+                this.sevice_date_time.date + ' ' + this.sevice_date_time.time
+            );
+
+            // Format the datetime according to the desired format
+            const options: Intl.DateTimeFormatOptions = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+            };
+            this.formattedDatetime = datetime.toLocaleDateString(
+                'en-US',
+                options
+            );
+        }
     }
 
     /**
