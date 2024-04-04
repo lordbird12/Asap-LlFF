@@ -107,6 +107,7 @@ export class CarsComponent implements OnInit {
                 this._changeDetectorRef.markForCheck();
             });
     }
+    
 
     booking(item:any): void {
         const data = {
