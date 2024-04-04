@@ -117,8 +117,10 @@ export class ConfirmComponent implements OnInit, OnDestroy {
         if (this.sevice_date_time) {
             // Create a Date object from the datetime string
             const datetime: Date = new Date(
-                this.sevice_date_time.date + ' ' + this.sevice_date_time.time
+                '2024-4-11 09:00'
             );
+
+            alert(datetime);
 
             // Format the datetime according to the desired format
             const options: Intl.DateTimeFormatOptions = {
