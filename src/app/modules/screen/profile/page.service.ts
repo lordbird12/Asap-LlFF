@@ -164,7 +164,18 @@ export class PageService {
             .get(environment.baseURL + `/api/profile/${Id}`)
             .pipe(
                 switchMap((response: any) => {
-                
+                    return of(response.data);
+                })
+            );
+    }
+
+    getProfile(userId: any): Observable<any> {
+        return this._httpClient
+            .post(environment.baseURL + '/api/get_profile', {
+                user_id: userId,
+            })
+            .pipe(
+                switchMap((response: any) => {
                     return of(response.data);
                 })
             );

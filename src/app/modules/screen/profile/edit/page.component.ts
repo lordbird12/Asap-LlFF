@@ -70,6 +70,7 @@ export class EditComponent implements OnInit {
     dataForm: FormGroup;
     disableError: boolean = false;
     profile: any;
+    myBooking: any;
     imageUrl: string = ''; // Initial image URL
     imageUrlBase: string = ''; // Initial image URL
     @ViewChild('fileInput') fileInput!: ElementRef;
@@ -108,17 +109,40 @@ export class EditComponent implements OnInit {
         if (this.profile) {
             // this.imageUrl = this.profile.pictureUrl;
 
+            // this._service
+            //     .getById(this.profile.userId)
+            //     .subscribe((resp: any) => {
+            //         const item = resp;
+            //         this.dataForm.patchValue({
+            //             name: item.name,
+            //             phone: item.phone,
+            //         });
+            //         this.imageUrl = item.picture
+            //             ? item.picture
+            //             : item.pictureUrl;
+            //     });
+
             this._service
-                .getById(this.profile.userId)
+                .getProfile(this.profile.userId)
                 .subscribe((resp: any) => {
-                    const item = resp;
-                    this.dataForm.patchValue({
-                        name: item.name,
-                        phone: item.phone,
-                    });
-                    this.imageUrl = item.picture
-                        ? item.picture
-                        : item.pictureUrl;
+                    if (resp.length > 0) {
+                        localStorage.setItem('MyBooking', JSON.stringify(resp));
+
+                        this.myBooking = localStorage.getItem('MyBooking')
+                            ? JSON.parse(localStorage.getItem('MyBooking'))
+                            : [];
+
+                        const item = resp;
+                        this.dataForm.patchValue({
+                            name: this.myBooking[0].profile.name,
+                            phone: this.myBooking[0].profile.phone,
+                        });
+
+                 
+                        this.imageUrl = this.profile
+                            ? this.profile.pictureUrl
+                            : item.pictureUrl;
+                    }
                 });
         }
     }
@@ -165,18 +189,27 @@ export class EditComponent implements OnInit {
                         });
 
                         this._service
-                            .getById(this.profile.userId)
-                            .subscribe((resp: any) => {
-                                console.log(resp);
+                        .getProfile(this.profile.userId)
+                        .subscribe((resp: any) => {
+                            if (resp.length > 0) {
+                                localStorage.setItem('MyBooking', JSON.stringify(resp));
+        
+                                this.myBooking = localStorage.getItem('MyBooking')
+                                    ? JSON.parse(localStorage.getItem('MyBooking'))
+                                    : [];
+        
                                 const item = resp;
                                 this.dataForm.patchValue({
-                                    name: item.name,
-                                    phone: item.phone,
+                                    name: this.myBooking[0].profile.name,
+                                    phone: this.myBooking[0].profile.phone,
                                 });
-                                this.imageUrl = item.picture
-                                    ? item.picture
+        
+                         
+                                this.imageUrl = this.profile
+                                    ? this.profile.pictureUrl
                                     : item.pictureUrl;
-                            });
+                            }
+                        });
                     },
 
                     error: (err: any) => {
