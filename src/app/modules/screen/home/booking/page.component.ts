@@ -52,7 +52,6 @@ import { StarsComponent } from '../stars/page.component';
 @Component({
     selector: 'home-list',
     templateUrl: './page.component.html',
-    encapsulation: ViewEncapsulation.None,
     styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
@@ -253,5 +252,30 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
                 ',' +
                 booking.service_center.lon
         );
+    }
+
+    convertDateFormat(inputDateString: string): string {
+        // Split the date string into year, month, and day
+        const [year, month, day] = inputDateString.split('-');
+
+        // Create a Date object with the provided year, month (subtracting 1 as months are 0-indexed), and day
+        const dateObject: Date = new Date(
+            parseInt(year),
+            parseInt(month) - 1,
+            parseInt(day)
+        );
+
+        // Format the date to 'dd Mon yyyy'
+        const options: Intl.DateTimeFormatOptions = {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+        };
+        const formattedDate: string = dateObject.toLocaleDateString(
+            'en-US',
+            options
+        );
+
+        return formattedDate;
     }
 }
