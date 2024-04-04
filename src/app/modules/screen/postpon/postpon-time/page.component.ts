@@ -172,6 +172,8 @@ export class PostponTimeComponent implements OnInit {
                     duration: 3000,
                     verticalPosition: 'top',
                 });
+
+                this._router.navigate(['screens/booking-detail/'+this.id]);
             }
             // this.openSnackBar(
             //     'ยกเลิกการจองสำเร็จ',
@@ -224,6 +226,6 @@ export class PostponTimeComponent implements OnInit {
     }
 
     editDate() {
-        this._router.navigate(['screens/services/step-three']);
+        this._router.navigate(['screens/postpon/date/'+this.id]);
     }
 }
