@@ -14,7 +14,7 @@
                                         <img class="w-12 h-12 rounded-full" *ngIf="profile && profile.pictureUrl" [src]="profile.pictureUrl">
                                         <div class="ml-2">
                                             <p class="text-1xl font-bold">
-                                                {{profile ? profile.displayName : "-"}}
+                                                {{myBooking ? myBooking[0].profile.name : "-"}}
                                             </p>
                                             <p class="text-md">
                                                 {{myBooking ? myBooking[0].profile.phone : "-"}}
