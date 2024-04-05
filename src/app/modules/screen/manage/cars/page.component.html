@@ -14,7 +14,7 @@
 
             <div class="flex flex-wrap items-start w-full">
                 <ng-container *ngFor="let item of this.items; let i = index">
-                    <fuse-card class="flex flex-col w-full p-4 m-2 filter-article" [ngClass]="{'opacity-50': item?.expire, '': !item?.expire}" (click)="booking(item)">
+                    <fuse-card class="flex flex-col w-full p-4 m-2 filter-article" [ngClass]="{'opacity-50': item?.expire, '': !item?.expire}">
                         <div class="flex flex-col">
 
                             <div class="flex items-center">
