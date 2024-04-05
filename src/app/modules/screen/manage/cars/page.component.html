@@ -34,7 +34,7 @@
 
                                 <div class="flex absolute right-2 top-1">
                                     <ng-container *ngIf="!item?.expire">
-                                        <mat-icon class="icon-size-5" [svgIcon]="'asha:edit'"></mat-icon>
+                                        <mat-icon class="icon-size-5" [svgIcon]="'asha:edit'" (click)="editCar(item.id)"></mat-icon>
                                     </ng-container>
                                     <ng-container *ngIf="item?.expire">
                                         <mat-icon class="icon-size-5 text-red-500" [svgIcon]="'asha:time-bg'"></mat-icon>

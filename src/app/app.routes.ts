@@ -4,7 +4,7 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { LayoutMainComponent } from 'app/layout-main/layout-main.component';
-import { Layout2Component } from './layout2/layout.component';
+import { Layout2Component } from './layout-detail/layout.component';
 import { LayoutBookingComponent } from './layout-booking/layout.component';
 import { LayoutCalendarComponent } from './layout-calendar/layout-calendar.component';
 import { LayoutSearchComponent } from './layout-search/layout.component';
@@ -12,6 +12,7 @@ import { LayoutFinishComponent } from './layout-finish/layout.component';
 import { LayoutPostponComponent } from './layout-postpon/layout-postpon.component';
 import { LayoutProfileComponent } from './layout-profile/layout.component';
 import { LayoutManageComponent } from './layout-manage/layout.component';
+import { LayoutEditComponent } from './layout-edit/layout.component';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -172,6 +173,24 @@ export const appRoutes: Route[] = [
             },
         ],
     },
+
+    {
+        path: 'screens',
+        // canActivate: [AuthGuard],
+        // canActivateChild: [AuthGuard],
+        component: LayoutEditComponent,
+        resolve: {
+            initialData: initialDataResolver,
+        },
+        children: [
+            {
+                path: 'car-edit',
+                loadChildren: () =>
+                    import('app/modules/screen/car-edit/page.routes'),
+            },
+        ],
+    },
+
 
     {
         path: 'screens',

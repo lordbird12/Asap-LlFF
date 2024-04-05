@@ -139,4 +139,8 @@ export class CarsComponent implements OnInit {
     submit():void{
         this._router.navigate(['screens/reg-license-plate/list']);
     }
+
+    editCar(id:any):void{
+        this._router.navigate(['screens/car-edit/'+id]);
+    }
 }

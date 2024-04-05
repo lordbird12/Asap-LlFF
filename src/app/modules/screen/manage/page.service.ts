@@ -169,6 +169,16 @@ export class PageService {
             );
     }
 
+    getCarById(Id: any): Observable<any> {
+        return this._httpClient
+            .get(environment.baseURL + `/api/car/${Id}`)
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response.data);
+                })
+            );
+    }
+
     getProfile(userId: any): Observable<any> {
         return this._httpClient
             .post(environment.baseURL + '/api/get_profile', {
