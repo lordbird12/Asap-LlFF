@@ -37,7 +37,6 @@ import { SnackBarComponent } from '../snackbar/page.component';
 @Component({
     selector: 'services',
     templateUrl: './page.component.html',
-    encapsulation: ViewEncapsulation.None,
     styleUrls: ['./page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,

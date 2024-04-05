@@ -35,7 +35,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 @Component({
     selector: 'list',
     templateUrl: './list.component.html',
-    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./list.component.scss'],
     standalone: true,
     imports: [
         CommonModule,
@@ -118,6 +118,30 @@ export class ListComponent implements OnInit, AfterViewInit {
         // setCookie('mlie', JSON.stringify(obj));
     }
 
+    removeCar() {
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'ลบข้อมูล',
+            message: 'คุณต้องการลบรายการรถคันนี้ใช่หรือไม่ ?',
+            icon: {
+                show: false,
+                name: 'heroicons_outline:exclamation',
+                color: 'warning',
+            },
+            actions: {
+                confirm: {
+                    show: true,
+                    label: 'ตกลง',
+                    color: 'primary',
+                },
+                cancel: {
+                    show: true,
+                    label: 'ยกเลิก',
+                },
+            },
+            dismissible: true,
+        });
+    }
+
     submit() {
         if (this.dataForm.invalid) {
             return;
@@ -154,7 +178,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             .create(this.item.license, this.dataForm.value.mile)
             .subscribe({
                 next: (resp: any) => {
-                    this._router.navigate(['screens/services/main']);
+                    this._router.navigate(['screens/manage/cars']);
                 },
 
                 error: (err: any) => {
