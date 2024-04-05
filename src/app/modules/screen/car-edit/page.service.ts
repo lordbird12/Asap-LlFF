@@ -70,7 +70,7 @@ export class PageService {
     }
 
     delete(id: any): Observable<any> {
-        return this._httpClient.delete<any>(
+        return this._httpClient.get<any>(
             environment.baseURL + '/api/remove_car/' + id,
             { headers: this.httpOptionsFormdata.headers }
         );
