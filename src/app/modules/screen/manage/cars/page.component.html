@@ -1,5 +1,5 @@
 <div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden">
-    <div class="px-6 pt-9 pb-2 md:p-8 md:pb-2 lg:p-12">
+    <div class="px-6 pt-4 pb-2 md:p-8 md:pb-2 lg:p-12">
         <div class="mt-3">
             <!-- Section -->
             <div class="w-full px-3 pt-1">
@@ -14,11 +14,10 @@
 
             <div class="flex flex-wrap items-start w-full">
                 <ng-container *ngFor="let item of this.items; let i = index">
-                    <fuse-card class="flex flex-col w-full p-4 m-2 filter-article" (click)="booking(item)">
+                    <fuse-card class="flex flex-col w-full p-4 m-2 filter-article" [ngClass]="{'opacity-50': item?.expire, '': !item?.expire}" (click)="booking(item)">
                         <div class="flex flex-col">
-                            <div class="flex items-center">
-                                <img class="w-30 h-auto mr-4 object-cover" [src]="item?.image" alt="Card cover image">
 
+                            <div class="flex items-center">
                                 <div class="flex flex-col min-w-0">
                                     <div class="font-lg font-bold leading-none">{{item?.license ?? "-"}}</div>
                                     <div class="text-md leading-none text-secondary mt-2">
@@ -27,10 +26,26 @@
                                     <br>
                                     <div class="font-sm leading-none pt-3">Last Maintenance</div>
                                     <div class="text-md leading-none text-secondary mt-2">
-                                        {{item?.mile ?? "-"}} Km.{{item?.created_at | date: 'dd MMM yyyy HH:mm'}}
+                                        {{item?.mile ?? "-"}} Km.{{item?.created_at | date: 'd/m/Y'}}
                                     </div>
                                 </div>
+
+                                <img class="w-30 h-auto ml-4 object-cover" [src]="item?.image" alt="Card cover image">
+
+                                <div class="flex absolute right-2 top-1">
+                                    <ng-container *ngIf="!item?.expire">
+                                        <mat-icon class="icon-size-5" [svgIcon]="'asha:edit'"></mat-icon>
+                                    </ng-container>
+                                    <ng-container *ngIf="item?.expire">
+                                        <mat-icon class="icon-size-5 text-red-500" [svgIcon]="'asha:time-bg'"></mat-icon>
+                                        <div class="ml-1.5 leading-6 text-red-500">
+                                            หมดสัญญา
+                                        </div>
+                                    </ng-container>
+
+                                </div>
                             </div>
+
 
                         </div>
                     </fuse-card>
