@@ -1,0 +1,29 @@
+<div class=" flex flex-col relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white rounded-full">
+
+    <span class="text-2xl text-center md:text-xl font-bold tracking-tight leading-7 sm:leading-10 truncate mt-3 ">
+        ยืนยันการลบรถ
+    </span>
+</div>
+
+<div class="grid grid-cols-1 mt-2 bg-white justify-center rounded max-w-[100vh] ">
+    <div class=" flex relative items-center justify-center w-full h-35 px-4 md:px-6 z-49 bg-white ">
+        <div class="flex">
+            <span class="font-sm m-0.5">ข้อมูลรถจะถูกลบอย่างถาวร</span>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-2 mt-2 bg-white justify-center rounded max-w-[100vh]">
+    <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
+        <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'default'" (click)="close()">
+            ย้อนกลับ
+        </button>
+    </div>
+    <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
+        <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
+            ยืนยัน
+        </button>
+    </div>
+
+
+</div>

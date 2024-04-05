@@ -71,7 +71,7 @@ export class PageService {
 
     delete(id: any): Observable<any> {
         return this._httpClient.delete<any>(
-            environment.baseURL + '/api/permission/' + id,
+            environment.baseURL + '/api/remove_car/' + id,
             { headers: this.httpOptionsFormdata.headers }
         );
     }

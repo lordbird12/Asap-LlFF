@@ -30,7 +30,14 @@ import { MatTableModule } from '@angular/material/table';
 import { PageService } from '../page.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-// import { NgxMaskDirective } from 'ngx-mask';
+import { ConfirmComponent } from '../confirm/page.component';
+import {
+    MatBottomSheet,
+    MatBottomSheetModule,
+    MatBottomSheetRef,
+} from '@angular/material/bottom-sheet'
+import { SnackBarComponent } from '../snackbar/page.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'list',
@@ -54,7 +61,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
         MatDatepickerModule,
         MatPaginatorModule,
         MatTableModule,
-        // NgxMaskDirective
+        MatBottomSheetModule
     ],
 })
 export class ListComponent implements OnInit, AfterViewInit {
@@ -74,7 +81,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         private _router: Router,
         private _formBuilder: FormBuilder,
         private _fuseConfirmationService: FuseConfirmationService,
-        private _activatedRoute: ActivatedRoute
+        private _activatedRoute: ActivatedRoute,
+        private _bottomSheet: MatBottomSheet,
+        private _snackBar: MatSnackBar,
     ) {}
 
     ngOnInit() {
@@ -119,26 +128,27 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     removeCar() {
-        const confirmation = this._fuseConfirmationService.open({
-            title: 'ลบข้อมูล',
-            message: 'คุณต้องการลบรายการรถคันนี้ใช่หรือไม่ ?',
-            icon: {
-                show: false,
-                name: 'heroicons_outline:exclamation',
-                color: 'warning',
+        const bottomSheetRef = this._bottomSheet.open(ConfirmComponent, {
+            data: {
+                id: this.id
             },
-            actions: {
-                confirm: {
-                    show: true,
-                    label: 'ตกลง',
-                    color: 'primary',
-                },
-                cancel: {
-                    show: true,
-                    label: 'ยกเลิก',
-                },
-            },
-            dismissible: true,
+        });
+
+        bottomSheetRef.afterDismissed().subscribe((data) => {
+            if (data) {
+                this._snackBar.openFromComponent(SnackBarComponent, {
+                    duration: 3000,
+                    verticalPosition: 'top',
+                });
+
+                this._router.navigate(['screens/manage/cars']);
+            }
+            // this.openSnackBar(
+            //     'ยกเลิกการจองสำเร็จ',
+            //     'ปิด',
+            //     'custom-snackbar',
+            //     'end'
+            // );
         });
     }
 
