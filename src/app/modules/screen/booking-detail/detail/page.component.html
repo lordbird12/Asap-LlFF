@@ -21,7 +21,7 @@
                 </div>
 
             </div>
-            <div class="flex flex-row -mx-3 md:flex mb-6">
+            <div class="flex flex-row -mx-3 md:flex mb-3">
                 <div class="flex ml-10">
                     <button class="bg-red-100 p-1 rounded-xl">
                         <mat-icon [svgIcon]="'asha:calendar-bg'" class="text-red-300 icon-size-10"></mat-icon>
@@ -29,13 +29,14 @@
                 </div>
                 <div class="flex ml-5">
                     <div>
-                        <span class="text-md font-extrabold">{{date_format[2]}} {{months[+date_format[1]]}}
-                            {{date_format[0]}}</span>
+                        <span *ngIf="date_format" class="text-md font-extrabold">
+                            {{date_format}}
+                        </span>
                         <br> {{item?.time}}
                     </div>
                 </div>
             </div>
-            <div class="flex flex-row -mx-3 md:flex mb-6">
+            <div class="flex flex-row -mx-3 md:flex mb-3">
                 <div class="flex ml-10">
                     <img class="h-20 w-auto" [src]="item?.car?.image">
                 </div>
@@ -50,7 +51,19 @@
                 </div>
             </div>
 
-            <div class="flex flex-wrap items-center -m-1.5 mb-5 mx-5">
+            <div class="flex flex-wrap items-center -m-1.5 mb-3 mx-5">
+                <!-- Tags -->
+                <ng-container *ngIf="item?.services.length">
+                    <ng-container *ngFor="let data of item?.services; trackBy: trackByFn">
+                        <div class="flex items-center justify-center px-2 py-0 m-1.5 rounded-md leading-9 text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                            <img class="w-5 h-5 mr-1" [src]="data?.service.image" alt="">
+                            <span class="text-md font-medium whitespace-nowrap">{{data?.service.name}}</span>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+
+            <div class="flex flex-wrap items-center -m-1.5 mb-3 mx-5">
                 <!-- Tags -->
                 <ng-container *ngIf="item?.services.length > 0">
                     <ng-container *ngFor="let it of item?.services; trackBy: trackByFn">

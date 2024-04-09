@@ -114,6 +114,14 @@ export class DetailComponent implements OnInit, OnDestroy {
                 this.item = resp.data;
                 if (this.item.date) {
                     this.date_format = this.item.date.split('-');
+                    if (this.date_format.length > 0) {
+                        this.date_format =
+                            this.date_format[2] +
+                            ' ' +
+                            this.months[+this.date_format[1]] +
+                            ' ' +
+                            this.date_format[0];
+                    }
                 }
                 this._changeDetectorRef.markForCheck();
             });

@@ -30,7 +30,7 @@
                 </div>
 
             </div>
-            <div class="flex flex-row -mx-3 md:flex mb-6">
+            <div class="flex flex-row -mx-3 md:flex mb-3">
                 <div class="flex ml-10">
                     <button class="bg-red-100 p-1 rounded-xl">
                         <mat-icon [svgIcon]="'asha:calendar-bg'" class="text-red-300 icon-size-10"></mat-icon>
@@ -43,9 +43,9 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-row -mx-3 md:flex mb-6">
+            <div class="flex flex-row -mx-3 md:flex mb-3">
                 <div class="flex ml-10">
-                    <img class="h-15 w-20" [src]="item?.image">
+                    <img class="h-auto w-20" [src]="item?.image">
                 </div>
                 <div class="flex ml-5">
                     <div>
@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-wrap items-center -m-1.5 mb-5 mx-5">
+            <div class="flex flex-wrap items-center -m-1.5 mb-3 mx-5">
                 <!-- Tags -->
                 <ng-container *ngIf="services.length">
                     <ng-container *ngFor="let item of services; trackBy: trackByFn">
