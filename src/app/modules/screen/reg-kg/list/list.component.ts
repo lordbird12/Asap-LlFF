@@ -35,7 +35,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 @Component({
     selector: 'list',
     templateUrl: './list.component.html',
-    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./list.component.scss'],
     standalone: true,
     imports: [
         CommonModule,

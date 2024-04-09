@@ -119,6 +119,8 @@ export class PageComponent implements OnInit, OnDestroy {
     }
 
     initLine(): void {
+        localStorage.clear();
+
         liff.init(
             { liffId: '2003760286-Mk9gQ2gG' },
             () => {
