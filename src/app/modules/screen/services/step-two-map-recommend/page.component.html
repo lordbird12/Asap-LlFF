@@ -1,5 +1,5 @@
 <div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden bg-card">
-    <div class="px-6 pt-9 pb-2 md:p-8 md:pb-2 lg:p-12">
+    <div class="px-6 pt-9 pb-1 md:p-8 md:pb-2 lg:p-12">
         <div class="mt-3">
 
 
@@ -71,21 +71,21 @@
     </div>
     <div class="bottom-0 px-6 pt-1 pb-3 md:p-8 md:pb-12 lg:p-12 bg-card">
 
-        <div class="grid grid-cols-2 mt-2 bg-white justify-center rounded max-w-[100vh]">
+        <div class="grid grid-cols-2 mt-0 bg-white justify-center rounded max-w-[100vh]">
 
             <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
-                <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="selectServiceCenter(item)">
-                    เลือก
+                <button class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="selectServiceCenter(item)">
+                    จองเลย
                 </button>
             </div>
             <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49 bg-white">
                 <ng-container *ngIf="items?.length > 0">
-                    <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'default'" (click)="goToServicesCenter()">
+                    <button class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'default'" (click)="goToServicesCenter()">
                         แสดงศูนย์บริการอื่น
                     </button>
                 </ng-container>
                 <ng-container *ngIf="items?.length == 0">
-                    <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'default'" (click)="goToServicesCenter()">
+                    <button class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'default'" (click)="goToServicesCenter()">
                         ลองค้นหาที่อยู่อื่น
                     </button>
                 </ng-container>
