@@ -89,7 +89,7 @@
     <div class="w-full">
         <div class="container" style="padding:20px !important;">
             <div class="relative items-center justify-start w-full h-14 py-5 z-49">
-                <mat-checkbox (change)="showOptions($event)" *ngIf="selectedPanel == 'policy' || selectedPanel == ''" color="primary">
+                <mat-checkbox color="primary" (change)="showOptions($event)" *ngIf="selectedPanel == 'policy' || selectedPanel == ''">
                     ยอมรับข้อกำหนดและเงื่อนไขบริการ
                 </mat-checkbox>
                 <button *ngIf="activeBtn" class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" (click)=" goToPanel() " mat-flat-button [color]="'primary'">

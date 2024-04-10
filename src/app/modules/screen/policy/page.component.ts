@@ -34,7 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
     selector: 'page',
     templateUrl: './page.component.html',
-    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [

@@ -114,6 +114,13 @@
         .url-title-bar {
             display: none;
         }
+        
+        .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+        .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
+        .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate=true]:enabled~.mdc-checkbox__background {
+            border-color: #FF595A !important;
+            background-color: #FF595A !important;
+        }
     </style>
 </head>
 

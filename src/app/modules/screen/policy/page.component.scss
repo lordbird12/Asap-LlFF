@@ -1,0 +1,16 @@
+/* custom-checkbox-checked is the custom class name */
+
+.custom-checkbox-checked .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #FF5859;
+    /* Change 'green' to the desired color */
+}
+
+.custom-checkbox-checked .mat-checkbox-checked .mat-checkbox-frame {
+    border-color: #FF5859;
+    /* Change 'green' to the desired color */
+}
+
+.custom-checkbox-checked .mat-checkbox-checked.mat-accent .mat-ripple-element {
+    background-color: #FF5859;
+    /* Change 'green' to the desired color */
+}
