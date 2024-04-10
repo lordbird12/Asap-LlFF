@@ -93,6 +93,10 @@ export const MY_FORMATS = {
             .example-double-arrow .mat-icon {
                 margin: -22%;
             }
+
+            .mat-calendar-body-cell-content{
+                font-size:16px !important;
+            }
         `,
     ],
     encapsulation: ViewEncapsulation.None,
