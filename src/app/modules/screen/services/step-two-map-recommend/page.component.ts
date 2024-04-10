@@ -114,7 +114,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
                     if (this.item) {
                         // Initialize the map
                         const resolution = 156543.03392;
-                        const distance = 1000;
+                        const distance = 50;
                         const zoomLevel = Math.round(Math.log2(40075016.686 * Math.cos(this.item.lat * Math.PI / 180) / (resolution * distance)));
 
                         // Initialize the map
