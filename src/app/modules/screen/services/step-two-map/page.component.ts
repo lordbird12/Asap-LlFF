@@ -129,6 +129,12 @@ export class StepTwoMapComponent implements OnInit {
 
             this.map.Overlays.add(this.marker);
             this.focusOnMarker();
+
+            // Set the zoom level again after initializing the map
+            this.map.zoom(16); // Adjust the zoom level as needed
+
+            // Save the last view (including zoom level)
+            // this.map.view();
         }
     }
 

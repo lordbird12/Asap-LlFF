@@ -49,7 +49,6 @@ import { Observable } from 'rxjs';
     selector: 'step-two-map-recommend',
     templateUrl: './page.component.html',
     styleUrls: ['./page.component.scss'],
-    encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -154,6 +153,13 @@ export class StepTwoMapMyLocationComponent implements OnInit {
 
                         this.map.Overlays.add(this.marker);
                         this.focusOnMarker();
+
+                          // Set the zoom level again after initializing the map
+                          this.map.zoom(16); // Adjust the zoom level as needed
+
+                          // Save the last view (including zoom level)
+                          // this.map.view();
+                          
                         this._changeDetectorRef.markForCheck();
                     }
                 } catch (error) {

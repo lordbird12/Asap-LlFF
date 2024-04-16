@@ -151,7 +151,7 @@
 
     </div>
 
-    <div class="bottom-0 px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12 px-3">
+    <!-- <div class="bottom-0 px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12 px-3">
 
         <div class="relative items-center justify-start w-full h-14 py-5 z-49">
             <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" (click)="submit()" mat-flat-button [color]="'primary'">
@@ -159,5 +159,19 @@
             </button>
         </div>
 
+    </div> -->
+
+    <div class="bottom-0 px-6 pt-4 pb-5 md:p-8 md:pb-12 lg:p-12 w-full fixed">
+        <div class="grid grid-cols-1 mt-0  justify-center rounded max-w-[100vh]">
+
+            <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49">
+                <button *ngIf="this.time" class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
+                    ถัดไป
+                </button>
+                <button *ngIf="!this.time" class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'warn'">
+                    ถัดไป
+                </button>
+            </div>
+        </div>
     </div>
 </div>

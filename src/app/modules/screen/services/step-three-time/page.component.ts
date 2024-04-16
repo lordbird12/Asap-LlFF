@@ -146,7 +146,9 @@ export class StepThreeTimeComponent implements OnInit {
     }
 
     submit() {
-        this._router.navigate(['screens/services/step-four']);
+        if(this.time){
+            this._router.navigate(['screens/services/step-four']);
+        }
         // localStorage.setItem('services', JSON.stringify(this.items_check));
         // this._bottomSheet.open(MapComponent);
     }
