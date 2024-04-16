@@ -15,7 +15,8 @@
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                 <div class="flex items-center">
                                     <mat-icon class="icon-size-5 text-hint" [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>
-                                    <div class="ml-1.5 text-xl">{{date_format[2]}} {{months[date_format[1]]}} {{date_format[0]}}</div>
+                                    <div class="ml-1.5 text-xl">{{date_format[2]}} {{months[date_format[1]]}} {{date_format[0]}}
+                                    </div>
                                 </div>
                             </div>
 
@@ -143,12 +144,19 @@
 
     </div>
 
-    <div class="bottom-0 px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12 px-3">
-
-        <div class="relative items-center justify-start w-full h-14 py-5 z-49">
-            <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" (click)="openConfirm()" mat-flat-button [color]="'primary'">
+    <div class="bottom-0 px-6 pt-4 pb-5 md:p-8 md:pb-12 lg:p-12 w-full fixed">
+        <div class="grid grid-cols-1 mt-0  justify-center rounded max-w-[100vh]">
+            <!-- <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" (click)="openConfirm()" mat-flat-button [color]="'primary'">
                 ดำเนินการต่อ
-            </button>
+            </button> -->
+            <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49">
+                <button *ngIf="this.time" class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="openConfirm()">
+                    ดำเนินการต่อ
+                </button>
+                <button *ngIf="!this.time" class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'warn'">
+                    ดำเนินการต่อ
+                </button>
+            </div>
         </div>
 
     </div>

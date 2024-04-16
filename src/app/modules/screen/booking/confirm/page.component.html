@@ -1,4 +1,4 @@
-<div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden  bg-[91% 100%]">
+<div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden  bg-[91% 100%] mb-30">
     <div class="px-6 pt-3 pb-2 md:p-8 md:pb-2 lg:p-12">
         <div class="mt-3">
 
@@ -48,16 +48,10 @@
                     <!-- Tags -->
                     <ng-container *ngIf="services.length">
                         <ng-container *ngFor="let item of services; trackBy: trackByFn">
-                            <div *ngIf="item.check" class="ml-2 flex items-center justify-center px-1 py-1 m-1.5 rounded-md leading-9 text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
-                                <img *ngIf="item.name == 'เช็คระยะ'" class="w-5 h-5 mr-1" src="assets/images/services/flat-tire 1.png" alt="">
-                                <img *ngIf="item.name == 'เปลี่ยนแบตเตอรี่'" class="w-5 h-5 mr-1" src="assets/images/services/accumulator 1.png" alt="">
-                                <img *ngIf="item.name == 'เปลี่ยนยาง'" class="w-5 h-5 mr-1" src="assets/images/services/flat-tire 1.png" alt="">
-                                <img *ngIf="item.name == 'เช็คระบบแอร์'" class="w-5 h-5 mr-1" src="assets/images/services/Group.png" alt="">
-                                <img *ngIf="item.name == 'เช็คระบบไฟ'" class="w-5 h-5 mr-1" src="assets/images/services/car-engine 1.png" alt="">
-                                <img *ngIf="item.name == 'เช็คช่วงล่าง'" class="w-5 h-5 mr-1" src="assets/images/services/suspension (1) 1.png" alt="">
-                                <img *ngIf="item.name == 'เช็คระบบเบรค'" class="w-5 h-5 mr-1" src="assets/images/services/brake-disc 1.png" alt="">
-                                <img *ngIf="item.name == 'อื่นๆ (โปรดระบุ)'" class="w-5 h-5 mr-1" src="assets/images/services/option 1.png" alt="">
-                                <span class="text-md font-medium whitespace-nowrap">{{item.name}}</span>
+                            <div *ngIf="item.check" class="flex items-center justify-center px-2 py-0 m-1.5 rounded-md leading-9 text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                                <img class="w-5 h-5 mr-1" [src]="item?.image" alt="">
+                                <span *ngIf="item.id == 8" class="text-md font-medium whitespace-nowrap">อื่นๆ ({{item?.remark}})</span>
+                                <span *ngIf="item.id != 8" class="text-md font-medium whitespace-nowrap">{{item?.name}}</span>
                             </div>
                         </ng-container>
                     </ng-container>
