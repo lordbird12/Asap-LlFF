@@ -72,11 +72,14 @@ export const MY_FORMATS = {
             }
             .mat-calendar-body-label {
                 visibility: hidden !important;
+                padding-top: 0px !important;
+                padding-bottom: 0px !important;
             }
 
             .mat-calendar-label {
                 display: none !important;
             }
+
             .example-header {
                 display: flex;
                 align-items: center;
@@ -94,8 +97,8 @@ export const MY_FORMATS = {
                 margin: -22%;
             }
 
-            .mat-calendar-body-cell-content{
-                font-size:16px !important;
+            .mat-calendar-body-cell-content {
+                font-size: 16px !important;
             }
         `,
     ],
@@ -128,17 +131,18 @@ export class PostponDateComponent implements OnInit {
     dateClass = (date: Date): MatCalendarCellCssClasses => {
         const today = new Date();
 
-        const daysDifference = Math.floor((date.valueOf() - today.valueOf()) / (1000 * 60 * 60 * 24));
-
+        const daysDifference = Math.floor(
+            (date.valueOf() - today.valueOf()) / (1000 * 60 * 60 * 24)
+        );
 
         // const daysDifference = Math.floor(
         //     (date.getTime() - today.getTime()) /
         //         (1000 * 60 * 60 * 24)
         // );
 
-        if(daysDifference < 0 || daysDifference >= 90){
+        if (daysDifference < 0 || daysDifference >= 90) {
             return 'disabled-date';
-        }else{
+        } else {
             return '';
         }
     };

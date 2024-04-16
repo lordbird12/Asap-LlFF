@@ -71,7 +71,10 @@ export const MY_FORMATS = {
             }
             .mat-calendar-body-label {
                 visibility: hidden !important;
+                padding-top: 0px !important;
+                padding-bottom: 0px !important;
             }
+
 
             .mat-calendar-label {
                 display: none !important;
