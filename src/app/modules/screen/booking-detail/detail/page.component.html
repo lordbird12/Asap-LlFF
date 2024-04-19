@@ -118,7 +118,7 @@
         </form>
     </div>
 
-    <div class="bottom-10 px-6 pt-2 pb-5 md:p-8 md:pb-12 lg:p-12 bg-card">
+    <div class="bottom-10 px-6 pt-2 pb-5 md:p-8 md:pb-12 lg:p-12 bg-card" *ngIf="item?.status != 'Cancel' && item?.status != 'Finish'">
         <ng-container *ngIf="item?.diff_date >= 24">
             <div class="flex justify-center mt-6">
                 แก้ไขการจองได้จนถึง {{item?.date_change}}
