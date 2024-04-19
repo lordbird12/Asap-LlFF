@@ -73,6 +73,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
     items: any;
     item: any;
     item2: any;
+    itemData: any;
     marker: any; // Holds the marker instance
     /**
      * Constructor
@@ -101,90 +102,185 @@ export class StepTwoMapRecommendComponent implements OnInit {
             ? JSON.parse(localStorage.getItem('mylocation'))
             : [];
 
+        this.itemData = localStorage.getItem('data')
+            ? JSON.parse(localStorage.getItem('data')).data
+            : [];
+
         if (this.item2) {
-            const data = {
-                lat: this.item2.lat,
-                lon: this.item2.lon,
-            };
-            this._service
-                .get_service_centers_recommend(data)
-                .subscribe((resp: any) => {
-                    try {
-                        this.items = resp.data;
-                        this.item = this.items[0];
-                        if (this.item) {
-                            // Initialize the map
-                            const resolution = 156543.03392;
-                            const distance = 0.005;
-                            const zoomLevel = Math.round(
-                                Math.log2(
-                                    (40075016.686 *
-                                        Math.cos(
-                                            (this.item.lat * Math.PI) / 180
-                                        )) /
-                                        (resolution * distance)
-                                )
-                            );
+            if (this.item2.lat && this.item2.lon) {
+                const data = {
+                    lat: this.item2.lat,
+                    lon: this.item2.lon,
+                    brand:this.itemData.brand,
+                };
+                console.log(data);
 
-                            // Initialize the map
-                            this.map = new longdo.Map({
-                                placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
-                                zoom: zoomLevel, // Start with a zoom level that provides detail for approximately 500 meters
-                                animate: true,
-                                // other map options
-                            });
+                this._service
+                    .get_service_centers_recommend(data)
+                    .subscribe((resp: any) => {
+                        try {
+                            this.items = resp.data;
+                            this.item = this.items[0];
+                            if (this.item) {
+                                // Initialize the map
+                                const resolution = 156543.03392;
+                                const distance = 0.005;
+                                const zoomLevel = Math.round(
+                                    Math.log2(
+                                        (40075016.686 *
+                                            Math.cos(
+                                                (this.item.lat * Math.PI) / 180
+                                            )) /
+                                            (resolution * distance)
+                                    )
+                                );
 
-                            // Add a marker to the map
-                            // const marker = new longdo.Marker({
-                            //     lon: this.item.lat,
-                            //     lat: this.item.lon,
-                            // });
+                                // Initialize the map
+                                this.map = new longdo.Map({
+                                    placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
+                                    zoom: zoomLevel, // Start with a zoom level that provides detail for approximately 500 meters
+                                    animate: true,
+                                    // other map options
+                                });
 
-                            this.marker = new longdo.Marker(
-                                {
-                                    lon: this.item.lon
-                                        ? this.item.lon
-                                        : this.item.lon,
-                                    lat: this.item.lat
-                                        ? this.item.lat
-                                        : this.item.lat,
-                                },
-                                {
-                                    title: 'Marker',
-                                    icon: {
-                                        url: 'https://asha-tech.co.th/pin.png',
+                                // Add a marker to the map
+                                // const marker = new longdo.Marker({
+                                //     lon: this.item.lat,
+                                //     lat: this.item.lon,
+                                // });
+
+                                this.marker = new longdo.Marker(
+                                    {
+                                        lon: this.item.lon
+                                            ? this.item.lon
+                                            : this.item.lon,
+                                        lat: this.item.lat
+                                            ? this.item.lat
+                                            : this.item.lat,
                                     },
-                                }
-                            );
+                                    {
+                                        title: 'Marker',
+                                        icon: {
+                                            url: 'https://asha-tech.co.th/pin.png',
+                                        },
+                                    }
+                                );
 
-                            this.map.Overlays.add(this.marker);
-                            this.focusOnMarker();
+                                this.map.Overlays.add(this.marker);
+                                this.focusOnMarker();
 
-                            // Set the zoom level again after initializing the map
-                            this.map.zoom(16); // Adjust the zoom level as needed
+                                // Set the zoom level again after initializing the map
+                                this.map.zoom(16); // Adjust the zoom level as needed
 
-                            // Save the last view (including zoom level)
-                            // this.map.view();
+                                // Save the last view (including zoom level)
+                                // this.map.view();
 
-                            this._changeDetectorRef.markForCheck();
+                                this._changeDetectorRef.markForCheck();
+                            }
+                            // console.log("test",this.items);
+                            // if (resp.data) {
+                            //     const obj = {
+                            //         data: resp.data,
+                            //     };
+
+                            // localStorage.setItem('data', JSON.stringify(obj));
+                            // this._router.navigate(['screens/reg-kg/list']);
+                            // } else {
+                            //     // this.disableError = true;
+                            // }
+                            // this._changeDetectorRef.markForCheck();
+                        } catch (error) {
+                            // this.disableError = true;
+                            console.log(error);
                         }
-                        // console.log("test",this.items);
-                        // if (resp.data) {
-                        //     const obj = {
-                        //         data: resp.data,
-                        //     };
+                    });
+            } else {
+                const data = {
+                    lat: this.item2.road_lat,
+                    lon: this.item2.road_lon,
+                    brand:this.itemData.brand,
+                };
+                console.log(data);
+                this._service
+                    .get_service_centers_recommend(data)
+                    .subscribe((resp: any) => {
+                        try {
+                            this.items = resp.data;
+                            this.item = this.items[0];
+                            if (this.item) {
+                                // Initialize the map
+                                const resolution = 156543.03392;
+                                const distance = 0.005;
+                                const zoomLevel = Math.round(
+                                    Math.log2(
+                                        (40075016.686 *
+                                            Math.cos(
+                                                (this.item.lat * Math.PI) / 180
+                                            )) /
+                                            (resolution * distance)
+                                    )
+                                );
 
-                        // localStorage.setItem('data', JSON.stringify(obj));
-                        // this._router.navigate(['screens/reg-kg/list']);
-                        // } else {
-                        //     // this.disableError = true;
-                        // }
-                        // this._changeDetectorRef.markForCheck();
-                    } catch (error) {
-                        // this.disableError = true;
-                        console.log(error);
-                    }
-                });
+                                // Initialize the map
+                                this.map = new longdo.Map({
+                                    placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
+                                    zoom: zoomLevel, // Start with a zoom level that provides detail for approximately 500 meters
+                                    animate: true,
+                                    // other map options
+                                });
+
+                                // Add a marker to the map
+                                // const marker = new longdo.Marker({
+                                //     lon: this.item.lat,
+                                //     lat: this.item.lon,
+                                // });
+
+                                this.marker = new longdo.Marker(
+                                    {
+                                        lon: this.item.lon
+                                            ? this.item.lon
+                                            : this.item.lon,
+                                        lat: this.item.lat
+                                            ? this.item.lat
+                                            : this.item.lat,
+                                    },
+                                    {
+                                        title: 'Marker',
+                                        icon: {
+                                            url: 'https://asha-tech.co.th/pin.png',
+                                        },
+                                    }
+                                );
+
+                                this.map.Overlays.add(this.marker);
+                                this.focusOnMarker();
+
+                                // Set the zoom level again after initializing the map
+                                this.map.zoom(16); // Adjust the zoom level as needed
+
+                                // Save the last view (including zoom level)
+                                // this.map.view();
+
+                                this._changeDetectorRef.markForCheck();
+                            }
+                            // console.log("test",this.items);
+                            // if (resp.data) {
+                            //     const obj = {
+                            //         data: resp.data,
+                            //     };
+
+                            // localStorage.setItem('data', JSON.stringify(obj));
+                            // this._router.navigate(['screens/reg-kg/list']);
+                            // } else {
+                            //     // this.disableError = true;
+                            // }
+                            // this._changeDetectorRef.markForCheck();
+                        } catch (error) {
+                            // this.disableError = true;
+                            console.log(error);
+                        }
+                    });
+            }
         }
     }
 
