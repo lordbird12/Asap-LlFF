@@ -76,6 +76,7 @@ export class ServiceCenterComponent implements OnInit {
     map: any; // Assuming you have a reference to the map object
     items: any;
     item: any;
+    itemData: any;
     /**
      * Constructor
      */
@@ -103,32 +104,72 @@ export class ServiceCenterComponent implements OnInit {
             ? JSON.parse(localStorage.getItem('mylocation'))
             : [];
 
-        if (this.item) {
-            const data = {
-                lat: this.item.lat,
-                lon: this.item.lon,
-            };
-            this._service.get_service_centers(data).subscribe((resp: any) => {
-                try {
-                    this.items = resp.data;
-                    // console.log("test",this.items);
-                    this._changeDetectorRef.markForCheck();
-                    // if (resp.data) {
-                    //     const obj = {
-                    //         data: resp.data,
-                    //     };
+        this.itemData = localStorage.getItem('data')
+            ? JSON.parse(localStorage.getItem('data')).data
+            : [];
 
-                    // localStorage.setItem('data', JSON.stringify(obj));
-                    // this._router.navigate(['screens/reg-kg/list']);
-                    // } else {
-                    //     // this.disableError = true;
-                    // }
-                    // this._changeDetectorRef.markForCheck();
-                } catch (error) {
-                    // this.disableError = true;
-                    console.log(error);
-                }
-            });
+        if (this.item) {
+            if (this.item.lat && this.item.lon) {
+                const data = {
+                    lat: this.item.lat,
+                    lon: this.item.lon,
+                    brand: this.itemData.brand,
+                };
+
+                this._service
+                    .get_service_centers(data)
+                    .subscribe((resp: any) => {
+                        try {
+                            this.items = resp.data;
+                            // console.log("test",this.items);
+                            this._changeDetectorRef.markForCheck();
+                            // if (resp.data) {
+                            //     const obj = {
+                            //         data: resp.data,
+                            //     };
+
+                            // localStorage.setItem('data', JSON.stringify(obj));
+                            // this._router.navigate(['screens/reg-kg/list']);
+                            // } else {
+                            //     // this.disableError = true;
+                            // }
+                            // this._changeDetectorRef.markForCheck();
+                        } catch (error) {
+                            // this.disableError = true;
+                            console.log(error);
+                        }
+                    });
+            } else {
+                const data = {
+                    lat: this.item.road_lat,
+                    lon: this.item.road_lon,
+                    brand: this.itemData.brand,
+                };
+
+                this._service
+                    .get_service_centers(data)
+                    .subscribe((resp: any) => {
+                        try {
+                            this.items = resp.data;
+                            // console.log("test",this.items);
+                            this._changeDetectorRef.markForCheck();
+                            // if (resp.data) {
+                            //     const obj = {
+                            //         data: resp.data,
+                            //     };
+
+                            // localStorage.setItem('data', JSON.stringify(obj));
+                            // this._router.navigate(['screens/reg-kg/list']);
+                            // } else {
+                            //     // this.disableError = true;
+                            // }
+                            // this._changeDetectorRef.markForCheck();
+                        } catch (error) {
+                            // this.disableError = true;
+                            console.log(error);
+                        }
+                    });
+            }
         }
     }
 

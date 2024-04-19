@@ -113,7 +113,6 @@ export class StepTwoMapRecommendComponent implements OnInit {
                     lon: this.item2.lon,
                     brand:this.itemData.brand,
                 };
-                console.log(data);
 
                 this._service
                     .get_service_centers_recommend(data)
@@ -200,7 +199,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
                     lon: this.item2.road_lon,
                     brand:this.itemData.brand,
                 };
-                console.log(data);
+       
                 this._service
                     .get_service_centers_recommend(data)
                     .subscribe((resp: any) => {
