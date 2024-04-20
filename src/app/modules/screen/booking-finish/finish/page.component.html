@@ -1,4 +1,4 @@
-<div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden bg-gray-100">
+<div class="flex flex-col w-full min-w-0 sm:absolute sm:inset-0 sm:overflow-hidden bg-gray-100 mb-30">
     <div class="px-2 pt-3 pb-2 md:p-8 md:pb-2 lg:p-12">
         <div class="flex flex-row md:flex mb-5">
             <div class="flex items-center pl-2 m-auto space-x-0.5 sm:space-x-2">
@@ -112,11 +112,21 @@
             </div>
         </form>
     </div>
-    <div class="relative items-center justify-start w-full h-35 px-4 md:px-6 z-49 bg-white">
+    <!-- <div class="relative items-center justify-start w-full h-35 px-4 md:px-6 z-49 bg-white">
 
         <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
             เสร็จสิ้น
         </button>
+    </div> -->
+    <div class="bottom-0 px-6 pt-4 pb-5 md:p-8 md:pb-12 lg:p-12 w-full fixed bg-[#f1f5f9]">
+        <div class="grid grid-cols-1 mt-0 justify-center rounded max-w-[100vh]">
+
+            <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49">
+                <button class="fuse-mat-button-large w-full my-5 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
+                    เสร็จสิ้น
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
