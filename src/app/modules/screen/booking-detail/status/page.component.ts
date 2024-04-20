@@ -176,7 +176,7 @@ export class StatusComponent implements OnInit, OnDestroy {
                     verticalPosition: 'top',
                 });
                 this._bottomSheetRef.dismiss();
-                this._router.navigate(['screens/authen']);
+                this._router.navigate(['screens/home/booking']);
             }
         });
     }

@@ -74,7 +74,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         NgClass,
         MatBottomSheetModule,
         FuseCardComponent,
-        MatTooltipModule
+        MatTooltipModule,
     ],
 })
 export class PageBookingComponent implements OnInit, AfterViewInit {
@@ -113,25 +113,39 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
      * On init
      */
     ngOnInit(): void {
-        this.bookings = localStorage.getItem('MyBooking')
-            ? JSON.parse(localStorage.getItem('MyBooking'))
+        this.profile = localStorage.getItem('profile')
+            ? JSON.parse(localStorage.getItem('profile'))
             : [];
 
-        this.bookings.forEach((element) => {
-            if (
-                element?.status != 'รายการจองสิ้นสุดแล้ว' &&
-                element?.status != 'รายการจองถูกยกเลิก'
-            ) {
-                this.activeBtn1 = false;
-            }
+        if (this.profile) {
+            this._service
+                .getProfile(this.profile.userId)
+                .subscribe((resp: any) => {
+                    if (resp.length > 0) {
+                        localStorage.setItem('MyBooking', JSON.stringify(resp));
+                    }
+                });
 
-            if (
-                element.status == 'รายการจองสิ้นสุดแล้ว' ||
-                element.status == 'รายการจองถูกยกเลิก'
-            ) {
-                this.activeBtn2 = false;
-            }
-        });
+            this.bookings = localStorage.getItem('MyBooking')
+                ? JSON.parse(localStorage.getItem('MyBooking'))
+                : [];
+
+            this.bookings.forEach((element) => {
+                if (
+                    element?.status != 'รายการจองสิ้นสุดแล้ว' &&
+                    element?.status != 'รายการจองถูกยกเลิก'
+                ) {
+                    this.activeBtn1 = false;
+                }
+
+                if (
+                    element.status == 'รายการจองสิ้นสุดแล้ว' ||
+                    element.status == 'รายการจองถูกยกเลิก'
+                ) {
+                    this.activeBtn2 = false;
+                }
+            });
+        }
     }
 
     ngAfterViewInit(): void {
@@ -280,5 +294,4 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
 
         return formattedDate;
     }
-
 }
