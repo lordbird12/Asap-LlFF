@@ -175,6 +175,8 @@ export class StatusComponent implements OnInit, OnDestroy {
                     duration: 3000,
                     verticalPosition: 'top',
                 });
+                this._bottomSheetRef.dismiss();
+                this._router.navigate(['screens/authen']);
             }
         });
     }

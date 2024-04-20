@@ -59,11 +59,11 @@
                                 </div>
                                 <div class="my-2 border-t"></div>
                                 <div class="flex items-center sm:mx-8">
-                                    <div class="flex" (click)="openStatus(booking)" *ngIf="item?.diff_date >= 24">
+                                    <div class="flex" (click)="openStatus(booking)" *ngIf="booking?.diff_date >= 24">
                                         <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'asha:edit'"></mat-icon>
                                         <span class="font-semibold m-1">จัดการจอง</span>
                                     </div>
-                                    <div class="flex" matTooltip="Tooltip text" *ngIf="item?.diff_date < 24">
+                                    <div class="flex" *ngIf="booking?.diff_date < 24">
                                         <mat-icon class="icon-size-5 mt-0.5 mr-2 opacity-50" [svgIcon]="'asha:edit'"></mat-icon>
                                         <span class="font-semibold m-1 opacity-50">จัดการจอง</span>
                                     </div>
