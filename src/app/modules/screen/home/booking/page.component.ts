@@ -48,6 +48,7 @@ import {
 } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../booking-detail/snackbar/page.component';
 import { StarsComponent } from '../stars/page.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'home-list',
@@ -73,6 +74,7 @@ import { StarsComponent } from '../stars/page.component';
         NgClass,
         MatBottomSheetModule,
         FuseCardComponent,
+        MatTooltipModule
     ],
 })
 export class PageBookingComponent implements OnInit, AfterViewInit {
@@ -279,13 +281,4 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
         return formattedDate;
     }
 
-    detectString(inputDateString: any): boolean {
-        if(inputDateString == "สำเร็จ"){
-            console.log(true);
-            return true;
-        }else{
-            console.log(false);
-            return false;
-        }
-    }
 }
