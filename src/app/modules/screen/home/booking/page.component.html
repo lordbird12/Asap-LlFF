@@ -32,7 +32,7 @@
                                     <div class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer ring-inset ring-primary bg-hover">
                                         <div class="flex-0 w-2 h-2 rounded-full bg-gray-300"></div>
                                         <div class="ml-2.5 font-medium leading-5 truncate">
-                                            {{booking?.status}}
+                                            {{booking?.show_status}}
                                         </div>
                                     </div>
 
@@ -90,10 +90,10 @@
                                         <span class="font-semibold leading-none">{{convertDateFormat(booking?.date)}}</span>
                                         <span class="text-sm text-secondary leading-none mt-1">{{booking?.time}}</span>
                                     </div>
-                                    <div class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer ring-inset ring-primary bg-hover">
-                                        <div class="flex-0 w-2 h-2 rounded-full bg-gray-300"></div>
-                                        <div class="ml-2.5 font-medium leading-5 truncate">
-                                            {{booking?.status}}
+                                    <div class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer ring-inset ring-primary bg-hover" [ngClass]="{'bg-green-100': booking?.show_status == 'สำเร็จ', 'bg-red-100': booking?.show_status != 'สำเร็จ'}">
+                                        <div class="flex-0 w-2 h-2 rounded-full" [ngClass]="{'bg-green-500': booking?.show_status == 'สำเร็จ', 'bg-red-500': booking?.show_status != 'สำเร็จ'}"></div>
+                                        <div class="ml-2.5 font-medium leading-5 truncate" [ngClass]="{'text-green-500': booking?.show_status == 'สำเร็จ', 'text-red-500': booking?.show_status != 'สำเร็จ'}">
+                                            {{booking?.show_status}}
                                         </div>
                                     </div>
 

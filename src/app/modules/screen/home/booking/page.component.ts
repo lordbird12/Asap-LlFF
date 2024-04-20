@@ -278,4 +278,14 @@ export class PageBookingComponent implements OnInit, AfterViewInit {
 
         return formattedDate;
     }
+
+    detectString(inputDateString: any): boolean {
+        if(inputDateString == "สำเร็จ"){
+            console.log(true);
+            return true;
+        }else{
+            console.log(false);
+            return false;
+        }
+    }
 }
