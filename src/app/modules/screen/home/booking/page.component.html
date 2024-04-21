@@ -95,7 +95,8 @@
                                         <span class="text-sm text-secondary leading-none mt-1">{{booking?.time}}</span>
                                     </div>
                                     <div class="ml-auto flex items-center justify-center px-4 py-1 rounded-full cursor-pointer ring-inset ring-primary bg-hover" [ngClass]="{'bg-green-100': booking?.show_status == 'สำเร็จ', 'bg-red-100': booking?.show_status != 'สำเร็จ'}">
-                                        <div class="flex-0 w-2 h-2 rounded-full" [ngClass]="{'bg-green-500': booking?.show_status == 'สำเร็จ', 'bg-red-500': booking?.show_status != 'สำเร็จ'}"></div>
+                                        <div class="flex-0 w-2 h-2 rounded-full" [ngClass]="{'bg-green-500': booking?.show_status == 'สำเร็จ', 'bg-red-500': booking?.show_status != 'สำเร็จ'}">
+                                        </div>
                                         <div class="ml-2.5 font-medium leading-5 truncate" [ngClass]="{'text-green-500': booking?.show_status == 'สำเร็จ', 'text-red-500': booking?.show_status != 'สำเร็จ'}">
                                             {{booking?.show_status}}
                                         </div>
@@ -115,10 +116,17 @@
                                     </div>
 
                                 </div>
-                                <div class="flex flex-col">
+                                <div class="flex flex-col" *ngIf="booking?.show_status == 'สำเร็จ'">
                                     <div class="flex">
                                         <mat-icon class="icon-size-5 mt-0.5 mr-2" [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
                                         <div> {{booking?.service_center?.name ?? "-"}} <span (click)="openMap(booking)" class="underline text-slate-400">ดูแผนที่</span></div>
+                                    </div>
+
+                                </div>
+                                <div class="flex flex-col bg-[#F4F4F4] p-2 rounded-md" *ngIf="booking?.show_status != 'สำเร็จ'">
+                                    <div class="flex">
+                                        <div *ngIf="booking?.reason_by == 'A'"> ถูกยกเลิกโดยพนักงาน<br>เนื่องจาก {{booking?.reason ?? "-"}}</div>
+                                        <div *ngIf="booking?.reason_by == 'C'"> ถูกยกเลิกโดยลูกค้า<br>เนื่องจาก {{booking?.reason ?? "-"}}</div>
                                     </div>
 
                                 </div>
