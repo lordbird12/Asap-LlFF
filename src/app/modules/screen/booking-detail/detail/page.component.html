@@ -3,13 +3,24 @@
 
         <form class="bg-card rounded-2xl md:shadow overflow-hidden sm:px-8 pt-6 pb-8 m-5 flex flex-col bg-no-repeat" style="background:white !important;">
             <div>
-                <span class="text-2xl md:text-xl font-bold text-red-500 tracking-tight  leading-7 sm:leading-10 truncate m-5">
+                <span *ngIf="item?.status != 'Finish' && item?.status != 'Cancel'" class="text-2xl md:text-xl font-bold text-red-500 tracking-tight  leading-7 sm:leading-10 truncate m-5">
                     กำลังดำเนินการ
                 </span>
+                <span *ngIf="item?.status == 'Finish'" class="text-2xl md:text-xl font-bold text-green-500 tracking-tight  leading-7 sm:leading-10 truncate m-5">
+                    เสร็จสิ้น
+                </span>
+                <span *ngIf="item?.status == 'Cancel'" class="text-2xl md:text-xl font-bold text-red-500 tracking-tight  leading-7 sm:leading-10 truncate m-5">
+                    ถูกยกเลิก
+                </span>
             </div>
-            <div class="">
+            <div *ngIf="item?.status != 'Finish' && item?.status != 'Cancel'">
                 <span class="text-sm md:text-xl font-bold text-gray-400 tracking-tight  leading-7 sm:leading-10 truncate m-5">
                     รอศูนย์ให้บริการลูกค้ายืนยันภายใน 3 ชั่วโมง
+                </span>
+            </div>
+            <div *ngIf="item?.status == 'Finish' || item?.status == 'Cancel'">
+                <span class="text-sm md:text-xl font-bold text-gray-400 tracking-tight  leading-7 sm:leading-10 truncate m-5">
+                    รายการสิ้นสุดแล้วไม่สามารถเปลี่ยนแปลงและแก้ไขได้
                 </span>
             </div>
             <div class="flex-row">
