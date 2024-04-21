@@ -125,8 +125,7 @@
                                 </div>
                                 <div class="flex flex-col bg-[#F4F4F4] p-2 rounded-md" *ngIf="booking?.show_status != 'สำเร็จ'">
                                     <div class="flex">
-                                        <div *ngIf="booking?.reason_by == 'A'"> ถูกยกเลิกโดยพนักงาน<br>เนื่องจาก {{booking?.reason ?? "-"}}</div>
-                                        <div *ngIf="booking?.reason_by == 'C'"> ถูกยกเลิกโดยลูกค้า<br>เนื่องจาก {{booking?.reason ?? "-"}}</div>
+                                        <div> {{booking?.reason_by ?? "-"}}<br>เนื่องจาก {{booking?.reason ?? "-"}}</div>
                                     </div>
 
                                 </div>
