@@ -76,8 +76,8 @@ export class StepThreeTimeComponent implements OnInit {
     date_format: any;
     hours: string[] = [];
     selectedHour: string;
-    minutes: number[] = [];
-    selectedMinute: number;
+    minutes: string[] = [];
+    selectedMinute: string;
     months: any = [
         '',
         'Jan',
@@ -164,11 +164,12 @@ export class StepThreeTimeComponent implements OnInit {
     }
 
     generateMinutes() {
-        for (let i = 15; i <= 45; i += 15) {
-          this.minutes.push(i);
+        for (let i = 0; i < 60; i += 15) {
+            const minuteString = `${i < 10 ? '0' + i : i}`;
+            this.minutes.push(minuteString);
         }
-      }
-      
+    }
+
     submit() {
         if (this.time) {
             this._router.navigate(['screens/services/step-four']);
