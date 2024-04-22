@@ -64,6 +64,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     profile: any;
     placeholder: string = ''; // No placeholder initially
     dataRow: any[] = [];
+
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     constructor(
         private dialog: MatDialog,
@@ -162,11 +163,4 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
     }
 
-    setPlaceholder(text: string) {
-        this.placeholder = text; // Set the placeholder on focus
-    }
-
-    removePlaceholder() {
-        this.placeholder = ''; // Clear the placeholder on blur
-    }
 }

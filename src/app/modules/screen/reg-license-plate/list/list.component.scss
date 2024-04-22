@@ -33,3 +33,8 @@ mat-bottom-sheet-container {
 .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
     color: #FF595A; // Consistent with unfocused state, or choose another color
 }
+
+.show-placeholder ::ng-deep .mat-form-field-underline,
+.show-placeholder ::ng-deep .mat-form-field-label-wrapper {
+    display: block !important;
+}
