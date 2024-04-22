@@ -43,105 +43,33 @@
                 <div class="flex flex-col w-full max-w-screen-xl mx-auto px-3 sm:px-8">
 
                     <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-12">
-                        <!-- Avatar and name -->
-                        <div class="flex items-start justify-start">
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center">
-                                    <img src="assets/images/morning.png" class="icon-size-5 text-hint" style="width:1.5rem !important;">
-                                    <div class="ml-1.5 text-lg">ช่วงเช้า</div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="flex items-start justify-between">
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '08:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '08:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('08:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">08:00 am</span>
-                                </div>
+                                <mat-form-field>
+                                    <mat-label>ชั่วโมง</mat-label>
+
+                                    <mat-select [(ngModel)]="selectedHour">
+                                        <mat-option *ngFor="let hour of hours" [value]="hour">{{ hour }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
+                            <!-- <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                                ชั่วโมง
+                            </div> -->
 
                             <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '09:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '09:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('09:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">09:00 am</span>
-                                </div>
-                            </div>
+                                <mat-form-field>
+                                    <mat-label>นาที</mat-label>
 
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '10:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '10:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('10:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">10:00 am</span>
-                                </div>
+                                    <mat-select [(ngModel)]="selectedMinute">
+                                        <mat-option *ngFor="let minute of minutes" [value]="minute">{{ minute }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
-
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '11:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '11:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('11:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">11:00 am</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-start justify-start mt-3">
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center">
-                                    <img src="assets/images/noon.png" class="icon-size-5 text-hint" style="width:1.5rem !important;">
-                                    <div class="ml-1.5 text-lg">ช่วงบ่าย</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-start justify-between">
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '12:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '12:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('12:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">12:00 am</span>
-                                </div>
-                            </div>
-
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '01:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '01:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('01:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">01:00 pm</span>
-                                </div>
-                            </div>
-
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '02:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '02:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('02:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">02:00 pm</span>
-                                </div>
-                            </div>
-
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '03:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '03:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('03:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">03:00 pm</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-start justify-start mt-3">
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div class="flex items-center">
-                                    <img src="assets/images/evening.png" class="icon-size-5 text-hint" style="width:1.5rem !important;">
-                                    <div class="ml-1.5 text-lg">ช่วงเย็น</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-start justify-between">
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '04:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '04:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('04:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">04:00 pm</span>
-                                </div>
-                            </div>
-
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '05:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '05:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('05:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">05:00 pm</span>
-                                </div>
-                            </div>
-
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '06:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '06:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('06:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">06:00 pm</span>
-                                </div>
-                            </div>
-
-                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                <div [ngClass]="{'text-white bg-red-500 dark:text-red-500 dark:bg-red-500': time === '07:00','text-black bg-gray-100 dark:text-gray-300 dark:bg-gray-700': time === '07:00'}" class="flex items-center justify-center px-3 m-1.5 rounded-lg leading-9" (click)="addTime('07:00')">
-                                    <span class="text-lg font-medium whitespace-nowrap">07:00 pm</span>
-                                </div>
-                            </div>
+                            <!-- <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                                นาที
+                            </div> -->
                         </div>
                     </div>
                 </div>

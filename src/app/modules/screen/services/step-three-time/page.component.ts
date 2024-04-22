@@ -74,6 +74,10 @@ export class StepThreeTimeComponent implements OnInit {
     date: any;
     time: any;
     date_format: any;
+    hours: string[] = [];
+    selectedHour: string;
+    minutes: number[] = [];
+    selectedMinute: number;
     months: any = [
         '',
         'Jan',
@@ -99,7 +103,10 @@ export class StepThreeTimeComponent implements OnInit {
         private _router: Router,
         private _bottomSheet: MatBottomSheet,
         private _activatedRoute: ActivatedRoute
-    ) {}
+    ) {
+        this.generateHours();
+        this.generateMinutes();
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -145,8 +152,25 @@ export class StepThreeTimeComponent implements OnInit {
         });
     }
 
+    generateHours() {
+        for (let i = 8; i <= 16; i++) {
+            for (let j = 0; j < 60; j += 15) {
+                const hourString = `${i < 10 ? '0' + i : i}:${
+                    j === 0 ? '00' : j
+                }`;
+                this.hours.push(hourString);
+            }
+        }
+    }
+
+    generateMinutes() {
+        for (let i = 15; i <= 45; i += 15) {
+          this.minutes.push(i);
+        }
+      }
+      
     submit() {
-        if(this.time){
+        if (this.time) {
             this._router.navigate(['screens/services/step-four']);
         }
         // localStorage.setItem('services', JSON.stringify(this.items_check));
