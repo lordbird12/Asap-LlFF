@@ -143,6 +143,7 @@ export class ServicesMainComponent implements OnInit {
 
     addService(index) {
         this.service_remark = 0;
+        this.service_remark_text = "";
         if (this.items_check[index].check) {
             this.items_check[index].check = false;
 
