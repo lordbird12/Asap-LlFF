@@ -84,8 +84,8 @@
             <div class="grid grid-cols-2 grid-flow-row ng-star-inserted">
                 <ng-container *ngFor="let item of items_check; let  i = index">
                     <div [ngClass]="{
-                        'border-4 border-kPrimary':item.check === true,
-                      }" class="relative pointer group flex m-2 rounded-lg flex-col overflow-hidden bg-card ng-star-inserted" (click)="addService(i)">
+                        'border-kPrimary':item.check === true,'border-white':item.check === false,
+                      }" class="border-4 relative pointer group flex m-2 rounded-lg flex-col overflow-hidden bg-card ng-star-inserted" (click)="addService(i)">
                         <!---->
                         <!---->
                         <div class="flex justify-end">
@@ -125,7 +125,7 @@
         </form>
         <div class="flex px-5" *ngIf="service_remark">
             <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:exclamation-circle'"></mat-icon>
-            <div class="ml-1.5 leading-6" *ngIf="service_remark > 0">ต้องจองล่วงหน้าอย่างน้อย {{service_remark}} วัน
+            <div class="ml-1.5 leading-6" *ngIf="service_remark > 0">{{service_remark_text}}
             </div>
         </div>
 

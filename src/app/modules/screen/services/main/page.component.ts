@@ -68,6 +68,8 @@ export class ServicesMainComponent implements OnInit {
     items_check: any[] = [];
     item: any;
     service_remark: number;
+    service_remark_text: string;
+
     service_input: boolean;
     activeBtn: any;
     num: any;
@@ -171,6 +173,11 @@ export class ServicesMainComponent implements OnInit {
                 if (element.remark) {
                     this.service_remark =
                         this.service_remark + Number(element.remark);
+                        if(this.service_remark == 2){
+                            this.service_remark_text = "เช็คระยะต้องจองล่วงหน้าอย่างน้อย 2 วัน";
+                        }else{
+                            this.service_remark_text = "เช็คระยะและเปลี่ยนยางต้องจองล่วงหน้าอย่างน้อย 3 วัน";
+                        }
                 }
             }
 
