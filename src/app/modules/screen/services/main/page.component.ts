@@ -143,7 +143,7 @@ export class ServicesMainComponent implements OnInit {
 
     addService(index) {
         this.service_remark = 0;
-        this.service_remark_text = "";
+        this.service_remark_text = '';
         if (this.items_check[index].check) {
             this.items_check[index].check = false;
 
@@ -174,11 +174,16 @@ export class ServicesMainComponent implements OnInit {
                 if (element.remark) {
                     this.service_remark =
                         this.service_remark + Number(element.remark);
-                        if(this.service_remark == 2){
-                            this.service_remark_text = "เช็คระยะต้องจองล่วงหน้าอย่างน้อย 2 วัน";
-                        }else{
-                            this.service_remark_text = "เช็คระยะและเปลี่ยนยางต้องจองล่วงหน้าอย่างน้อย 3 วัน";
-                        }
+                    if (this.service_remark == 2) {
+                        this.service_remark_text =
+                            'เช็คระยะต้องจองล่วงหน้าอย่างน้อย 2 วัน';
+                    } else if (this.service_remark == 5) {
+                        this.service_remark_text =
+                            'เช็คระยะและเปลี่ยนยางต้องจองล่วงหน้าอย่างน้อย 3 วัน';
+                    } else if (this.service_remark == 3) {
+                        this.service_remark_text =
+                            'เปลี่ยนยางต้องจองล่วงหน้าอย่างน้อย 3 วัน';
+                    }
                 }
             }
 
