@@ -25,7 +25,7 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4">
                         <div class="flex items-center">
-                            <div id="map" style="width: 100%; height: 300px;"></div>
+                            <div id="map" style="width: 100%; height: 200px;"></div>
                         </div>
                         <ng-container *ngIf="items?.length > 0">
                             <div class="p-2 sm:p-8 lg:p-10">
@@ -34,9 +34,9 @@
                                 <!-- Features -->
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4 mt-2 p-1">
                                     <div class="text-2xl font-bold">{{item?.name}}</div>
-                                    <div class="leading-relaxed text-2xl font-semibold">
+                                    <!-- <div class="leading-relaxed text-2xl font-semibold">
                                         {{item?.km}} km.
-                                    </div>
+                                    </div> -->
 
                                     <div class="flex items-center p-2 mb-2 rounded-lg font-semibold text-green-800 bg-green-100 dark:text-green-50 dark:bg-green-500 w-max">
                                         <mat-icon class="icon-size-5 p-1 rounded-full text-white bg-green-500" svgIcon="mat_solid:thumb_up_alt"></mat-icon>
