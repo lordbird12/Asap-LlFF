@@ -16,10 +16,20 @@ mat-bottom-sheet-container {
 .mdc-snackbar__surface {
     background-color: #D8FBDE !important;
     /* Set your desired background color */
-    color: #0A5554 !important;
+    color: #FF595A !important;
     /* Set your desired text color */
 }
 
 .mat-mdc-snack-bar-label {
-    color: #0A5554 !important;
+    color: #FF595A !important;
+}
+
+// Override the border color for mat-form-field outline
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #FF595A; // Set this to whatever color you prefer
+}
+
+// Override the color when the form field is focused or filled
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #FF595A; // Consistent with unfocused state, or choose another color
 }
