@@ -22,18 +22,26 @@
                         <!-- Name -->
                         <div class="sm:col-span-4">
 
-                            <mat-form-field class="w-full" style="border-radius:18px !important;">
+                            <!-- <mat-form-field class="w-full" style="border-radius:18px !important;">
                                 <mat-label>ชื่อ</mat-label>
                                 <input class="w-full" [formControlName]="'name'" style="border-radius:18px !important;" matInput placeholder="Enter name">
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'asha:user_contact'"></mat-icon>
+                            </mat-form-field> -->
+                            <b class="mb-1">ชื่อ</b>
+                            <mat-form-field class="w-full" [subscriptSizing]="'dynamic'" style="border-radius:18px !important;">
+                                <input class="w-full" [formControlName]="'name'" style="border-radius:18px !important;" matInput placeholder="ระบุชื่อ">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'asha:user_contact'"></mat-icon>
+
                             </mat-form-field>
                         </div>
                         <div class="sm:col-span-4">
-                            <mat-form-field class="w-full" style="border-radius:18px !important;">
-                                <mat-label>เบอร์โทรศัพท์</mat-label>
-                                <input class="w-full" [formControlName]="'phone'" (keyup)="onChange($event)" style="border-radius:18px !important;" matInput placeholder="Enter your phone number">
+                            <b class="mb-1">เบอร์โทรศัพท์</b>
+                            <mat-form-field class="w-full" [subscriptSizing]="'dynamic'" style="border-radius:18px !important;">
+                                <input class="w-full" [formControlName]="'phone'" (keyup)="onChange($event)" style="border-radius:18px !important;" matInput placeholder="ระบุเบอร์ติดต่อ">
                                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'asha:phone_contact'"></mat-icon>
+
                             </mat-form-field>
+
                             <div class="flex" *ngIf="disableError">
                                 <mat-icon class="icon-size-5 text-red-500" [svgIcon]="'heroicons_solid:exclamation-triangle'"></mat-icon>
                                 <div class="ml-1.5 leading-6 text-red-500">
