@@ -62,7 +62,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     isLoading: boolean = false;
     disableError: boolean = false;
     profile: any;
-    // public dataRow: any[];
+    placeholder: string = ''; // No placeholder initially
     dataRow: any[] = [];
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     constructor(
@@ -76,10 +76,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.dataForm = this._formBuilder.group({
-            license: [
-                '',
-                [Validators.required],
-            ],
+            license: ['', [Validators.required]],
         });
     }
 
@@ -163,5 +160,13 @@ export class ListComponent implements OnInit, AfterViewInit {
         } else {
             this._router.navigate(['screens/authen']);
         }
+    }
+
+    setPlaceholder(text: string) {
+        this.placeholder = text; // Set the placeholder on focus
+    }
+
+    removePlaceholder() {
+        this.placeholder = ''; // Clear the placeholder on blur
     }
 }

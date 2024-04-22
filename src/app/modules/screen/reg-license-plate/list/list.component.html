@@ -67,12 +67,9 @@
                 <div class="grid sm:grid-cols-4 gap-6 w-full mt-15 md:px-6">
                     <!-- Name -->
                     <div class="sm:col-span-4">
-                        <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
-                            <mat-label>โปรดระบุเลขทะเบียนรถ</mat-label>
-                            <!-- <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:user'" matPrefix></mat-icon> -->
-                            <!-- <input type="text" [(ngModel)]="licensePlate" (input)="formatLicensePlate()"> -->
-
-                            <input [formControlName]="'license'" (keyup)="onChange($event)" max="8" placeholder="ตัวอย่าง 8กง-6780" matInput>
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label class=" font-light">ตัวอย่าง 8กง-6780</mat-label>
+                            <input matInput formControlName="license" (keyup)="onChange($event)" max="8">
                         </mat-form-field>
                     </div>
                     <div class="sm:col-span-4" *ngIf="disableError">
