@@ -78,6 +78,10 @@ export class PostponTimeComponent implements OnInit {
     date: any;
     time: any;
     date_format: any;
+    hours: string[] = [];
+    selectedHour: string;
+    minutes: string[] = [];
+    selectedMinute: string;
     months: any = [
         '',
         'Jan',
@@ -103,8 +107,11 @@ export class PostponTimeComponent implements OnInit {
         private _router: Router,
         private _bottomSheet: MatBottomSheet,
         private _activatedRoute: ActivatedRoute,
-        private _snackBar: MatSnackBar,
-    ) {}
+        private _snackBar: MatSnackBar
+    ) {
+        this.generateHours();
+        this.generateMinutes();
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -151,37 +158,68 @@ export class PostponTimeComponent implements OnInit {
         });
     }
 
+    generateHours() {
+        for (let i = 8; i <= 16; i++) {
+            const hourString = `${i < 10 ? '0' + i : i}`;
+            this.hours.push(hourString);
+        }
+    }
+
+    generateMinutes() {
+        for (let i = 0; i < 60; i += 15) {
+            const minuteString = `${i < 10 ? '0' + i : i}`;
+            this.minutes.push(minuteString);
+        }
+    }
+
     submit() {
-        this._router.navigate(['screens/services/step-four']);
+        this.time = this.selectedHour + ':' + this.selectedMinute;
+
+        if (this.time) {
+            const data = {
+                id: this.id,
+                date: this.date,
+                time: this.time,
+            };
+            localStorage.setItem('change_date_time', JSON.stringify(data));
+
+            this._router.navigate(['screens/services/step-four']);
+        }
+        // this._router.navigate(['screens/services/step-four']);
         // localStorage.setItem('services', JSON.stringify(this.items_check));
         // this._bottomSheet.open(MapComponent);
     }
 
     openConfirm(): void {
-        const bottomSheetRef = this._bottomSheet.open(ConfirmComponent, {
-            data: {
-                id: this.id,
-                date: this.date,
-                time: this.time,
-            },
-        });
+        this.time = this.selectedHour + ':' + this.selectedMinute;
+        if (this.time) {
+            const bottomSheetRef = this._bottomSheet.open(ConfirmComponent, {
+                data: {
+                    id: this.id,
+                    date: this.date,
+                    time: this.time,
+                },
+            });
 
-        bottomSheetRef.afterDismissed().subscribe((data) => {
-            if (data) {
-                this._snackBar.openFromComponent(SnackBarComponent, {
-                    duration: 3000,
-                    verticalPosition: 'top',
-                });
+            bottomSheetRef.afterDismissed().subscribe((data) => {
+                if (data) {
+                    this._snackBar.openFromComponent(SnackBarComponent, {
+                        duration: 3000,
+                        verticalPosition: 'top',
+                    });
 
-                this._router.navigate(['screens/booking-detail/'+this.id]);
-            }
-            // this.openSnackBar(
-            //     'ยกเลิกการจองสำเร็จ',
-            //     'ปิด',
-            //     'custom-snackbar',
-            //     'end'
-            // );
-        });
+                    this._router.navigate([
+                        'screens/booking-detail/' + this.id,
+                    ]);
+                }
+                // this.openSnackBar(
+                //     'ยกเลิกการจองสำเร็จ',
+                //     'ปิด',
+                //     'custom-snackbar',
+                //     'end'
+                // );
+            });
+        }
     }
 
     addService(index) {
@@ -226,6 +264,6 @@ export class PostponTimeComponent implements OnInit {
     }
 
     editDate() {
-        this._router.navigate(['screens/postpon/date/'+this.id]);
+        this._router.navigate(['screens/postpon/date/' + this.id]);
     }
 }
