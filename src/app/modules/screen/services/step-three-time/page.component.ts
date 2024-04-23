@@ -154,12 +154,8 @@ export class StepThreeTimeComponent implements OnInit {
 
     generateHours() {
         for (let i = 8; i <= 16; i++) {
-            for (let j = 0; j < 60; j += 15) {
-                const hourString = `${i < 10 ? '0' + i : i}:${
-                    j === 0 ? '00' : j
-                }`;
-                this.hours.push(hourString);
-            }
+            const hourString = `${i < 10 ? '0' + i : i}`;
+            this.hours.push(hourString);
         }
     }
 
@@ -171,7 +167,18 @@ export class StepThreeTimeComponent implements OnInit {
     }
 
     submit() {
+        console.log(this.selectedHour);
+        console.log(this.selectedMinute);
+
+        this.time = this.selectedHour + ':' + this.selectedMinute;
+
         if (this.time) {
+            const data = {
+                date: this.date,
+                time: this.time,
+            };
+            localStorage.setItem('sevice_date_time', JSON.stringify(data));
+
             this._router.navigate(['screens/services/step-four']);
         }
         // localStorage.setItem('services', JSON.stringify(this.items_check));
@@ -221,4 +228,14 @@ export class StepThreeTimeComponent implements OnInit {
     editDate() {
         this._router.navigate(['screens/services/step-three']);
     }
+
+    // onHourChange(newHour: number) {
+    //     console.log('Hour changed to:', newHour);
+    //     this.selectedHour = newHour;
+    // }
+
+    // onMinuteChange(newHour: number) {
+    //     console.log('Hour changed to:', newHour);
+    //     this.selectedHour = newHour;
+    // }
 }

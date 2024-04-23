@@ -93,10 +93,10 @@
         <div class="grid grid-cols-1 mt-0  justify-center rounded max-w-[100vh]">
 
             <div class=" flex relative items-end justify-end w-full h-35 px-4 md:px-6 z-49">
-                <button *ngIf="this.time" class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
+                <button *ngIf="this.selectedHour && this.selectedMinute" class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
                     ถัดไป
                 </button>
-                <button *ngIf="!this.time" class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'warn'">
+                <button *ngIf="!this.selectedHour || !this.selectedMinute" class="fuse-mat-button-large w-full my-1 rounded-md text-white" mat-flat-button [color]="'warn'">
                     ถัดไป
                 </button>
             </div>
