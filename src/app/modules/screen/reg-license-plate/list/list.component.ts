@@ -34,7 +34,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 @Component({
     selector: 'list',
     templateUrl: './list.component.html',
-    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./list.component.scss'],
     standalone: true,
     imports: [
         CommonModule,
@@ -64,7 +64,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     profile: any;
     placeholder: string = ''; // No placeholder initially
     dataRow: any[] = [];
-
+    activeBtn: any;
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     constructor(
         private dialog: MatDialog,

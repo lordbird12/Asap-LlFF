@@ -62,13 +62,13 @@
 
                 <!-- Section -->
                 <div class="flex items-center justify-center">
-                    <img class="w-50 h-auto items-center justify-center" src="assets/images/OBJECTS1.png" alt="Cover image">
+                    <img class="w-60 h-auto items-center justify-center" src="assets/images/car.png" alt="Cover image">
                 </div>
-                <div class="grid sm:grid-cols-4 gap-6 w-full mt-15 md:px-6">
+                <div class="grid sm:grid-cols-4 gap-6 w-full mt-8 md:px-6">
                     <!-- Name -->
                     <div class="sm:col-span-4">
-                        <b class="mb-1">โปรดระบุเลขทะเบียนรถ</b>
-                        <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                        <b class="ml-1 text-lg">โปรดระบุเลขทะเบียนรถ</b>
+                        <mat-form-field class="w-full mt-4" [subscriptSizing]="'dynamic'">
                             <!-- <mat-label>โปรดระบุเลขทะเบียนรถ</mat-label> -->
 
                             <input [formControlName]="'license'" (keyup)="onChange($event)" max="8" placeholder="ตัวอย่าง 8กง-6780" matInput>
@@ -102,10 +102,13 @@
 </div>
 
 
-<div class="bottom-0 px-6 pt-4 pb-5 md:p-8 md:pb-12 lg:p-12 w-full fixed bg-card">
+<div class="bottom-0 px-6 pt-4 pb-5 md:p-8 md:pb-12 lg:p-12 w-full fixed">
 
     <div class="relative items-center justify-start w-full h-14 py-5 pb-15 z-49">
-        <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
+        <button *ngIf="!disableBtn" class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'primary'" (click)="submit()">
+            ถัดไป
+        </button>
+        <button *ngIf="disableBtn" class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white" mat-flat-button [color]="'warn'">
             ถัดไป
         </button>
     </div>
