@@ -40,7 +40,7 @@ import { MapComponent } from '../map/page.component';
 @Component({
     selector: 'step-main',
     templateUrl: './page.component.html',
-    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./page.component.scss'],
     standalone: true,
     imports: [
         CdkStepperModule,
@@ -126,6 +126,10 @@ export class ServicesMainComponent implements OnInit {
                 console.log(error);
             }
         });
+    }
+
+    back(){
+        this._router.navigate(['screens/reg-kg/list']);
     }
 
     submit() {
