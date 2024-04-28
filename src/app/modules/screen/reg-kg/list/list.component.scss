@@ -1,5 +1,26 @@
 ::ng-deep body,
 .dark,
 .light {
-    background: #ffffff !important;
+    background: #fbfbfb !important;
+}
+
+.keypad {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.keypad .display {
+    width: 100%;
+    padding: 10px;
+    background: #eee;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.keypad button {
+    flex: 1 0 30%;
+    padding: 10px;
+    margin: 1px;
+    background: red !important;
+    border-radius: 12px;
 }

@@ -30,7 +30,12 @@ import { MatTableModule } from '@angular/material/table';
 import { PageService } from '../page.service';
 import { Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-// import { NgxMaskDirective } from 'ngx-mask';
+import {
+    MatBottomSheet,
+    MatBottomSheetModule,
+    MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+import { KeypadComponent } from '../keypad/page.component';
 
 @Component({
     selector: 'list',
@@ -54,7 +59,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
         MatDatepickerModule,
         MatPaginatorModule,
         MatTableModule,
-        // NgxMaskDirective
+        MatBottomSheetModule,
     ],
 })
 export class ListComponent implements OnInit, AfterViewInit {
@@ -63,28 +68,29 @@ export class ListComponent implements OnInit, AfterViewInit {
     licensePlate: string = '';
     isLoading: boolean = false;
     item: any;
-    // public dataRow: any[];
+    currentInput = '';
+
     dataRow: any[] = [];
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     constructor(
         private dialog: MatDialog,
+        private _bottomSheet: MatBottomSheet,
         private _changeDetectorRef: ChangeDetectorRef,
         private _service: PageService,
         private _router: Router,
         private _formBuilder: FormBuilder,
-        private _fuseConfirmationService: FuseConfirmationService,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {}
 
     ngOnInit() {
         this.dataForm = this._formBuilder.group({
-            mile: [
-                null,
-                [Validators.required],
-            ],
+            mile: [null, [Validators.required]],
         });
 
-        this.item = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')).data : [];
-        // console.log(this.item);
+        this.item = localStorage.getItem('data')
+            ? JSON.parse(localStorage.getItem('data')).data
+            : [];
+        // this._bottomSheet.open(KeypadComponent);
     }
 
     ngAfterViewInit(): void {
@@ -141,38 +147,51 @@ export class ListComponent implements OnInit, AfterViewInit {
         //     // If the confirm button pressed...
         //     if (result === 'confirmed') {
 
+        this._service
+            .create(this.item.license, this.dataForm.value.mile)
+            .subscribe({
+                next: (resp: any) => {
+                    this._router.navigate(['screens/services/main']);
+                },
 
-                this._service.create(this.item.license, this.dataForm.value.mile).subscribe({
-                    next: (resp: any) => {
-                        this._router.navigate(['screens/services/main']);
-                    },
-
-                    error: (err: any) => {
-                        this._fuseConfirmationService.open({
-                            title: 'เกิดข้อผิดพลาด',
-                            message: err.error.message,
-                            icon: {
+                error: (err: any) => {
+                    this._fuseConfirmationService.open({
+                        title: 'เกิดข้อผิดพลาด',
+                        message: err.error.message,
+                        icon: {
+                            show: true,
+                            name: 'heroicons_outline:exclamation-triangle',
+                            color: 'accent',
+                        },
+                        actions: {
+                            confirm: {
                                 show: true,
-                                name: 'heroicons_outline:exclamation-triangle',
-                                color: 'accent',
+                                label: 'ปิด',
+                                color: 'primary',
                             },
-                            actions: {
-                                confirm: {
-                                    show: true,
-                                    label: 'ปิด',
-                                    color: 'primary',
-                                },
-                                cancel: {
-                                    show: false,
-                                    label: 'ยกเลิก',
-                                },
+                            cancel: {
+                                show: false,
+                                label: 'ยกเลิก',
                             },
-                            dismissible: true,
-                        });
-                        console.log(err.error.message);
-                    },
-                });
+                        },
+                        dismissible: true,
+                    });
+                    console.log(err.error.message);
+                },
+            });
         //     }
         // });
+    }
+
+    onKeyPress(key: string) {
+        this.currentInput += key;
+        this.dataForm.patchValue({
+            mile: this.currentInput,
+        });
+        this._changeDetectorRef.markForCheck();
+    }
+
+    onClear() {
+        this.currentInput = '';
     }
 }
