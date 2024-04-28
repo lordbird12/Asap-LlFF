@@ -183,6 +183,14 @@ export class ListComponent implements OnInit, AfterViewInit {
         // });
     }
 
+    validateInput(event: KeyboardEvent) {
+        const pattern = /[0-9\+\-\ ]/;
+        if (!pattern.test(event.key)) {
+            // If input is not a number, prevent the key press
+            event.preventDefault();
+        }
+    }
+
     onKeyPress(key: string) {
         this.currentInput += key;
         this.dataForm.patchValue({
