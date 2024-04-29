@@ -6,3 +6,23 @@
 :host body {
     background: white !important;
 }
+
+.custom-bullet-list {
+    list-style-type: none;
+    /* Remove default bullets */
+    padding: 0;
+    /* Reset padding, adjust as needed */
+}
+
+.custom-bullet-list li {
+    background-image: url('/assets/images/Point2.png');
+    /* Set your custom bullet icon */
+    background-repeat: no-repeat;
+    /* Prevent the icon from repeating */
+    background-position: 0px 5px;
+    /* Position the background image (horizontal, vertical) */
+    padding-left: 25px;
+    /* Space out text from the bullet icon */
+    margin-bottom: 10px;
+    /* Space between list items, adjust as needed */
+}
