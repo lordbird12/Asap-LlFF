@@ -38,3 +38,9 @@ mat-bottom-sheet-container {
 .show-placeholder ::ng-deep .mat-form-field-label-wrapper {
     display: block !important;
 }
+
+.bg-card {
+    position: relative;
+    /* If you want to adjust the position relative to the bottom */
+    /* bottom: 0; */
+}
