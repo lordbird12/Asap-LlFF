@@ -44,3 +44,13 @@ mat-bottom-sheet-container {
     /* If you want to adjust the position relative to the bottom */
     /* bottom: 0; */
 }
+
+.footer {
+    flex-shrink: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    /* Adjust as needed */
+    background-color: #f2f2f2;
+}

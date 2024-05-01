@@ -148,5 +148,26 @@
     <app-root></app-root>
 
 </body>
+<script>
+    window.addEventListener('resize', updateButtonPosition);
+    window.addEventListener('scroll', updateButtonPosition);
+
+    function updateButtonPosition() {
+        var button = document.getElementById('fixedButton');
+        var inputField = document.getElementById('inputField');
+        var keyboardHeight = window.innerHeight - window.visualViewport.height;
+
+        if (keyboardHeight > 0) {
+            var inputBottom = inputField.getBoundingClientRect().bottom;
+            var buttonBottom = window.innerHeight - button.getBoundingClientRect().bottom;
+
+            if (buttonBottom < keyboardHeight) {
+                button.style.bottom = keyboardHeight - inputBottom + 20 + 'px'; // Adjust as needed
+            }
+        } else {
+            button.style.bottom = '20px'; // Reset to original position
+        }
+    }
+</script>
 
 </html>
