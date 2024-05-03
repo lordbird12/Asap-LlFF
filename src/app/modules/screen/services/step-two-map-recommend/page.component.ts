@@ -105,13 +105,13 @@ export class StepTwoMapRecommendComponent implements OnInit {
         this.itemData = localStorage.getItem('data')
             ? JSON.parse(localStorage.getItem('data')).data
             : [];
-           
+
         if (this.item2) {
             if (this.item2.lat && this.item2.lon) {
                 const data = {
                     lat: this.item2.lat,
                     lon: this.item2.lon,
-                    brand:this.itemData.brand,
+                    brand: this.itemData.brand,
                 };
 
                 this._service
@@ -119,9 +119,9 @@ export class StepTwoMapRecommendComponent implements OnInit {
                     .subscribe((resp: any) => {
                         try {
                             this.items = resp.data;
-                          
-                            this.item = this.items[0];
-                            if (this.item) {
+                            console.log(this.items);
+                            if (this.items) {
+                                this.item = this.items[0];
                                 // Initialize the map
                                 const resolution = 156543.03392;
                                 const distance = 0.005;
@@ -198,9 +198,9 @@ export class StepTwoMapRecommendComponent implements OnInit {
                 const data = {
                     lat: this.item2.road_lat,
                     lon: this.item2.road_lon,
-                    brand:this.itemData.brand,
+                    brand: this.itemData.brand,
                 };
-       
+
                 this._service
                     .get_service_centers_recommend(data)
                     .subscribe((resp: any) => {
