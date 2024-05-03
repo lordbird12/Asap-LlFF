@@ -4,11 +4,10 @@
 <head>
     <title>Asap Call Center</title>
     <meta charset="utf-8">
-    <meta name="description" content="Admin Template and Starter Kit with Angular, Angular Material Components and TailwindCSS">
-    <meta name="keywords" content="Fuse,HTML,CSS,Angular,Angular 13,Angular 14,Angular 15,Material,Angular Components,Tailwind,Tailwind CSS,TailwindCSS,Admin Template,Admin Starter Kit">
-    <!-- <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Asap Call Center">
+    <meta name="keywords" content="Asap Call Center">
 
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
     <base href="/">
 
     <!-- Favicon -->
@@ -148,26 +147,5 @@
     <app-root></app-root>
 
 </body>
-<script>
-    window.addEventListener('resize', updateButtonPosition);
-    window.addEventListener('scroll', updateButtonPosition);
-
-    function updateButtonPosition() {
-        var button = document.getElementById('fixedButton');
-        var inputField = document.getElementById('inputField');
-        var keyboardHeight = window.innerHeight - window.visualViewport.height;
-
-        if (keyboardHeight > 0) {
-            var inputBottom = inputField.getBoundingClientRect().bottom;
-            var buttonBottom = window.innerHeight - button.getBoundingClientRect().bottom;
-
-            if (buttonBottom < keyboardHeight) {
-                button.style.bottom = keyboardHeight - inputBottom + 20 + 'px'; // Adjust as needed
-            }
-        } else {
-            button.style.bottom = '20px'; // Reset to original position
-        }
-    }
-</script>
 
 </html>

@@ -46,11 +46,15 @@ mat-bottom-sheet-container {
 }
 
 .footer {
-    flex-shrink: 0;
     position: absolute;
     bottom: 0;
-    width: 100%;
-    height: 60px;
-    /* Adjust as needed */
-    background-color: #f2f2f2;
+    left: 0;
+    z-index: 10;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
 }
