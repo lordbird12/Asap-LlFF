@@ -119,7 +119,7 @@ export class StepTwoMapMyLocationComponent implements OnInit {
                 try {
                     this.item = resp;
                     this._changeDetectorRef.markForCheck();
-                    console.log(this.item);
+      
 
                     if (this.item) {
                         const resolution = 156543.03392;
