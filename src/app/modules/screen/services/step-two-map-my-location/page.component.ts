@@ -119,18 +119,23 @@ export class StepTwoMapMyLocationComponent implements OnInit {
                 try {
                     this.item = resp;
                     this._changeDetectorRef.markForCheck();
-      
 
                     if (this.item) {
                         const resolution = 156543.03392;
                         const distance = 50;
-                        const zoomLevel = Math.round(Math.log2(40075016.686 * Math.cos(this.data.lat * Math.PI / 180) / (resolution * distance)));
+                        const zoomLevel = Math.round(
+                            Math.log2(
+                                (40075016.686 *
+                                    Math.cos((this.data.lat * Math.PI) / 180)) /
+                                    (resolution * distance)
+                            )
+                        );
 
                         // Initialize the map
                         this.map = new longdo.Map({
                             placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
                             zoom: zoomLevel,
-                            animate:true
+                            animate: true,
                             // other map options
                         });
 
@@ -154,12 +159,12 @@ export class StepTwoMapMyLocationComponent implements OnInit {
                         this.map.Overlays.add(this.marker);
                         this.focusOnMarker();
 
-                          // Set the zoom level again after initializing the map
-                          this.map.zoom(16); // Adjust the zoom level as needed
+                        // Set the zoom level again after initializing the map
+                        this.map.zoom(16); // Adjust the zoom level as needed
 
-                          // Save the last view (including zoom level)
-                          // this.map.view();
-                          
+                        // Save the last view (including zoom level)
+                        // this.map.view();
+
                         this._changeDetectorRef.markForCheck();
                     }
                 } catch (error) {

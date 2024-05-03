@@ -206,11 +206,12 @@ export class StepTwoMapRecommendComponent implements OnInit {
                     .subscribe((resp: any) => {
                         try {
                             this.items = resp.data;
-                            this.item = this.items[0];
-                            if (this.item) {
+                            if (this.items) {
+                                this.item = this.items[0];
+
                                 // Initialize the map
                                 const resolution = 156543.03392;
-                                const distance = 0.005;
+                                const distance = 50;
                                 const zoomLevel = Math.round(
                                     Math.log2(
                                         (40075016.686 *
@@ -224,25 +225,15 @@ export class StepTwoMapRecommendComponent implements OnInit {
                                 // Initialize the map
                                 this.map = new longdo.Map({
                                     placeholder: document.getElementById('map'), // Assuming you have an element with id 'map' in your template
-                                    zoom: zoomLevel, // Start with a zoom level that provides detail for approximately 500 meters
+                                    zoom: zoomLevel,
                                     animate: true,
                                     // other map options
                                 });
 
-                                // Add a marker to the map
-                                // const marker = new longdo.Marker({
-                                //     lon: this.item.lat,
-                                //     lat: this.item.lon,
-                                // });
-
                                 this.marker = new longdo.Marker(
                                     {
-                                        lon: this.item.lon
-                                            ? this.item.lon
-                                            : this.item.lon,
-                                        lat: this.item.lat
-                                            ? this.item.lat
-                                            : this.item.lat,
+                                        lon: 100.7799669,
+                                        lat: 13.7220189,
                                     },
                                     {
                                         title: 'Marker',
