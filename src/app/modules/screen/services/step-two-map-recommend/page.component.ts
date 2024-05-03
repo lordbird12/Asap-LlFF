@@ -105,7 +105,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
         this.itemData = localStorage.getItem('data')
             ? JSON.parse(localStorage.getItem('data')).data
             : [];
-
+           
         if (this.item2) {
             if (this.item2.lat && this.item2.lon) {
                 const data = {
@@ -119,6 +119,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
                     .subscribe((resp: any) => {
                         try {
                             this.items = resp.data;
+                          
                             this.item = this.items[0];
                             if (this.item) {
                                 // Initialize the map
