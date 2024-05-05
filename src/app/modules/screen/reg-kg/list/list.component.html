@@ -38,42 +38,43 @@
 
     <!-- Main -->
     <div class="flex-auto px-6 pt-20 pb-1 md:p-8 md:pb-12 lg:p-12">
-
-        <!-- Load settings panel -->
-        <fuse-card class="flex-col max-w-sm md:max-w-none p-6 sm:py-12 sm:px-10 shadow overflow-visible">
-            <div class="absolute inset-x-0 -top-4 flex items-center justify-center">
-                <div class="flex items-center h-8 px-8 rounded-full font-medium text-center leading-none">
-                    <img class="w-50 h-auto items-center justify-center " [src]="item?.image " alt="Cover image ">
+        <form [formGroup]="dataForm">
+            <!-- Load settings panel -->
+            <fuse-card class="flex-col max-w-sm md:max-w-none p-6 sm:py-12 sm:px-10 shadow overflow-visible">
+                <div class="absolute inset-x-0 -top-4 flex items-center justify-center">
+                    <div class="flex items-center h-8 px-8 rounded-full font-medium text-center leading-none">
+                        <img class="w-50 h-auto items-center justify-center " [src]="item?.image " alt="Cover image ">
+                    </div>
                 </div>
-            </div>
 
-            <div class="w-full pt-18">
-                <div class="text-xl ">{{item ? item.license : "- "}}</div>
-                <div class="text-secondary ">{{item ? item.brand_model.name : "- "}} • {{item ? item.color : "- "}}
+                <div class="w-full pt-18">
+                    <div class="text-xl ">{{item ? item.license : "- "}}</div>
+                    <div class="text-secondary ">{{item ? item.brand_model.name : "- "}} • {{item ? item.color : "- "}}
+                    </div>
                 </div>
-            </div>
 
-            <div class="grid sm:grid-cols-4 gap-6 mt-5 w-full ">
-                <!-- Name -->
-                <div class="sm:col-span-4 ">
-                    <b class="ml-1 text-lg ">โปรดระบุเลขไมล์ปัจจุบัน</b>
-                    <mat-form-field class="w-full mt-4 " [subscriptSizing]=" 'dynamic' ">
-                        <input class="w-full " type="number" [formControlName]=" 'mile' " (keypress)="validateInput($event)" pattern="\d*" placeholder="เลขไมล์ " matInput required>
-                        <!-- <input mask="9999999999 " [allowNegativeNumbers]="true " class="w-full " [formControlName]=" 'mile' " placeholder=" " matInput required> -->
-                        <span matSuffix>กิโลเมตร</span>
-                    </mat-form-field>
+                <div class="grid sm:grid-cols-4 gap-6 mt-5 w-full ">
+                    <!-- Name -->
+                    <div class="sm:col-span-4 ">
+                        <b class="ml-1 text-lg ">โปรดระบุเลขไมล์ปัจจุบัน</b>
+                        <mat-form-field class="w-full mt-4 " [subscriptSizing]=" 'dynamic' ">
+                            <input class="w-full " type="number" [formControlName]=" 'mile' " (keypress)="validateInput($event)" pattern="\d*" placeholder="เลขไมล์ " matInput required>
+                            <!-- <input mask="9999999999 " [allowNegativeNumbers]="true " class="w-full " [formControlName]=" 'mile' " placeholder=" " matInput required> -->
+                            <span matSuffix>กิโลเมตร</span>
+                        </mat-form-field>
+                    </div>
                 </div>
-            </div>
-            <div class="grid sm:grid-cols-4 gap-6 mt-2 w-full ">
+                <div class="grid sm:grid-cols-4 gap-6 mt-2 w-full ">
 
 
-                <div class="relative items-center justify-start w-full h-14 py-2 pb-15 z-49 ">
-                    <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white " mat-flat-button [color]=" 'primary' " (click)="submit() ">
-                        ถัดไป
-                    </button>
+                    <div class="relative items-center justify-start w-full h-14 py-2 pb-15 z-49 ">
+                        <button class="fuse-mat-button-large w-full mt-2 mb-3 rounded-md text-white " mat-flat-button [color]=" 'primary' " (click)="submit() ">
+                            ถัดไป
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </fuse-card>
+            </fuse-card>
+        </form>
     </div>
 
     <!-- <div class="bottom-0 px-2 pt-2 pb-5 md:p-8 md:pb-12 lg:p-12 w-full">

@@ -8,22 +8,22 @@
         </span>
         <form [formGroup]="otpForm">
             <div class="grid grid-cols-6 gap-1 mx-10">
-                <mat-form-field class="text-center rounded">
+                <mat-form-field class="text-center rounded-[8px]">
                     <input matInput type="tel" maxLength="1" #otpInput1 (input)="onFirstDigitInput($event)" formControlName="otp1">
                 </mat-form-field>
-                <mat-form-field class="text-center rounded">
+                <mat-form-field class="text-center rounded-[8px]">
                     <input matInput type="tel" maxLength="1" #otpInput2 (input)="onSelect2($event)" formControlName="otp2">
                 </mat-form-field>
-                <mat-form-field class="text-center rounded">
+                <mat-form-field class="text-center rounded-[8px]">
                     <input matInput type="tel" maxLength="1" #otpInput3 (input)="onSelect3($event)" formControlName="otp3">
                 </mat-form-field>
-                <mat-form-field class="text-center rounded">
+                <mat-form-field class="text-center rounded-[8px]">
                     <input matInput type="tel" maxLength="1" #otpInput4 (input)="onSelect4($event)" formControlName="otp4">
                 </mat-form-field>
-                <mat-form-field class="text-center rounded">
+                <mat-form-field class="text-center rounded-[8px]">
                     <input matInput type="tel" maxLength="1" #otpInput5 (input)="onSelect5($event)" formControlName="otp5">
                 </mat-form-field>
-                <mat-form-field class="text-center rounded">
+                <mat-form-field class="text-center rounded-[8px]">
                     <input matInput type="tel" maxLength="1" #otpInput6 (input)="submit($event)" formControlName="otp6">
                 </mat-form-field>
             </div>

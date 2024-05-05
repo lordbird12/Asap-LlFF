@@ -163,5 +163,16 @@
 			<circle cx="8" cy="8" r="8" fill="#FF595A" fill-opacity="0.07" />
 			<circle cx="8" cy="8" r="4" fill="#FD451C" />
 		</svg>
+		<svg id="marker" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<g clip-path="url(#clip0_487_11763)">
+				<path d="M8.75 4.16669C8.75 7.08335 5 9.58335 5 9.58335C5 9.58335 1.25 7.08335 1.25 4.16669C1.25 3.17213 1.64509 2.2183 2.34835 1.51504C3.05161 0.811775 4.00544 0.416687 5 0.416687C5.99456 0.416687 6.94839 0.811775 7.65165 1.51504C8.35491 2.2183 8.75 3.17213 8.75 4.16669Z" stroke="#808899" stroke-linecap="round" stroke-linejoin="round" />
+				<path d="M5 5.41669C5.69036 5.41669 6.25 4.85704 6.25 4.16669C6.25 3.47633 5.69036 2.91669 5 2.91669C4.30964 2.91669 3.75 3.47633 3.75 4.16669C3.75 4.85704 4.30964 5.41669 5 5.41669Z" stroke="#808899" stroke-linecap="round" stroke-linejoin="round" />
+			</g>
+			<defs>
+				<clipPath id="clip0_487_11763">
+					<rect width="10" height="10" fill="white" />
+				</clipPath>
+			</defs>
+		</svg>
 	</defs>
 </svg>

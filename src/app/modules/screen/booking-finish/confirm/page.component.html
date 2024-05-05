@@ -11,7 +11,7 @@
                 <div class="flex flex-row -mx-3 md:flex">
                     <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
 
-                        <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-12">
+                        <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 sm:my-12">
                             <!-- Avatar and name -->
                             <div class="flex flex-auto items-center min-w-0">
                                 <div class="flex-0 w-26 h-auto overflow-hidden">
@@ -48,9 +48,10 @@
                     <!-- Tags -->
                     <ng-container *ngIf="services.length">
                         <ng-container *ngFor="let item of services; trackBy: trackByFn">
-                            <div *ngIf="item.check" class="ml-2 flex items-center justify-center px-3 m-1.5 rounded-md leading-9 text-gray-500 bg-gray-100 dark:text-gray-300 dark:bg-gray-700">
+                            <div *ngIf="item.check" class="ml-2 flex items-center justify-center px-3 m-1.5 rounded-md leading-9 text-gray-500 bg-[#DFDFDF] dark:text-gray-300 dark:bg-gray-700">
                                 <img class="w-5 h-5 mr-1" [src]="item?.image" alt="">
-                                <span *ngIf="item.id == 8" class="text-md font-medium whitespace-nowrap">อื่นๆ ({{item?.remark}})</span>
+                                <span *ngIf="item.id == 8" class="text-md font-medium whitespace-nowrap">อื่นๆ
+                                    ({{item?.remark}})</span>
                                 <span *ngIf="item.id != 8" class="text-md font-medium whitespace-nowrap">{{item?.name}}</span>
                             </div>
                         </ng-container>
@@ -106,6 +107,7 @@
 
                                     </div>
                                     <div class="flex items-center">
+                                        <mat-icon [svgIcon]="'asha:marker_map'" class="icon-size-5"></mat-icon>
                                         <div class="ml-1.5 leading-6 truncate text-secondary">
                                             {{service ? service.address : "-"}}
                                         </div>

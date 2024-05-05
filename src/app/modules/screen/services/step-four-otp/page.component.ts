@@ -37,7 +37,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 @Component({
     selector: 'otp',
     templateUrl: './page.component.html',
-    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
@@ -168,6 +168,106 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
         }
     }
 
+    // submit(event) {
+    //     this.otp = localStorage.getItem('otp')
+    //         ? JSON.parse(localStorage.getItem('otp'))
+    //         : [];
+
+    //     const data = {
+    //         otp_ref: this.otp.otp.otp_ref,
+    //         token_otp: this.otp.otp.token,
+    //         tel: this.otp.otp.tel,
+    //         otp_code:
+    //             this.otpForm.value.otp1 +
+    //             this.otpForm.value.otp2 +
+    //             this.otpForm.value.otp3 +
+    //             this.otpForm.value.otp4 +
+    //             this.otpForm.value.otp5 +
+    //             this.otpForm.value.otp6,
+    //     };
+
+    //     // this.dataForm.patchValue({
+    //     //     otp_ref: this.otp.otp.otp_ref,
+    //     //     token_otp: this.otp.otp.token,
+    //     //     tel: this.otp.otp.tel,
+    //     //     otp_code:
+    //     //         this.otpForm.value.otp1 +
+    //     //         this.otpForm.value.otp2 +
+    //     //         this.otpForm.value.otp3 +
+    //     //         this.otpForm.value.otp4 +
+    //     //         this.otpForm.value.otp5 +
+    //     //         this.otpForm.value.otp6,
+    //     // });
+    //     const confirmation = this._fuseConfirmationService.open({
+    //         title: 'ยืนยัน OTP',
+    //         message: 'คุณต้องการยืนยัน OTPใช่หรือไม่ ?',
+    //         icon: {
+    //             show: false,
+    //             name: 'heroicons_outline:exclamation-triangle',
+    //             color: 'accent',
+    //         },
+    //         actions: {
+    //             confirm: {
+    //                 show: true,
+    //                 label: 'ตกลง',
+    //                 color: 'primary',
+    //             },
+    //             cancel: {
+    //                 show: false,
+    //                 label: 'ยกเลิก',
+    //             },
+    //         },
+    //         dismissible: true,
+    //     });
+
+    //     // Subscribe to the confirmation dialog closed action
+    //     confirmation.afterClosed().subscribe((result) => {
+    //         // If the confirm button pressed...
+    //         if (result === 'confirmed') {
+    //             this._service.confirm_otp(data).subscribe({
+    //                 next: (resp: any) => {
+    //                     this._bottomSheetRef.dismiss();
+    //                     this._router.navigate(['screens/booking/confirm']);
+    //                 },
+
+    //                 error: (err: any) => {
+    //                     this._fuseConfirmationService.open({
+    //                         title: 'เกิดข้อผิดพลาด',
+    //                         message: err.error.message,
+    //                         icon: {
+    //                             show: true,
+    //                             name: 'heroicons_outline:exclamation-triangle',
+    //                             color: 'accent',
+    //                         },
+    //                         actions: {
+    //                             confirm: {
+    //                                 show: true,
+    //                                 label: 'ปิด',
+    //                                 color: 'primary',
+    //                             },
+    //                             cancel: {
+    //                                 show: false,
+    //                                 label: 'ยกเลิก',
+    //                             },
+    //                         },
+    //                         dismissible: true,
+    //                     });
+    //                     // console.log(err.error.message);
+    //                 },
+    //             });
+    //         }
+    //     });
+
+    //     // return;
+    //     // if (event.inputType === 'deleteContentBackward') {
+    //     //     // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
+    //     //     this.otpInput5.nativeElement.focus();
+    //     // } else {
+    //     //     // ให้ focus ที่ช่องที่ 2
+    //     //     this.closeBottomSheet(event);
+    //     // }
+    // }
+
     submit(event) {
         this.otp = localStorage.getItem('otp')
             ? JSON.parse(localStorage.getItem('otp'))
@@ -186,86 +286,37 @@ export class StepFourOtpComponent implements OnInit, OnDestroy {
                 this.otpForm.value.otp6,
         };
 
-        // this.dataForm.patchValue({
-        //     otp_ref: this.otp.otp.otp_ref,
-        //     token_otp: this.otp.otp.token,
-        //     tel: this.otp.otp.tel,
-        //     otp_code:
-        //         this.otpForm.value.otp1 +
-        //         this.otpForm.value.otp2 +
-        //         this.otpForm.value.otp3 +
-        //         this.otpForm.value.otp4 +
-        //         this.otpForm.value.otp5 +
-        //         this.otpForm.value.otp6,
-        // });
-        const confirmation = this._fuseConfirmationService.open({
-            title: 'ยืนยัน OTP',
-            message: 'คุณต้องการยืนยัน OTPใช่หรือไม่ ?',
-            icon: {
-                show: false,
-                name: 'heroicons_outline:exclamation-triangle',
-                color: 'accent',
+        this._service.confirm_otp(data).subscribe({
+            next: (resp: any) => {
+                this._bottomSheetRef.dismiss();
+                this._router.navigate(['screens/booking/confirm']);
             },
-            actions: {
-                confirm: {
-                    show: true,
-                    label: 'ตกลง',
-                    color: 'primary',
-                },
-                cancel: {
-                    show: false,
-                    label: 'ยกเลิก',
-                },
-            },
-            dismissible: true,
-        });
 
-        // Subscribe to the confirmation dialog closed action
-        confirmation.afterClosed().subscribe((result) => {
-            // If the confirm button pressed...
-            if (result === 'confirmed') {
-                this._service.confirm_otp(data).subscribe({
-                    next: (resp: any) => {
-                        this._bottomSheetRef.dismiss();
-                        this._router.navigate(['screens/booking/confirm']);
+            error: (err: any) => {
+                this._fuseConfirmationService.open({
+                    title: 'เกิดข้อผิดพลาด',
+                    message: err.error.message,
+                    icon: {
+                        show: true,
+                        name: 'heroicons_outline:exclamation-triangle',
+                        color: 'accent',
                     },
-
-                    error: (err: any) => {
-                        this._fuseConfirmationService.open({
-                            title: 'เกิดข้อผิดพลาด',
-                            message: err.error.message,
-                            icon: {
-                                show: true,
-                                name: 'heroicons_outline:exclamation-triangle',
-                                color: 'accent',
-                            },
-                            actions: {
-                                confirm: {
-                                    show: true,
-                                    label: 'ปิด',
-                                    color: 'primary',
-                                },
-                                cancel: {
-                                    show: false,
-                                    label: 'ยกเลิก',
-                                },
-                            },
-                            dismissible: true,
-                        });
-                        // console.log(err.error.message);
+                    actions: {
+                        confirm: {
+                            show: true,
+                            label: 'ปิด',
+                            color: 'primary',
+                        },
+                        cancel: {
+                            show: false,
+                            label: 'ยกเลิก',
+                        },
                     },
+                    dismissible: true,
                 });
-            }
+                // console.log(err.error.message);
+            },
         });
-
-        // return;
-        // if (event.inputType === 'deleteContentBackward') {
-        //     // ให้ focus ที่ช่องก่อนหน้า (ไม่ให้ focus ที่ช่องแรกถ้าอยู่ที่ช่องแรกแล้ว)
-        //     this.otpInput5.nativeElement.focus();
-        // } else {
-        //     // ให้ focus ที่ช่องที่ 2
-        //     this.closeBottomSheet(event);
-        // }
     }
 
     closeBottomSheet(event: MouseEvent): void {
