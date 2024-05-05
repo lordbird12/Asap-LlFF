@@ -36,6 +36,7 @@ import {
     MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 import { KeypadComponent } from '../keypad/page.component';
+import { FuseCardComponent } from '@fuse/components/card';
 
 @Component({
     selector: 'list',
@@ -60,6 +61,7 @@ import { KeypadComponent } from '../keypad/page.component';
         MatPaginatorModule,
         MatTableModule,
         MatBottomSheetModule,
+        FuseCardComponent
     ],
 })
 export class ListComponent implements OnInit, AfterViewInit {
