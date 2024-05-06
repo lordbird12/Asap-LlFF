@@ -250,6 +250,11 @@ export class ConfirmComponent implements OnInit, OnDestroy {
 
             this._service.booking(data_book).subscribe({
                 next: (resp: any) => {
+                    const obj = {
+                        data: resp.data,
+                    };
+
+                    localStorage.setItem('booking', JSON.stringify(obj));
                     this._router.navigate(['screens/booking-finish/finish']);
                 },
 

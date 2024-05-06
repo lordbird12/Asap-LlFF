@@ -64,12 +64,13 @@ export class FinishComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     formFieldHelpers: string[] = ['fuse-mat-dense'];
     item: any;
+    booking: any;
     service: any;
     services: any[] = [];
     sevice_date_time: any;
     contact: any;
     date_format: any;
-    formattedDatetime:string;
+    formattedDatetime: string;
     months: any = [
         '',
         'January',
@@ -130,11 +131,16 @@ export class FinishComponent implements OnInit, OnDestroy {
             ? JSON.parse(localStorage.getItem('services'))
             : [];
 
+        this.booking = localStorage.getItem('booking')
+            ? JSON.parse(localStorage.getItem('booking')).data
+            : [];
+
         if (this.sevice_date_time.date) {
             this.date_format = this.sevice_date_time.date.split('-');
 
             // Assuming you have a datetime string in the format 'yyyy-mm-dd hh:mm:ss'
-            const datetimeString: string = this.sevice_date_time.date+" "+this.sevice_date_time.time;
+            const datetimeString: string =
+                this.sevice_date_time.date + ' ' + this.sevice_date_time.time;
 
             // Split the datetime string into date and time parts
             const [datePart, timePart] = datetimeString.split(' ');
