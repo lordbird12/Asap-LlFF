@@ -33,7 +33,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 @Component({
     selector: 'confirm',
     templateUrl: './page.component.html',
-    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [
