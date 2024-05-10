@@ -49,7 +49,7 @@
                     <ng-container *ngIf="services.length">
                         <ng-container *ngFor="let item of services; trackBy: trackByFn">
                             <div *ngIf="item.check" class="flex items-center justify-center px-2 py-0 m-1.5 rounded-md leading-9 text-gray-500 bg-[#DFDFDF]">
-                                <img class="w-5 h-5 mr-1.5" [src]="item?.image" alt="">
+                                <img class="w-5 h-5 mr-2" [src]="item?.image" alt="">
                                 <span *ngIf="item.id == 8" class="text-md font-medium whitespace-nowrap">อื่นๆ
                                     ({{item?.remark}})</span>
                                 <span *ngIf="item.id != 8" class="text-md font-medium whitespace-nowrap">{{item?.name}}</span>
