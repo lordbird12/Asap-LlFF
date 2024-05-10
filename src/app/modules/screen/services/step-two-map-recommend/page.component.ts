@@ -98,8 +98,8 @@ export class StepTwoMapRecommendComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        this.item2 = localStorage.getItem('Location')
-            ? JSON.parse(localStorage.getItem('Location'))
+        this.item2 = localStorage.getItem('mylocation')
+            ? JSON.parse(localStorage.getItem('mylocation'))
             : [];
 
         this.itemData = localStorage.getItem('data')
