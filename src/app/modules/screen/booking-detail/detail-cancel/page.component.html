@@ -53,7 +53,7 @@
                 <!-- Tags -->
                 <ng-container *ngIf="item?.services.length > 0">
                     <ng-container *ngFor="let it of item?.services; trackBy: trackByFn">
-                        <div *ngIf="item.check" class="flex items-center justify-center px-2 py-0 m-1.5 rounded-md leading-9 text-gray-500 bg-[#DFDFDF]">
+                        <div *ngIf="item.check" class="flex items-center justify-center px-2 py-0 m-1.5 rounded-md leading-9 text-gray-500 bg-[#DFDFDF] bg-opacity-30">
                             <span class="text-md font-medium whitespace-nowrap">{{it?.name}}</span>
                         </div>
                     </ng-container>
