@@ -13,3 +13,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+::ng-deep body,
+.dark,
+.light {
+    background-color: #ffffff !important;
+}
