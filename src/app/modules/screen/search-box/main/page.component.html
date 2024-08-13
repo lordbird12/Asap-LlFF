@@ -14,7 +14,7 @@
             <div class="flex-auto max-w-3xl p-2 sm:p-10 prose prose-sm ">
                 <ul class="custom-bullet-list">
                     <ng-container *ngFor="let item of this.items; let i = index;">
-                        <li *ngIf="item.type == 'poi'" (click)="selectPoint(i) ">
+                        <li *ngIf="item.type == 'poi' || item.type == 'khet'" (click)="selectPoint(i) ">
                             <p style="margin:0 !important;"><strong>{{item.name}}</strong></p>
                             <p style="margin:0 !important;">{{item.address}}</p>
                         </li>

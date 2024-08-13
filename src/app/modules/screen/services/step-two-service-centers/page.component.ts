@@ -76,6 +76,7 @@ export class ServiceCenterComponent implements OnInit {
     map: any; // Assuming you have a reference to the map object
     items: any;
     item: any;
+    item3: any;
     itemData: any;
     /**
      * Constructor
@@ -104,6 +105,10 @@ export class ServiceCenterComponent implements OnInit {
             ? JSON.parse(localStorage.getItem('mylocation'))
             : [];
 
+        this.item3 = localStorage.getItem('services')
+            ? JSON.parse(localStorage.getItem('services'))
+            : [];
+
         this.itemData = localStorage.getItem('data')
             ? JSON.parse(localStorage.getItem('data')).data
             : [];
@@ -114,6 +119,7 @@ export class ServiceCenterComponent implements OnInit {
                     lat: this.item.lat,
                     lon: this.item.lon,
                     brand: this.itemData.brand,
+                    services: this.item3,
                 };
 
                 this._service

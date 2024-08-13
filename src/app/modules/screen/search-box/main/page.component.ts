@@ -117,7 +117,6 @@ export class SearchBoxComponent implements OnInit {
     }
 
     onChange(event: any) {
-        console.log(event.target.value);
 
         const data = {
             search: event.target.value,

@@ -73,6 +73,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
     items: any;
     item: any;
     item2: any;
+    item3: any;
     itemData: any;
     marker: any; // Holds the marker instance
     /**
@@ -102,6 +103,10 @@ export class StepTwoMapRecommendComponent implements OnInit {
             ? JSON.parse(localStorage.getItem('mylocation'))
             : [];
 
+        this.item3 = localStorage.getItem('services')
+            ? JSON.parse(localStorage.getItem('services'))
+            : [];
+
         this.itemData = localStorage.getItem('data')
             ? JSON.parse(localStorage.getItem('data')).data
             : [];
@@ -112,6 +117,7 @@ export class StepTwoMapRecommendComponent implements OnInit {
                     lat: this.item2.lat,
                     lon: this.item2.lon,
                     brand: this.itemData.brand,
+                    services: this.item3,
                 };
 
                 this._service
