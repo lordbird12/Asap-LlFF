@@ -96,10 +96,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             .replace(/[^ก-ฮ0-9]/g, '')
             .toUpperCase();
         event.target.value = event.target.value.replace(
-            /([ก-ฮ]{2})([0-9]{4})/,
+            /([ก-ฮ]{2})([0-9]{2})/,
             '$1-$2'
         );
-
+console.log(1);
         this.dataForm.patchValue({
             license: event.target.value.slice(0, 8),
         });
