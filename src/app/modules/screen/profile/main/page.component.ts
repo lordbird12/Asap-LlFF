@@ -91,6 +91,8 @@ export class MainComponent implements OnInit {
             ? JSON.parse(localStorage.getItem('profile'))
             : [];
 
+            console.log(this.profile.pictureUrl);
+
         this.myBooking = localStorage.getItem('MyBooking')
             ? JSON.parse(localStorage.getItem('MyBooking'))
             : [];

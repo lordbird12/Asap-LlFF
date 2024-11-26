@@ -11,13 +11,13 @@
                             <div class="flex items-start justify-between">
                                 <div class="text-lg font-medium tracking-tight leading-6 truncate">
                                     <div class="flex items-center">
-                                        <img class="w-12 h-12 rounded-full" *ngIf="profile && profile.pictureUrl" [src]="profile.pictureUrl">
+                                        <img class="w-12 h-12 rounded-full" *ngIf="profile" [src]="profile.pictureUrl">
                                         <div class="ml-2">
                                             <p class="text-1xl font-bold">
-                                                {{myBooking ? myBooking[0].profile.name : "-"}}
+                                                {{myBooking ? myBooking[0]?.profile?.name : "-"}}
                                             </p>
                                             <p class="text-md">
-                                                {{myBooking ? myBooking[0].profile.phone : "-"}}
+                                                {{myBooking ? myBooking[0]?.profile?.phone : "-"}}
                                             </p>
                                         </div>
                                     </div>
@@ -42,7 +42,7 @@
 
                                         <div class="ml-4">
                                             <p class="text-1xl font-bold">
-                                                จัดการรถ ({{myBooking ? myBooking[0].profile.cars.length : "0"}})
+                                                จัดการรถ ({{myBooking[0].cars?.length ? myBooking[0].cars?.length : 0}})
                                             </p>
 
                                         </div>
