@@ -43,7 +43,7 @@
             <fuse-card class="flex-col max-w-sm md:max-w-none p-6 sm:py-12 sm:px-10 shadow overflow-visible">
                 <div class="absolute inset-x-0 -top-4 flex items-center justify-center">
                     <div class="flex items-center h-8 px-8 rounded-full font-medium text-center leading-none">
-                        <img class="w-50 h-auto items-center justify-center " [src]="item?.image " alt="Cover image ">
+                        <img class="w-50 h-auto items-center justify-center " [src]="item?.image " (error)="onImageError($event)" alt="Cover image ">
                     </div>
                 </div>
 

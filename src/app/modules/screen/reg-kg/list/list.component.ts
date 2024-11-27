@@ -204,4 +204,9 @@ export class ListComponent implements OnInit, AfterViewInit {
     onClear() {
         this.currentInput = '';
     }
+
+    onImageError(event: Event) {
+        const target = event.target as HTMLImageElement;
+        target.src = "https://asha-tech.co.th/asap/public/images/not_car.jpg"; // Set your default image path here
+    }
 }
