@@ -95,6 +95,7 @@ export class StepFourComponent implements OnInit {
     }
 
     submit2() {
+
         localStorage.setItem('contact', JSON.stringify(this.dataForm.value));
 
         this.profile = localStorage.getItem('profile')
@@ -103,7 +104,7 @@ export class StepFourComponent implements OnInit {
 
         const data = {
             tel: this.dataForm.value.phone,
-            user_id: this.profile.user_id,
+            user_id: this.profile.userId,
         };
 
         this._service.otp(data).subscribe({
